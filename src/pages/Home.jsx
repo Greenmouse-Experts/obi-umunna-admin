@@ -24,7 +24,7 @@ const home = () => {
         lineTension: 0.4,
       },
       {
-        label: "Number of Items",
+        label: "Number of Members",
         data: [80, 85, 55, 75, 50, 67, 73, 40],
         borderColor: "rgba(255, 99, 132, 1)",
         backgroundColor: "rgba(255, 99, 132, 0.2)",
@@ -67,17 +67,17 @@ const home = () => {
 
   const list = [
     {
-      head: "Total Employees",
+      head: "Total Members",
       num: 116,
       Image: img1,
     },
     {
-      head: "Total Suppliers",
+      head: "Total Suscriber",
       num: 690,
       Image: img2,
     },
     {
-      head: "Total Inventory Cost",
+      head: "Total Membership Cost",
       num: "₦13,510,000",
       Image: img3,
     },
@@ -174,7 +174,7 @@ const home = () => {
         <div className="l">
           <div className="line">
             <div className="line_head">
-              <h2>Inventory Stock Analysis</h2>
+              <h2>Monthly Members</h2>
               <button>
                 Monthly (2023){" "}
                 <span>

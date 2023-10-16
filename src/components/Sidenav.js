@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../image/logo.png";
-import { FiUsers, FiShoppingBag, FiSettings, FiLogOut } from "react-icons/fi";
+import { FiUsers, FiSettings, FiLogOut } from "react-icons/fi";
 import { MdOutlineManageAccounts, MdAccessTime } from "react-icons/md";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { LuLayoutDashboard } from "react-icons/lu";
@@ -11,7 +11,7 @@ import { AiOutlineClose} from 'react-icons/ai'
 
 const Sidebar = ({showSidebar, toggleSidebar}) => {
   const [showUsersMenu, setShowUsersMenu] = useState(false);
-  const [showInventoriesMenu, setShowInventoriesMenu] = useState(false);
+    // const [showInventoriesMenu, setShowInventoriesMenu] = useState(false);
 
  
   const toggleUsersMenu = () => {
@@ -20,11 +20,11 @@ const Sidebar = ({showSidebar, toggleSidebar}) => {
     }
   };
   
-  const toggleInventoriesMenu = () => {
-    if (showSidebar) {
-      setShowInventoriesMenu(!showInventoriesMenu);
-    }
-  };
+  // const toggleInventoriesMenu = () => {
+  //   if (showSidebar) {
+  //     setShowInventoriesMenu(!showInventoriesMenu);
+  //   }
+  // };
 
 
   const sidebarRef = useRef(null)
@@ -79,7 +79,7 @@ const Sidebar = ({showSidebar, toggleSidebar}) => {
               <ul className="submenu">
                 <li className="submenu-item">
                   <NavLink to="/employees" className="nav-link">
-                    {showSidebar && "Employees"}
+                    {showSidebar && "Members"}
                   </NavLink>
                 </li>
                 <li className="submenu-item">
@@ -94,11 +94,11 @@ const Sidebar = ({showSidebar, toggleSidebar}) => {
             <NavLink to="/suppliers" className="nav-link">
               <span className="nav-icon">
                 <FiUsers />
-                {showSidebar && "Suppliers"}
+                {showSidebar && "Members"}
               </span>
             </NavLink>
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <span className="nav-link" onClick={toggleInventoriesMenu}>
               <span className="nav-icon">
                 {" "}
@@ -124,7 +124,7 @@ const Sidebar = ({showSidebar, toggleSidebar}) => {
                 </li>
               </ul>
             )}
-          </li>
+          </li> */}
           <li className="nav-item">
             <NavLink to="/history" className="nav-link">
               <span className="nav-icon">

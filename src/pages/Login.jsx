@@ -34,7 +34,7 @@ const Login = () => {
           }else{
             if(resp.password === logData.password){
               usenavigate("/dashboard/")
-              toast.success("welcome " +resp.firstName)
+              toast.success("Welcome " +resp.firstName)
               localStorage.setItem('fName', resp.firstName)
             }else{
               toast.warn('Password is incorrect');
