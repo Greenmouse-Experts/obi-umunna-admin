@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../image/logo.png";
 import { FiUsers, FiShoppingBag, FiSettings, FiLogOut } from "react-icons/fi";
@@ -6,8 +6,10 @@ import { MdOutlineManageAccounts, MdAccessTime } from "react-icons/md";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { LuLayoutDashboard } from "react-icons/lu";
 import "../stylesheet/component.css";
+import { AiOutlineClose} from 'react-icons/ai'
 
-const Sidebar = ({showSidebar}) => {
+
+const Sidebar = ({showSidebar, toggleSidebar}) => {
   const [showUsersMenu, setShowUsersMenu] = useState(false);
   const [showInventoriesMenu, setShowInventoriesMenu] = useState(false);
 
@@ -23,12 +25,35 @@ const Sidebar = ({showSidebar}) => {
       setShowInventoriesMenu(!showInventoriesMenu);
     }
   };
+
+
+  const sidebarRef = useRef(null)
+  
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (showSidebar && sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+        toggleSidebar(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showSidebar, toggleSidebar]);
+  
+  
+  
+  
   
   return (
-    <div className="sidebar" >
+    <div ref={sidebarRef} className={showSidebar ? "sidebar" : "sidebar closed"} >
       
-      <div className="side_img">
-        <img className="img-logo" src={logo} alt="Logo" />
+      <div className={showSidebar ? "side_img" : "img-side"} >
+        <img className="img-logo" src={logo} alt="Logo" /> <div className="men" onClick={toggleSidebar}>
+        <AiOutlineClose/>
+      </div>
       </div>
       <nav className={`side-nav ${showSidebar ? "active" : ""}` }>
         <ul className="nav-list">

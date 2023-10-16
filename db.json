@@ -1,0 +1,18 @@
+{
+  "user": [
+    {
+      "firstName": "Mubarak",
+      "lastName": "Oguntunde",
+      "id": "oguntunde722@gmail.com",
+      "password": "tolu",
+      "confirmPassword": "tolu"
+    },
+    {
+      "firstName": "jjjjkjkkjjk",
+      "lastName": "ijkkkjjkk",
+      "id": "ikj@gmail.com",
+      "password": "1234567",
+      "confirmPassword": "1234567"
+    }
+  ]
+}

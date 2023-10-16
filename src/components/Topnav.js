@@ -6,6 +6,8 @@ import {GoBell} from "react-icons/go"
 import user from "../image/Ellipse 922.png"
 
 export const Topnav = ({toggleSidebar}) => {
+
+  const name = localStorage.getItem('fName')
   const currentDate = new Date();
 
 
@@ -32,7 +34,7 @@ const formattedDate = `${day} ${month} ${year}`;
         <LuMenu/>
       </div>
       <div className="icon_text">
-        <h3>Hello Super Admin</h3>
+        <h3>Hello {name}</h3>
         <p>{formattedDate}</p>
       </div>
       </div>

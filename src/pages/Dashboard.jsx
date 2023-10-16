@@ -6,7 +6,7 @@ import "../stylesheet/layout.css";
 import Home from "./Home";
 
 const Dashboard = () => {
-  const [showSidebar, setShowSidebar] = useState(true);
+  const [showSidebar, setShowSidebar] = useState(window.innerWidth >= 650);
 
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
@@ -19,7 +19,7 @@ const Dashboard = () => {
       </div>
       <div className={showSidebar ? "component" : "close-side"}>
         <div>
-          <Topnav showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
+          <Topnav setShowSidebar={setShowSidebar} showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
         </div>
         <div className="pages">
           <Routes>

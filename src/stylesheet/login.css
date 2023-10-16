@@ -19,6 +19,15 @@
     gap: 2rem
     ;
 }
+.register{
+    background: white;
+    padding: 2.5rem 5rem 3rem 5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem
+    ;
+    width: 60%;
+}
 
 .login img{
     width: 7rem;
@@ -96,9 +105,48 @@ font-size: 1rem;
 margin-top: 0.7rem;
 }
 
+.register button{
+    width: 100%;
+    padding: 1rem 1.5rem;
+    border-radius: 15px;
+    background: var(--red);
+    border: none;
+    color: white;
+    font-style: normal;
+font-weight: 600;
+line-height: normal;
+font-size: 1rem;
+margin-top: 1.5rem;
+}
 
 
 /* Sidebar.css */
 .sidebar{
    
+}
+
+.main_log{
+    width: 100%;
+    height: auto;
+    background: #291670;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 5rem 8%;
+    
+}
+
+
+.already{
+
+    color: #291670;
+    font-size: 1.1rem;
+}
+
+.register img{
+    width: 8rem;
+    align-self: center;
+
 }
