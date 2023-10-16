@@ -13,6 +13,13 @@
       "id": "ikj@gmail.com",
       "password": "1234567",
       "confirmPassword": "1234567"
+    },
+    {
+      "firstName": "musharraf",
+      "lastName": "Oguntunde",
+      "id": "oguntunde123@gmail.com",
+      "password": "man",
+      "confirmPassword": "man"
     }
   ]
 }

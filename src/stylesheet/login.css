@@ -27,6 +27,7 @@
     gap: 1.2rem
     ;
     width: 60%;
+    height: fit-content;
 }
 
 .login img{
@@ -149,4 +150,25 @@ margin-top: 1.5rem;
     width: 8rem;
     align-self: center;
 
+}
+
+@media screen and (max-width: 1024px) {
+    .register{
+        width: 75%;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .register{
+        width: 95%;
+        padding: 2.5rem 3rem 3rem 3rem;
+
+    }
+
+    .main_login{
+       
+        padding: 0 8%;
+        
+    }
+    
 }
