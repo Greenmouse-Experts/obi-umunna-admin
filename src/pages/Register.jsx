@@ -1,8 +1,8 @@
 import '../stylesheet/login.css'
 import React, {useState} from "react";
-import { AiOutlineMail } from "react-icons/ai";
-import { BsKey } from "react-icons/bs";
-import { HiOutlineUser } from "react-icons/hi";
+// import { AiOutlineMail } from "react-icons/ai";
+// import { BsKey } from "react-icons/bs";
+// import { HiOutlineUser } from "react-icons/hi";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
@@ -159,7 +159,7 @@ const Register = () => {
   <img src={logo} alt="" />
   <div className="log_head">
     <h3>Register</h3>
-    <p>Fill in your credentials to register as a User</p>
+    <p>Fill in your credentials to register as a Member</p>
   </div>
 
   {/* Add Account Type */}
@@ -193,12 +193,13 @@ const Register = () => {
 </div>
 
 
-
-  <div className="input_log">
+    <div className="double">
+    <div className="input_log">
     <label htmlFor="firstName">First Name</label>
     <div>
-      <HiOutlineUser className="icon" />
+      {/* <HiOutlineUser className="icon" /> */}
       <input
+        placeholder='Enter First Name'
         id="first_name"
         name="first_name"
         type="text"
@@ -211,8 +212,9 @@ const Register = () => {
   <div className="input_log">
     <label htmlFor="last_name">Last Name</label>
     <div>
-      <HiOutlineUser className="icon" />
+      {/* <HiOutlineUser className="icon" /> */}
       <input
+      placeholder='Enter Last Name'
         id="last_name"
         name="last_name"
         type="text"
@@ -221,12 +223,16 @@ const Register = () => {
       />
     </div>
   </div>
+    </div>
 
-  <div className="input_log">
+
+    <div className="double">
+       <div className="input_log">
     <label htmlFor="email">Email</label>
     <div>
-      <AiOutlineMail className="icon" />
+      {/* <AiOutlineMail className="icon" /> */}
       <input
+      placeholder='Enter Email'
         id="email"
         name="email"
         type="email"
@@ -236,11 +242,29 @@ const Register = () => {
     </div>
   </div>
 
+   
+  <div className="input_log">
+      <label htmlFor="phone_number">Phone Number</label>
+      <div>
+         <input
+         placeholder='Enter Phone Number'
+          id="phone_number"
+          name="phone_number"
+          type="text"
+          value={logindata.phone_number}
+          onChange={hadleInput}
+        />
+      </div>
+    </div>
+
+    </div>
+ 
   <div className="input_log">
           <label htmlFor="username">Username</label>
           <div>
-            <HiOutlineUser className="icon" />
+            {/* <HiOutlineUser className="icon" /> */}
             <input
+            placeholder='Enter Username'
               id="username"
               name="username"
               type="text"
@@ -251,27 +275,12 @@ const Register = () => {
    </div>
 
 
-
-  
-  {/* Add Phone Number */}
-  <div className="input_log">
-      <label htmlFor="phone_number">Phone Number</label>
-      <div>
-         <input
-          id="phone_number"
-          name="phone_number"
-          type="text"
-          value={logindata.phone_number}
-          onChange={hadleInput}
-        />
-      </div>
-    </div>
-
   {/* Add Address */}
   <div className="input_log">
     <label htmlFor="address">Address</label>
     <div>
       <input
+      placeholder='Enter Your Address'
         id="address"
         name="address"
         type="text"
@@ -281,8 +290,8 @@ const Register = () => {
     </div>
   </div>
 
-  {/* Add Gender */}
-  <div className="input_log">
+<div className="double">
+   <div className="input_log">
     <label htmlFor="gender">Gender</label>
     <div>
       <select
@@ -297,9 +306,7 @@ const Register = () => {
       </select>
     </div>
   </div>
-
-  {/* Add Marital Status */}
-  <div className="input_log">
+   <div className="input_log">
     <label htmlFor="marital_status">Marital Status</label>
     <div>
       <select
@@ -316,6 +323,11 @@ const Register = () => {
       </select>
     </div>
   </div>
+</div>
+ 
+
+  
+ 
 
   <div className="input_log">
     <label htmlFor="passport">Please upload your passport</label>
@@ -347,6 +359,7 @@ const Register = () => {
     <label htmlFor="place_business_employment">Place of Business or Employment</label>
     <div>
       <input
+      placeholder='Where do you work? '
         id="place_business_employment"
         name="place_business_employment"
         type="text"
@@ -360,6 +373,7 @@ const Register = () => {
     <label htmlFor="nature_business_employment">Nature of Business or Employment</label>
     <div>
       <input
+      placeholder='Type of work yo do'
         id="nature_business_employment"
         name="nature_business_employment"
         type="text"
@@ -372,6 +386,7 @@ const Register = () => {
   <label htmlFor="membership_professional_bodies">Membership of other Professional Bodies/Reg. Numbers</label>
   <div>
     <input
+    placeholder='Professional Bodies/Reg. Numbers'
       id="membership_professional_bodies"
       name="membership_professional_bodies"
       type="text"
@@ -385,6 +400,7 @@ const Register = () => {
   <label htmlFor="previous_insolvency_work_experience">Detials of Previous Insolvency Work Experience</label>
   <div>
     <input
+    placeholder='Previous Insolvency Work Experience'
       id="previous_insolvency_work_experience"
       name="previous_insolvency_work_experience"
       type="text"
@@ -398,6 +414,7 @@ const Register = () => {
   <label htmlFor="referee_email_address">Referee Email Address</label>
   <div>
     <input
+    placeholder='Enter Referee Email Address'
       id="referee_email_address"
       name="referee_email_address"
       type="text"
@@ -407,11 +424,13 @@ const Register = () => {
   </div>
 </div>
 
-<div className="input_log">
+<div className="double">
+  <div className="input_log">
     <label htmlFor="password">Password</label>
     <div>
-      <BsKey className="icon" />
+      {/* <BsKey className="icon" /> */}
       <input
+        placeholder='Enter Passowrd'
         id="password"
         name="password"
         type="password"
@@ -420,12 +439,12 @@ const Register = () => {
       />
     </div>
   </div>
-
   <div className="input_log">
     <label htmlFor="password_confirmation">Confirm Password</label>
     <div>
-      <BsKey className="icon" />
+      {/* <BsKey className="icon" /> */}
       <input
+      placeholder='Confirm Password'
         id="password_confirmation"
         name="password_confirmation"
         type="password"
@@ -434,6 +453,10 @@ const Register = () => {
       />
     </div>
   </div>
+</div>
+
+
+  
 
   <button className="form_btn" type="submit" disabled={isLoading}>
   {isLoading ? "Loading..." : "Sign Up"}

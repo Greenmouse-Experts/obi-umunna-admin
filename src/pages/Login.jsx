@@ -121,7 +121,7 @@ const Login = () => {
       <form onSubmit={handleSubmit} action="submit" className="login">
         <img src={logo} alt="" />
         <div className="log_head">
-          <h3>User Login</h3>
+          <h3>Memberr Login</h3>
           <p>Fill in your credentials to login to your dashboard</p>
         </div>
         <div className="input_log">
