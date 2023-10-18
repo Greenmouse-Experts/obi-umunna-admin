@@ -1,25 +1,27 @@
 {
   "user": [
+    
     {
-      "firstName": "Mubarak",
-      "lastName": "Oguntunde",
-      "id": "oguntunde722@gmail.com",
-      "password": "tolu",
-      "confirmPassword": "tolu"
-    },
-    {
-      "firstName": "jjjjkjkkjjk",
-      "lastName": "ijkkkjjkk",
-      "id": "ikj@gmail.com",
-      "password": "1234567",
-      "confirmPassword": "1234567"
-    },
-    {
-      "firstName": "musharraf",
-      "lastName": "Oguntunde",
-      "id": "oguntunde123@gmail.com",
+      "first_name": "Mubarak",
+      "last_name": "Oguntunde",
+      "email": "oguntunde123@gmail.com",
       "password": "man",
-      "confirmPassword": "man"
+      "username": "Mb.oguntunde",
+      "password_confirmation": "man",
+      "account_type": "Associate",
+      "phone_number": "09034985365",
+      "address": "8,taiwo ODUSHOGA Street, omitoro",
+      "gender": "Male",
+      "marital_status": "Married",
+      "passport": {},
+      "certificates": {},
+      "place_business_employment": "cnmcnmc",
+      "nature_business_employment": "mann",
+      "membership_professional_bodies": "mcmcm",
+      "previous_insolvency_work_experience": "nc,c",
+      "referee_email_address": "oguntunde722@gmail.com",
+      "id": "PzmLSf0"
     }
+   
   ]
 }

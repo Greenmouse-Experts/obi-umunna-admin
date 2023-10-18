@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import logo from "../image/logo.png";
 import { FiUsers, FiSettings, FiLogOut } from "react-icons/fi";
 import { MdOutlineManageAccounts, MdAccessTime } from "react-icons/md";
-// import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { LuLayoutDashboard } from "react-icons/lu";
 import "../stylesheet/component.css";
 import { AiOutlineClose} from 'react-icons/ai'
@@ -58,7 +58,7 @@ const Sidebar = ({showSidebar, toggleSidebar}) => {
       <nav className={`side-nav ${showSidebar ? "active" : ""}` }>
         <ul className="nav-list">
           <li className="nav-item">
-            <NavLink to="/dashboard/" className="nav-link">
+            <NavLink to="/admin/" className="nav-link">
               <span className="nav-icon">
                 <LuLayoutDashboard /> {showSidebar && "Dashboard"}
               </span>
@@ -67,34 +67,34 @@ const Sidebar = ({showSidebar, toggleSidebar}) => {
           <li className="nav-item">
             <span className="nav-link" onClick={toggleUsersMenu}>
               <span className="nav-icon">
-                <MdOutlineManageAccounts /> {showSidebar && "Subcriptions"}
+                <MdOutlineManageAccounts /> {showSidebar && "Members"}
               </span>
-              {/* {showSidebar && (
+              {showSidebar && (
                 <div className="bb">
                   {showUsersMenu ? <IoIosArrowUp /> : <IoIosArrowDown />}
                 </div>
-              )} */}
+              )}
             </span>
-            {/* {showUsersMenu && (
+            {showUsersMenu && (
               <ul className="submenu">
                 <li className="submenu-item">
                   <NavLink to="/employees" className="nav-link">
-                    {showSidebar && "Members"}
+                    {showSidebar && "Fellow"}
                   </NavLink>
                 </li>
                 <li className="submenu-item">
                   <NavLink to="/sub-admin" className="nav-link">
-                    {showSidebar && "Sub-admin"}
+                    {showSidebar && "Associate"}
                   </NavLink>
                 </li>
               </ul>
-            )} */}
+            )}
           </li>
           <li className="nav-item">
             <NavLink to="/suppliers" className="nav-link">
               <span className="nav-icon">
                 <FiUsers />
-                {showSidebar && "Members"}
+                {showSidebar && "Payments"}
               </span>
             </NavLink>
           </li>

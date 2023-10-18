@@ -11,7 +11,7 @@ import { IoIosArrowDown } from "react-icons/io";
 // eslint-disable-next-line
 import { Chart as chartjs } from "chart.js/auto";
 
-const home = () => {
+const Admin = () => {
   const datas = {
     labels: ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug"],
     datasets: [
@@ -196,4 +196,4 @@ const home = () => {
   );
 };
 
-export default home;
+export default Admin;
