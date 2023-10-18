@@ -26,30 +26,6 @@ const Login = () => {
 
     const  usenavigate = useNavigate()
 
-    // const proceed = (e) => {
-    //   e.preventDefault();
-    //   if(logValidate()){
-    //     fetch("http://localhost:8000/user/"+logData.logEmail).then((res)=>{
-    //       return res.json();
-    //     }).then((resp)=>{
-    //       if(Object.keys(resp).length === 0){
-    //         toast.error("Please Enter a valid Email");
-    //       }else{
-    //         if(resp.password === logData.password){
-    //           usenavigate("/dashboard/")
-    //           toast.success("Welcome " +resp.first_name)
-    //           localStorage.setItem('fName', resp.first_name)
-    //         }else{
-    //           toast.warn('Password is incorrect');
-    //         }
-    //       }
-    //     }).catch((err)=>{
-    //       toast.error("Login failed due to: " +err.message)
-    //     })
-        
-    //   }
-    // }
-
     const handleSubmit = (e) => {
       e.preventDefault();
       if (logValidate()) {
@@ -85,6 +61,42 @@ const Login = () => {
       
       }
     };
+    
+    // const handleSubmit = (e) => {
+    //   e.preventDefault();
+    //   if (logValidate()) {
+    //     const fd = new FormData()
+    //     Object.entries(logData).forEach(([key, value])=>{
+    //       fd.append(key , value);
+    //     })
+    //     setIsLoading(true);
+    //     axios.post('/auth/login', fd, {
+    //       headers: {
+    //         'Content-Type': 'multipart/form-data',
+    //       },
+    //     })
+    //     .then((res) => {
+    //       console.log(res);
+    //       localStorage.setItem('fName', res.data.data.first_name)
+    //       if(res.data.code === 200){
+    //       toast.success(res.data.message);
+    //       usenavigate('/dashboard/')
+    //       // toast.success("welcome " +res.data.first_name)
+             
+    //       }else{
+    //       toast.error("Email or Passward is Incorrect");
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       toast.error(""+err);
+    //       console.log(err);
+    //     })
+    //     .finally(() => {
+    //       setIsLoading(false); 
+    //     });
+      
+    //   }
+    // };
     
     
 
