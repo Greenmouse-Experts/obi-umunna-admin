@@ -135,7 +135,7 @@ const Register = () => {
       .then((res) => {
         console.log(res);
         if(res.status){
-        toast.success(res.data.message);
+        toast.success("Registered Successfully");
         navigate('/login')
         }else{
         toast.error(res.data.message);
