@@ -7,7 +7,9 @@ import { MdOutlineManageAccounts, MdAccessTime } from "react-icons/md";
 import { LuLayoutDashboard } from "react-icons/lu";
 import "../stylesheet/component.css";
 import { AiOutlineClose} from 'react-icons/ai'
+import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 
 const Sidebar = ({showSidebar, toggleSidebar}) => {
@@ -23,10 +25,21 @@ const Sidebar = ({showSidebar, toggleSidebar}) => {
   
   const Navigate = useNavigate()
 
-  const handleLogOut = ()=> {
-    Navigate('login')
-    localStorage.removeItem('fName')
-  }
+
+  const handleLogOut = async () => {
+    try {
+      // Perform a log-out request to the server
+      await axios.post('https://bripan.greenmouseacademy.com.ng/api/logout'); // Replace with your actual log-out endpoint
+  
+      toast.success("Logged Out Successfully")
+  
+      // Navigate to the login page or another appropriate page
+      Navigate('/login');
+    } catch (err) {
+      toast.error('Log-out failed:' +err);
+    }
+  };
+  
   // const toggleInventoriesMenu = () => {
   //   if (showSidebar) {
   //     setShowInventoriesMenu(!showInventoriesMenu);

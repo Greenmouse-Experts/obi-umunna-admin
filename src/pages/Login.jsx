@@ -3,13 +3,15 @@ import { HiOutlineMail } from "react-icons/hi";
 import { GoLock } from "react-icons/go";
 import "../stylesheet/login.css"
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import logo from "../image/logo.png"
 import axios from 'axios';
 
 
 
+
 const Login = () => {
+ 
   const [isLoading, setIsLoading] = useState(false);
 
   const [logData, setLogData] = useState(
@@ -141,6 +143,7 @@ const Login = () => {
             <GoLock />{" "}
             <input type="password" name="password" placeholder="Password" onChange={handleInput} value={logData.password} />
           </div>
+          <Link to="/" >Don,t have an account? <span>Create Account</span></Link>
         </div>
 
         <button type="submit" className="login_btn" disabled={isLoading}>

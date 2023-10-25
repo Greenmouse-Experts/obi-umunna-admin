@@ -1,6 +1,6 @@
 import '../stylesheet/login.css'
 import React, {useState} from "react";
-// import { AiOutlineMail } from "react-icons/ai";
+import { AiFillEye} from "react-icons/ai";
 // import { BsKey } from "react-icons/bs";
 // import { HiOutlineUser } from "react-icons/hi";
 import { toast } from "react-toastify";
@@ -11,7 +11,26 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 
 
+
 const Register = () => {
+  function togglePassword(inputId) {
+    const passwordInput = document.getElementById(inputId);
+    const toggleIcon = passwordInput.parentElement.querySelector('.eye-icon');
+  
+    if (!passwordInput || !toggleIcon) {
+      // Check if the elements are null or undefined before attempting to modify them
+      return;
+    }
+  
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      toggleIcon.style.backgroundImage = 'url("eye-icon-hidden.png")'; // Change to an icon that represents hidden password
+    } else {
+      passwordInput.type = 'password';
+      toggleIcon.style.backgroundImage = 'url("eye-icon.png")'; // Change back to the normal eye icon
+    }
+  }
+  
   const [isLoading, setIsLoading] = useState(false);
 
   const [logindata , setLoginData] = useState(
@@ -437,6 +456,11 @@ const Register = () => {
         value={logindata.password}
         onChange={hadleInput}
       />
+      <span className="toggle-password" onClick={() => togglePassword('password')}>
+
+      <span className="eye-icon">
+          <AiFillEye/>   
+        </span>    </span>
     </div>
   </div>
   <div className="input_log">
@@ -450,8 +474,14 @@ const Register = () => {
         type="password"
         value={logindata.password_confirmation}
         onChange={hadleInput}
-      />
+      /><span className="toggle-password" onClick={() => togglePassword('password_confirmation')}>
+        <span className="eye-icon">
+          <AiFillEye/>   
+        </span>
+        
+      </span>
     </div>
+    
   </div>
 </div>
 
