@@ -126,7 +126,7 @@ const Admin = () => {
         {" "}
         <div className="table">
           <div className="head_table">
-            <h3>Recent Inventories recorded</h3>
+            <h3>Recent Member</h3>
             <div className="searchh">
               <input type="text" placeholder="Search by name" />
               <span>
@@ -138,9 +138,9 @@ const Admin = () => {
             <thead>
               <tr>
                 <th>S/N</th>
-                <th>Item Id</th>
-                <th>Item Name</th>
-                <th>Category</th>
+                <th>Member Id</th>
+                <th>Member Name</th>
+                <th>Profession</th>
                 <th>Cost</th>
                 <th>Date Recorded</th>
               </tr>
@@ -187,7 +187,7 @@ const Admin = () => {
         </div>
         <div className="b">
           <div className="bar">
-            <h2>Department</h2>{" "}
+            <h2>Annoncement</h2>{" "}
             <Bar className="v" data={data} options={options} />
           </div>
         </div>

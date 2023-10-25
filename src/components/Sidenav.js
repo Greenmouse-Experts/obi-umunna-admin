@@ -7,6 +7,7 @@ import { MdOutlineManageAccounts, MdAccessTime } from "react-icons/md";
 import { LuLayoutDashboard } from "react-icons/lu";
 import "../stylesheet/component.css";
 import { AiOutlineClose} from 'react-icons/ai'
+import { useNavigate } from "react-router-dom";
 
 
 const Sidebar = ({showSidebar, toggleSidebar}) => {
@@ -20,6 +21,12 @@ const Sidebar = ({showSidebar, toggleSidebar}) => {
     }
   };
   
+  const Navigate = useNavigate()
+
+  const handleLogOut = ()=> {
+    Navigate('login')
+    localStorage.removeItem('fName')
+  }
   // const toggleInventoriesMenu = () => {
   //   if (showSidebar) {
   //     setShowInventoriesMenu(!showInventoriesMenu);
@@ -94,7 +101,7 @@ const Sidebar = ({showSidebar, toggleSidebar}) => {
             <NavLink to="/suppliers" className="nav-link">
               <span className="nav-icon">
                 <FiUsers />
-                {showSidebar && "Members"}
+                {showSidebar && "Transaction"}
               </span>
             </NavLink>
           </li>
@@ -129,7 +136,7 @@ const Sidebar = ({showSidebar, toggleSidebar}) => {
             <NavLink to="/history" className="nav-link">
               <span className="nav-icon">
                 <MdAccessTime />
-                {showSidebar && "History"}
+                {showSidebar && "Announcement"}
               </span>
             </NavLink>
           </li>
@@ -142,7 +149,7 @@ const Sidebar = ({showSidebar, toggleSidebar}) => {
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/login" className="nav-link">
+            <NavLink onClick={handleLogOut} className="nav-link">
               <span className="nav-icon">
                 {" "}
                 <FiLogOut /> {showSidebar && "Logout"}

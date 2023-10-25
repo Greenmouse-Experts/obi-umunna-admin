@@ -34,16 +34,18 @@ const Login = () => {
           fd.append(key , value);
         })
         setIsLoading(true);
-        axios.post('http://bripan.greenmouseacademy.com.ng/api/auth/login', fd, {
+        axios.post('https://bripan.greenmouseacademy.com.ng/api/auth/login', fd, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
         })
         .then((res) => {
           console.log(res);
-          localStorage.setItem('fName', res.data.data.first_name)
+          
           if(res.data.code === 200){
+            
           toast.success(res.data.message);
+          localStorage.setItem('fName', res.data.data.first_name)
           usenavigate('/dashboard/')
           // toast.success("welcome " +res.data.first_name)
              
@@ -121,7 +123,7 @@ const Login = () => {
       <form onSubmit={handleSubmit} action="submit" className="login">
         <img src={logo} alt="" />
         <div className="log_head">
-          <h3>Memberr Login</h3>
+          <h3>Member Login</h3>
           <p>Fill in your credentials to login to your dashboard</p>
         </div>
         <div className="input_log">

@@ -25,6 +25,7 @@ const Dashboard = () => {
           <Routes>
             <Route path="/" element={<Home />} />
           </Routes>
+          
         </div>
       </div>
     </div>

@@ -93,7 +93,7 @@ box-shadow: 0px 12px 30px 0px rgba(80, 143, 244, 0.10);
     gap: 1rem;
   }
   
-  .nav-item .active {
+  .nav-item:not(:last-child) .active{
     background-color: #29167038 ;
     color: #291670;
   }
@@ -129,6 +129,13 @@ box-shadow: 0px 12px 30px 0px rgba(80, 143, 244, 0.10);
   .menu-icon svg{
     color: black;
   }
+  .component div{
+    margin-left: 0.5rem;
+  }
+
+  .close-side div .top_nav{
+    padding-left: 2rem;
+  }
   .top_nav{
     width: 100%;
     display: flex;
@@ -136,6 +143,7 @@ box-shadow: 0px 12px 30px 0px rgba(80, 143, 244, 0.10);
     justify-content: space-between;
     align-items: center;
     padding: 1.5rem;
+    padding-left: 1rem;
     background: white;
     
   }

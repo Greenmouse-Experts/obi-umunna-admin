@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Register from './pages/Register';
 import AdminDashboard from './admin/AdminDashboard';
 import AdminLogin from './pages/AdminLogin';
+import Protect from './pages/Protect';
 
 function App() {
   return (
@@ -16,9 +17,11 @@ function App() {
       <Routes>
       <Route path='/' index element={<Register/>} />
         <Route path='/login' element={<Login/>} />
-        <Route path='/dashboard/*' element={<Dashboard/>} />
-        <Route path='/admin/*' element={<AdminDashboard/>}/>
         <Route path='/admin/login' element={<AdminLogin/>}/>
+        <Route path='/admin/*' element={<AdminDashboard/>}/>
+        <Route path='' element={<Protect/>}>
+          <Route path='/dashboard/*' element={<Dashboard/>} />
+        </Route>
       </Routes>
       
       </BrowserRouter>

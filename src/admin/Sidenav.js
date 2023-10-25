@@ -19,7 +19,8 @@ const Sidebar = ({showSidebar, toggleSidebar}) => {
       setShowUsersMenu(!showUsersMenu);
     }
   };
-  
+
+
   // const toggleInventoriesMenu = () => {
   //   if (showSidebar) {
   //     setShowInventoriesMenu(!showInventoriesMenu);
@@ -94,7 +95,7 @@ const Sidebar = ({showSidebar, toggleSidebar}) => {
             <NavLink to="/suppliers" className="nav-link">
               <span className="nav-icon">
                 <FiUsers />
-                {showSidebar && "Payments"}
+                {showSidebar && "Transactions"}
               </span>
             </NavLink>
           </li>
@@ -126,10 +127,10 @@ const Sidebar = ({showSidebar, toggleSidebar}) => {
             )}
           </li> */}
           <li className="nav-item">
-            <NavLink to="/history" className="nav-link">
+            <NavLink to="/announce" className="nav-link">
               <span className="nav-icon">
                 <MdAccessTime />
-                {showSidebar && "History"}
+                {showSidebar && "Announcement"}
               </span>
             </NavLink>
           </li>
@@ -142,7 +143,7 @@ const Sidebar = ({showSidebar, toggleSidebar}) => {
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/login" className="nav-link">
+            <NavLink to="/admin/login" className="nav-link">
               <span className="nav-icon">
                 {" "}
                 <FiLogOut /> {showSidebar && "Logout"}

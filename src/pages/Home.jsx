@@ -1,11 +1,6 @@
 import React from "react";
 import "../stylesheet/layout.css";
 import { BiSearch } from "react-icons/bi";
-import img1 from "../image/profit 5.png";
-import img2 from "../image/profit 6.png";
-import img3 from "../image/profit 7.png";
-import img4 from "../image/profit 8.png";
-import { Bar } from "react-chartjs-2";
 import { Line } from "react-chartjs-2";
 import { IoIosArrowDown } from "react-icons/io";
 // eslint-disable-next-line
@@ -44,49 +39,8 @@ const home = () => {
     responsive: true,
     maintainAspectRatio: false,
   };
-  const data = {
-    labels: ["Transportation", "Electronics", "Plumbing", "Mechanical"],
-    datasets: [
-      {
-        label: "Number",
-        data: [40, 88, 60, 50],
-        backgroundColor: ["#0263FF", "#FF7723", "#8E30FF", "#4A84DF"],
-      },
-    ],
-  };
-  const options = {
-    scales: {
-      y: {
-        beginAtZero: true,
-        max: 100,
-      },
-    },
-    responsive: true,
-    maintainAspectRatio: false,
-  };
+ 
 
-  const list = [
-    {
-      head: "Total Members",
-      num: 116,
-      Image: img1,
-    },
-    {
-      head: "Total Suscriber",
-      num: 690,
-      Image: img2,
-    },
-    {
-      head: "Total Membership Cost",
-      num: "₦13,510,000",
-      Image: img3,
-    },
-    {
-      head: "Total Departments",
-      num: 60,
-      Image: img4,
-    },
-  ];
   const items = [
     {
       Id: "TRA-VEH-BS-001",
@@ -126,7 +80,7 @@ const home = () => {
         {" "}
         <div className="table">
           <div className="head_table">
-            <h3>Recent Inventories recorded</h3>
+            <h3>Recent Members</h3>
             <div className="searchh">
               <input type="text" placeholder="Search by name" />
               <span>
@@ -136,11 +90,11 @@ const home = () => {
           </div>
           <table>
             <thead>
-              <tr>
+            <tr>
                 <th>S/N</th>
-                <th>Item Id</th>
-                <th>Item Name</th>
-                <th>Category</th>
+                <th>Member Id</th>
+                <th>Member Name</th>
+                <th>Profession</th>
                 <th>Cost</th>
                 <th>Date Recorded</th>
               </tr>
@@ -159,15 +113,10 @@ const home = () => {
             </tbody>
           </table>
         </div>
-        <div className="top_right">
-          {list.map((item) => (
-            <div className="">
-              <div className="_text">
-                <p>{item.head}</p> <h3>{item.num}</h3>{" "}
-              </div>{" "}
-              <img src={item.Image} alt="" />
-            </div>
-          ))}
+        <div className="event">
+          <h2>
+            Upcoming Events
+          </h2>          
         </div>
       </div>
       <div className="home_bottom">
@@ -187,8 +136,7 @@ const home = () => {
         </div>
         <div className="b">
           <div className="bar">
-            <h2>Department</h2>{" "}
-            <Bar className="v" data={data} options={options} />
+            <h2>Announcement</h2>{" "}
           </div>
         </div>
       </div>

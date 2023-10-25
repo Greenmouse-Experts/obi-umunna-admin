@@ -89,7 +89,7 @@ color: white;
     
 }
 .head_table h3{
-  font-size: 1rem;
+  font-size: 1rem;  
 }
 
 
@@ -183,6 +183,18 @@ color: white;
     
   }
 
+  .event{
+    width: 34%;
+    background: white;
+    height: 400px;
+    padding: 1rem;
+    border-radius: 10px;
+
+  }
+.event h2{
+  font-size: 1rem;  
+
+}
 .home_bottom{
   display: flex;
   flex-direction: row;

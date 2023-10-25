@@ -127,7 +127,7 @@ const Register = () => {
     if (isValidate()) {
       setIsLoading(true); // Set loading state to true
   
-      axios.post('http://bripan.greenmouseacademy.com.ng/api/auth/register', fd, {
+      axios.post('https://bripan.greenmouseacademy.com.ng/api/auth/register', fd, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

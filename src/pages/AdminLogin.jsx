@@ -35,7 +35,7 @@ const AdminLogin = () => {
             fd.append(key , value);
           })
           setIsLoading(true);
-          axios.post('http://bripan.greenmouseacademy.com.ng/api/auth/admin/login', fd, {
+          axios.post('https://bripan.greenmouseacademy.com.ng/api/auth/admin/login', fd, {
             headers: {
               'Content-Type': 'multipart/form-data',
             },
