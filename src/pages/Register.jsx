@@ -418,14 +418,13 @@ const Register = () => {
 <div className="input_log">
   <label htmlFor="previous_insolvency_work_experience">Detials of Previous Insolvency Work Experience</label>
   <div>
-    <input
-    placeholder='Previous Insolvency Work Experience'
+    <textarea placeholder='Previous Insolvency Work Experience'
       id="previous_insolvency_work_experience"
       name="previous_insolvency_work_experience"
       type="text"
       value={logindata.previous_insolvency_work_experience}
-      onChange={hadleInput}
-    />
+      onChange={hadleInput}cols="30" rows="10"></textarea>
+    
   </div>
 </div>
 
