@@ -28,21 +28,31 @@ const Sidebar = ({showSidebar, toggleSidebar}) => {
   // };
 
 
-  const sidebarRef = useRef(null)
-  
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (showSidebar && sidebarRef.current && !sidebarRef.current.contains(event.target)) {
+const sidebarRef = useRef(null);
+
+useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (showSidebar && sidebarRef.current && window.innerWidth <= 550) {
+      const sidebarRect = sidebarRef.current.getBoundingClientRect();
+      const isOutsideSidebar =
+        event.clientX < sidebarRect.left - 550 ||
+        event.clientX > sidebarRect.right + 550 ||
+        event.clientY < sidebarRect.top - 550 ||
+        event.clientY > sidebarRect.bottom + 550;
+
+      if (isOutsideSidebar) {
         toggleSidebar(false);
       }
-    };
+    }
+  };
 
-    document.addEventListener("mousedown", handleClickOutside);
+  document.addEventListener("mousedown", handleClickOutside);
 
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [showSidebar, toggleSidebar]);
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside);
+  };
+}, [showSidebar, toggleSidebar]);
+
   
   
   
@@ -79,7 +89,7 @@ const Sidebar = ({showSidebar, toggleSidebar}) => {
             {showUsersMenu && (
               <ul className="submenu">
                 <li className="submenu-item">
-                  <NavLink to="/employees" className="nav-link">
+                  <NavLink to="fellow" className="nav-link">
                     {showSidebar && "Fellow"}
                   </NavLink>
                 </li>
