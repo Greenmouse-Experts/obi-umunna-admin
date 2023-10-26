@@ -6,11 +6,19 @@ import { toast } from "react-toastify";
 import { useNavigate, Link } from "react-router-dom";
 import logo from "../image/logo.png"
 import axios from 'axios';
+import { AiFillEye} from "react-icons/ai";
+
 
 
 
 
 const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  
+  const togglePassword = () => {
+    setShowPassword(!showPassword); // Toggle the showPassword state
+  };
+
  
   const [isLoading, setIsLoading] = useState(false);
 
@@ -129,11 +137,11 @@ const Login = () => {
           <p>Fill in your credentials to login to your dashboard</p>
         </div>
         <div className="input_log">
-          <label htmlFor="email">Email</label>
+          <label htmlFor="email">Email or Username</label>
           <div>
             {" "}
             <HiOutlineMail />{" "}
-            <input type="text" name="login_details" placeholder="Email" onChange={handleInput} value={logData.login_details}/>
+            <input type="text" name="login_details" placeholder="Enter Email or Username" onChange={handleInput} value={logData.login_details}/>
           </div>
         </div>
         <div className="input_log">
@@ -141,16 +149,20 @@ const Login = () => {
           <div>
             {" "}
             <GoLock />{" "}
-            <input type="password" name="password" placeholder="Password" onChange={handleInput} value={logData.password} />
+            <input type={showPassword ? "text" : "password"} name="password" placeholder="Password" onChange={handleInput} value={logData.password} />  <span className="toggle-password"  onClick={togglePassword}>
+
+<span className="eye-icon">
+    <AiFillEye/>   
+  </span>    </span>
           </div>
-          <Link to="/" >Don,t have an account? <span>Create Account</span></Link>
+          
         </div>
 
         <button type="submit" className="login_btn" disabled={isLoading}>
   {isLoading ? "Verifying..." : "Login"}
         </button>  
 
-        
+        <Link to="/" >Don,t have an account? <span>Create Account</span></Link>
       </form>
     </div>
   );
