@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { BiSearch, BiPlus } from "react-icons/bi";
 import "../../stylesheet/admin.css";
-import { Custom } from "../../services/config";
 import dayjs from "dayjs";
 import { ThreeCircles } from "react-loader-spinner";
 import AddAssociate from "../../admin/AddAssociate";

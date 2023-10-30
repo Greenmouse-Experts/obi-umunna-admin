@@ -1,35 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { BiSearch, BiPlus } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import "../../stylesheet/admin.css";
-import { Custom } from "../../services/config";
 import dayjs from "dayjs";
 import { ThreeCircles } from "react-loader-spinner";
 import AddFellow from "../../admin/AddFellow";
 import useGetHook from "../../hook/useGet";
-import { getLocalToken } from "../../services/helpers";
 
 const Fellow = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState([]);
   const {data:item, isLoading:loading} = useGetHook('admin/member/retrieve/all?keyword=fellow')
-  // const fetchFellow = async () => {
-  //   setIsLoading(true);
-  //   await Custom.get(`admin/member/retrieve/all?keyword=fellow`)
-  //     .then((res) => {
-  //       if (res) {
-  //         setData(res.data.data.data);
-  //       }
-  //     })
-  //     .catch()
-  //     .finally(() => {
-  //       setIsLoading(false);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   fetchFellow();
-  // }, []);
+  
 
   const [showAddMemberPopup, setShowAddMemberPopup] = useState(false);
 
