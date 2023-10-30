@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
-import { Link, useNavigation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../stylesheet/login.css";
 
 const Error = () => {
-  const navigate = useNavigation()
   useEffect(() => {
-    navigate('/login')
+    window.location.replace('/login')
   }, [])
   return (
     <div className="error">

@@ -1,33 +1,35 @@
 import React, { useState, useEffect } from "react";
 import { BiSearch, BiPlus } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import "../stylesheet/admin.css";
-import { Custom } from "../services/config";
+import "../../stylesheet/admin.css";
+import { Custom } from "../../services/config";
 import dayjs from "dayjs";
 import { ThreeCircles } from "react-loader-spinner";
-import AddFellow from "../admin/AddFellow";
+import AddFellow from "../../admin/AddFellow";
+import useGetHook from "../../hook/useGet";
+import { getLocalToken } from "../../services/helpers";
 
 const Fellow = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
+  const {data:item, isLoading:loading} = useGetHook('admin/member/retrieve/all?keyword=fellow')
+  // const fetchFellow = async () => {
+  //   setIsLoading(true);
+  //   await Custom.get(`admin/member/retrieve/all?keyword=fellow`)
+  //     .then((res) => {
+  //       if (res) {
+  //         setData(res.data.data.data);
+  //       }
+  //     })
+  //     .catch()
+  //     .finally(() => {
+  //       setIsLoading(false);
+  //     });
+  // };
 
-  const fetchFellow = async () => {
-    setIsLoading(true);
-    await Custom.get(`admin/member/retrieve/all?keyword=fellow`)
-      .then((res) => {
-        if (res) {
-          setData(res.data.data.data);
-        }
-      })
-      .catch()
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    fetchFellow();
-  }, []);
+  // useEffect(() => {
+  //   fetchFellow();
+  // }, []);
 
   const [showAddMemberPopup, setShowAddMemberPopup] = useState(false);
 
@@ -90,7 +92,7 @@ const Fellow = () => {
             </div>
           </div>
         </div>
-        {isLoading ? (
+        {loading ? (
           <div className="load">
             <ThreeCircles
               height="100"
@@ -121,7 +123,7 @@ const Fellow = () => {
             </thead>
 
             <tbody>
-              {data.map((item, index) => (
+              {item?.data?.data.map((item, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{item.membership_id}</td>
