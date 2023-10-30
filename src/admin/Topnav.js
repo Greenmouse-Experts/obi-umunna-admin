@@ -4,9 +4,10 @@ import "../stylesheet/component.css";
 import {BiSearch} from "react-icons/bi"
 import {GoBell} from "react-icons/go"
 import user from "../image/Ellipse 922.png"
+import { Link } from 'react-router-dom';
 
-export const Topnav = ({toggleSidebar}) => {
-
+export const Topnav = ({toggleSidebar, data}) => {
+ 
   // const name = localStorage.getItem('fName')
   const currentDate = new Date();
 
@@ -43,10 +44,10 @@ const formattedDate = `${day} ${month} ${year}`;
           <BiSearch/>
           <input type="text" placeholder="Search"/>
         </div>
-        <div className="bell">
+        <Link to="notify" className="bell">
           <GoBell/>
-          <span>3</span>
-        </div>
+          <span>{data}</span>
+        </Link>
         <img src={user} alt="" />
 
       </div>

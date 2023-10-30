@@ -45,6 +45,7 @@ const AdminLogin = () => {
             if(res.data.code === 200){
             toast.success(res.data.message);
             usenavigate('/admin/')
+            localStorage.setItem("auth_token", res.data.token)
             // toast.success("welcome " +res.data.first_name)
                
             }else{

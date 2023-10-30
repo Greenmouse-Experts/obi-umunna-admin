@@ -89,32 +89,32 @@ const Admin = () => {
   ];
   const items = [
     {
-      Id: "TRA-VEH-BS-001",
-      Name: "Staff Bus",
-      category: "Transportation",
+      Id: 10001,
+      Name: "John Doe",
+      category: "Analyst",
       cost: 300000,
       date: "05-07-2023",
     },
     {
-      Id: "ELE-VLV-TV-002",
-      Name: "85 Inch TV",
-      category: "Electronics",
+      Id: 10002,
+      Name: "Victor Omar",
+      category: "Business Man",
       cost: 150000,
       date: "03-07-2023",
     },
 
     {
-      Id: "PLU-PIP-ES-003",
-      Name: "100 Ft Pipe",
-      category: "Plumbing ",
+      Id: 10003,
+      Name: "Daniel Akpan",
+      category: "Banker",
       cost: 200000,
       date: "02-07-2023",
     },
 
     {
-      Id: "TRA-VEH-BS-001",
-      Name: "Staff Bus",
-      category: "Transportation",
+      Id: 10004,
+      Name: "Mubarak Adeyomi",
+      category: "Teachern",
       cost: 300000,
       date: "05-07-2023",
     },
@@ -126,7 +126,7 @@ const Admin = () => {
         {" "}
         <div className="table">
           <div className="head_table">
-            <h3>Recent Member</h3>
+            <h3>Recent Members</h3>
             <div className="searchh">
               <input type="text" placeholder="Search by name" />
               <span>
@@ -136,12 +136,12 @@ const Admin = () => {
           </div>
           <table>
             <thead>
-              <tr>
+            <tr>
                 <th>S/N</th>
                 <th>Member Id</th>
                 <th>Member Name</th>
                 <th>Profession</th>
-                <th>Cost</th>
+                <th>Payment</th>
                 <th>Date Recorded</th>
               </tr>
             </thead>

@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../image/logo.png";
-import { FiUsers, FiSettings, FiLogOut } from "react-icons/fi";
-import { MdOutlineManageAccounts, MdAccessTime } from "react-icons/md";
+import {  FiSettings, FiLogOut } from "react-icons/fi";
+import { MdOutlineManageAccounts, MdAnnouncement} from "react-icons/md";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
+import {GrTransaction} from "react-icons/gr"
 import { LuLayoutDashboard } from "react-icons/lu";
 import "../stylesheet/component.css";
 import { AiOutlineClose} from 'react-icons/ai'
@@ -89,12 +90,12 @@ useEffect(() => {
             {showUsersMenu && (
               <ul className="submenu">
                 <li className="submenu-item">
-                  <NavLink to="fellow" className="nav-link">
+                  <NavLink  to="fellow" className="nav-link">
                     {showSidebar && "Fellow"}
                   </NavLink>
                 </li>
                 <li className="submenu-item">
-                  <NavLink to="/sub-admin" className="nav-link">
+                  <NavLink to="associate" className="nav-link">
                     {showSidebar && "Associate"}
                   </NavLink>
                 </li>
@@ -104,7 +105,7 @@ useEffect(() => {
           <li className="nav-item">
             <NavLink to="/suppliers" className="nav-link">
               <span className="nav-icon">
-                <FiUsers />
+                <GrTransaction />
                 {showSidebar && "Transactions"}
               </span>
             </NavLink>
@@ -139,7 +140,7 @@ useEffect(() => {
           <li className="nav-item">
             <NavLink to="/announce" className="nav-link">
               <span className="nav-icon">
-                <MdAccessTime />
+                <MdAnnouncement />
                 {showSidebar && "Announcement"}
               </span>
             </NavLink>

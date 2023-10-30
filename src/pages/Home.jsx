@@ -45,7 +45,7 @@ const home = () => {
     {
       Id: 10001,
       Name: "John Doe",
-      category: "Analiyst",
+      category: "Analyst",
       cost: 300000,
       date: "05-07-2023",
     },

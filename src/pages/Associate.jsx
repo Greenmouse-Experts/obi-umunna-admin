@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { BiSearch, BiPlus } from "react-icons/bi";
-import { BsThreeDotsVertical } from "react-icons/bs";
 import "../stylesheet/admin.css";
 import { Custom } from "../services/config";
 import dayjs from "dayjs";
 import { ThreeCircles } from "react-loader-spinner";
-import AddFellow from "../admin/AddFellow";
+import AddAssociate from "../admin/AddAssociate";
+import { BsThreeDotsVertical } from "react-icons/bs";
 
-const Fellow = () => {
+const Associate = () => {
   const [isLoading, setIsLoading] = useState(false);
+
   const [data, setData] = useState([]);
 
   const fetchFellow = async () => {
     setIsLoading(true);
-    await Custom.get(`admin/member/retrieve/all?keyword=fellow`)
+    await Custom.get(`admin/member/retrieve/all?keyword=associate`)
       .then((res) => {
         if (res) {
           setData(res.data.data.data);
@@ -114,8 +115,7 @@ const Fellow = () => {
                 <th>Member Name</th>
                 <th>Email</th>
                 <th>State</th>
-                <th>Date created</th>
-                <th>Status</th>
+                <th>Date Created</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -125,13 +125,10 @@ const Fellow = () => {
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{item.membership_id}</td>
-                  <td>
-                    {item.first_name} {item.last_name}
-                  </td>
+                  <td>{item.first_name} {item.last_name}</td>
                   <td>{item.email}</td>
                   <td>{item.state}</td>
                   <td>{dayjs(item.created_at).format("DD-MMM -YYYY")}</td>
-                  <td>{item.status}</td>
                   <td>
                     <BsThreeDotsVertical />
                   </td>
@@ -143,11 +140,11 @@ const Fellow = () => {
       </div>
       {showAddMemberPopup && (
         <div className="popup">
-          <AddFellow onClose={handleCloseAddMemberPopup} />
+          <AddAssociate onClose={handleCloseAddMemberPopup} />
         </div>
       )}
     </div>
   );
 };
 
-export default Fellow;
+export default Associate;

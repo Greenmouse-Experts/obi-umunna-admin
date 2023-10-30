@@ -14,7 +14,7 @@ const Dashboard = () => {
 
   return (
     <div className="layout">
-      <div>
+      <div className="cide">
         <Sidenav showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
       </div>
       <div className={showSidebar ? "component" : "close-side"}>

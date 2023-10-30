@@ -1,12 +1,15 @@
-
-
 .layout{
     display: flex;
     flex-direction: row;
-    height: 100%;
+    
     overflow: hidden;
     position: relative;
 
+}
+.layout .cide{
+  height: 120vh;
+  background: white;
+  position: fixed;
 }
 
 .component{
@@ -15,8 +18,7 @@
    flex-direction: column;
     flex: 1;
   
-    margin-left: 14r
-    em;
+    margin-left: 14rem;
 }
 
 .components{
@@ -45,8 +47,7 @@
     min-height: 100vh !important;
 }
 .home{
-    margin: 1rem 1.5rem;
-    
+    margin: 1rem 1.5rem;    
     background: #F6F7FB
 }
 .table{
