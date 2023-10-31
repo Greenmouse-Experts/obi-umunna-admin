@@ -6,8 +6,10 @@ import { Custom } from "../services/config";
 import dayjs from "dayjs";
 import { ThreeCircles } from "react-loader-spinner";
 import AddFellow from "../admin/AddFellow";
+import { Link } from "react-router-dom";
 
 const Fellow = () => {
+  const [activeDropdown, setActiveDropdown] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState([]);
 
@@ -113,7 +115,6 @@ const Fellow = () => {
                 <th>Member Id</th>
                 <th>Member Name</th>
                 <th>Email</th>
-                <th>State</th>
                 <th>Date created</th>
                 <th>Status</th>
                 <th>Action</th>
@@ -128,12 +129,16 @@ const Fellow = () => {
                   <td>
                     {item.first_name} {item.last_name}
                   </td>
-                  <td>{item.email}</td>
-                  <td>{item.state}</td>
+                  <td>{item.email}</td>    
                   <td>{dayjs(item.created_at).format("DD-MMM -YYYY")}</td>
                   <td>{item.status}</td>
-                  <td>
-                    <BsThreeDotsVertical />
+                  <td className="view_dot">
+                  <BsThreeDotsVertical onClick={() => setActiveDropdown(index)} />
+                {activeDropdown === index && (
+                  <div className="drop">
+                    <Link to={`member/${item.membership_id}`}>View Details</Link>
+                  </div>
+                )}
                   </td>
                 </tr>
               ))}

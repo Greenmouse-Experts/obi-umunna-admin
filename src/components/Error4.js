@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link, useNavigation } from "react-router-dom";
 import "../stylesheet/login.css";
-
+  
 const Error = () => {
   const navigate = useNavigation()
   useEffect(() => {

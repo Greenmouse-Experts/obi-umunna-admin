@@ -8,6 +8,7 @@ import Admin from "./Admin";
 import Fellow from "../pages/Fellow"
 import Associate from "../pages/Associate";
 import Notify from "../pages/Notify";
+import Member_details from './Member_details';
 
 const AdminDashboard = () => {
   const [showSidebar, setShowSidebar] = useState(window.innerWidth >= 650);
@@ -47,6 +48,7 @@ const AdminDashboard = () => {
           <Routes>
             <Route path="/" element={<Admin/>} />
             <Route path="fellow" element={<Fellow/>}/>
+            <Route path='fellow/member/:memberId' element={<Member_details/>}/>
             <Route path="associate" element={<Associate/>}/>
             <Route path="notify" element={<Notify datas={data}/>}/>
           </Routes>
