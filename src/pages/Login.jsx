@@ -50,8 +50,6 @@ const Login = () => {
           },
         })
         .then((res) => {
-          console.log(res);
-          
           if(res.data.code === 200){
             
           toast.success(res.data.message);

@@ -1,35 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { BiSearch, BiPlus } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
-import "../stylesheet/admin.css";
-import { Custom } from "../services/config";
+import "../../stylesheet/admin.css";
 import dayjs from "dayjs";
 import { ThreeCircles } from "react-loader-spinner";
-import AddFellow from "../admin/AddFellow";
-import { Link } from "react-router-dom";
+import AddFellow from "../../admin/AddFellow";
+import useGetHook from "../../hook/useGet";
 
 const Fellow = () => {
-  const [activeDropdown, setActiveDropdown] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState([]);
-
-  const fetchFellow = async () => {
-    setIsLoading(true);
-    await Custom.get(`admin/member/retrieve/all?keyword=fellow`)
-      .then((res) => {
-        if (res) {
-          setData(res.data.data.data);
-        }
-      })
-      .catch()
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    fetchFellow();
-  }, []);
+  const {data:item, isLoading:loading} = useGetHook('admin/member/retrieve/all?keyword=fellow')
+  
 
   const [showAddMemberPopup, setShowAddMemberPopup] = useState(false);
 
@@ -92,7 +72,7 @@ const Fellow = () => {
             </div>
           </div>
         </div>
-        {isLoading ? (
+        {loading ? (
           <div className="load">
             <ThreeCircles
               height="100"
@@ -115,6 +95,7 @@ const Fellow = () => {
                 <th>Member Id</th>
                 <th>Member Name</th>
                 <th>Email</th>
+                <th>State</th>
                 <th>Date created</th>
                 <th>Status</th>
                 <th>Action</th>
@@ -122,23 +103,19 @@ const Fellow = () => {
             </thead>
 
             <tbody>
-              {data.map((item, index) => (
+              {item?.data?.data.map((item, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{item.membership_id}</td>
                   <td>
                     {item.first_name} {item.last_name}
                   </td>
-                  <td>{item.email}</td>    
+                  <td>{item.email}</td>
+                  <td>{item.state}</td>
                   <td>{dayjs(item.created_at).format("DD-MMM -YYYY")}</td>
                   <td>{item.status}</td>
-                  <td className="view_dot">
-                  <BsThreeDotsVertical onClick={() => setActiveDropdown(index)} />
-                {activeDropdown === index && (
-                  <div className="drop">
-                    <Link to={`member/${item.membership_id}`}>View Details</Link>
-                  </div>
-                )}
+                  <td>
+                    <BsThreeDotsVertical />
                   </td>
                 </tr>
               ))}

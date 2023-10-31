@@ -1,34 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { BiSearch, BiPlus } from "react-icons/bi";
-import "../stylesheet/admin.css";
-import { Custom } from "../services/config";
+import "../../stylesheet/admin.css";
 import dayjs from "dayjs";
 import { ThreeCircles } from "react-loader-spinner";
-import AddAssociate from "../admin/AddAssociate";
+import AddAssociate from "../../admin/AddAssociate";
 import { BsThreeDotsVertical } from "react-icons/bs";
+import useGetHook from "../../hook/useGet";
 
 const Associate = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
-  const [data, setData] = useState([]);
-
-  const fetchFellow = async () => {
-    setIsLoading(true);
-    await Custom.get(`admin/member/retrieve/all?keyword=associate`)
-      .then((res) => {
-        if (res) {
-          setData(res.data.data.data);
-        }
-      })
-      .catch()
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
-
-  useEffect(() => {
-    fetchFellow();
-  }, []);
+  const {data:item, isLoading:loading} = useGetHook('admin/member/retrieve/all?keyword=associate')
 
   const [showAddMemberPopup, setShowAddMemberPopup] = useState(false);
 
@@ -91,7 +71,7 @@ const Associate = () => {
             </div>
           </div>
         </div>
-        {isLoading ? (
+        {loading ? (
           <div className="load">
             <ThreeCircles
               height="100"
@@ -121,11 +101,13 @@ const Associate = () => {
             </thead>
 
             <tbody>
-              {data.map((item, index) => (
+              {item?.data?.data.map((item, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{item.membership_id}</td>
-                  <td>{item.first_name} {item.last_name}</td>
+                  <td>
+                    {item.first_name} {item.last_name}
+                  </td>
                   <td>{item.email}</td>
                   <td>{item.state}</td>
                   <td>{dayjs(item.created_at).format("DD-MMM -YYYY")}</td>

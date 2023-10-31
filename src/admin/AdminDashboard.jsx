@@ -1,14 +1,14 @@
-import React,{useState, useEffect} from 'react'
-import { Custom } from '../services/config';
+import React, { useState, useEffect } from "react";
+import { Custom } from "../services/config";
 import Sidenav from "./Sidenav";
 import { Topnav } from "./Topnav";
 import { Route, Routes } from "react-router-dom";
 import "../stylesheet/layout.css";
 import Admin from "./Admin";
-import Fellow from "../pages/Fellow"
-import Associate from "../pages/Associate";
-import Notify from "../pages/Notify";
-import Member_details from './Member_details';
+import Fellow from "../pages/admin/Fellow";
+import Associate from "../pages/admin/Associate";
+import Notify from "../pages/admin/Notify";
+import AdminAnnouncement from "../pages/admin/Announcement";
 
 const AdminDashboard = () => {
   const [showSidebar, setShowSidebar] = useState(window.innerWidth >= 650);
@@ -16,24 +16,21 @@ const AdminDashboard = () => {
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
   };
-  const [data, setData] = useState([])
+  const [data, setData] = useState([]);
 
+  const fetchNotify = async () => {
+    await Custom.get(`admin/count/unread/notifications`)
+      .then((res) => {
+        if (res) {
+          setData(res.data.data);
+        }
+      })
+      .catch();
+  };
 
-  const fetchNotify = async ()=> {
-  await Custom.get(`admin/count/unread/notifications`)
-      .then((res)=>{
-          if(res) {
-              setData(res.data.data)
-          }
-      }).catch()
-   
-
-  }
-
-  useEffect(()=>{
-      fetchNotify();
-  }, [])
-
+  useEffect(() => {
+    fetchNotify();
+  }, []);
 
   return (
     <div className="layout">
@@ -42,15 +39,20 @@ const AdminDashboard = () => {
       </div>
       <div className={showSidebar ? "components" : "close-side"}>
         <div className="top_admin_nav">
-          <Topnav data={data} setShowSidebar={setShowSidebar} showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
+          <Topnav
+            data={data}
+            setShowSidebar={setShowSidebar}
+            showSidebar={showSidebar}
+            toggleSidebar={toggleSidebar}
+          />
         </div>
         <div className="pages">
           <Routes>
-            <Route path="/" element={<Admin/>} />
-            <Route path="fellow" element={<Fellow/>}/>
-            <Route path='fellow/member/:memberId' element={<Member_details/>}/>
-            <Route path="associate" element={<Associate/>}/>
-            <Route path="notify" element={<Notify datas={data}/>}/>
+            <Route path="/" element={<Admin />} />
+            <Route path="fellow" element={<Fellow />} />
+            <Route path="associate" element={<Associate />} />
+            <Route path="announcements" element={<AdminAnnouncement />} />
+            <Route path="notify" element={<Notify datas={data} />} />
           </Routes>
         </div>
       </div>
