@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import "../stylesheet/login.css";
-
+  
 const Error = () => {
   useEffect(() => {
     window.location.replace('/login')
