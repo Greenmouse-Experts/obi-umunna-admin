@@ -3,11 +3,11 @@ import axios from "axios";
 
 const useGetHook = (url) => {
   const [item, setItem] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const fetchItem = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
       const config = {
         headers: {
           "Content-Type": "Application/json",

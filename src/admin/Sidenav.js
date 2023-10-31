@@ -11,6 +11,7 @@ import { AiOutlineClose } from "react-icons/ai";
 
 const Sidebar = ({ showSidebar, toggleSidebar }) => {
   const [showUsersMenu, setShowUsersMenu] = useState(false);
+  const [duesMenu, setDuesMenu] = useState(false)
   const navigate = useNavigate()
 
   const toggleUsersMenu = () => {
@@ -19,11 +20,11 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
     }
   };
 
-  // const toggleInventoriesMenu = () => {
-  //   if (showSidebar) {
-  //     setShowInventoriesMenu(!showInventoriesMenu);
-  //   }
-  // };
+  const toggleDuesMenu = () => {
+    if (showSidebar) {
+      setDuesMenu(!duesMenu);
+    }
+  };
 
   const sidebarRef = useRef(null);
 
@@ -96,6 +97,37 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
                 <li className="submenu-item">
                   <NavLink to="associate" className="nav-link">
                     {showSidebar && "Associate"}
+                  </NavLink>
+                </li>
+              </ul>
+            )}
+          </li>
+          <li className="nav-item">
+            <span className="nav-link" onClick={toggleDuesMenu}>
+              <span className="nav-icon">
+                <MdOutlineManageAccounts /> {showSidebar && "Dues"}
+              </span>
+              {showSidebar && (
+                <div className="bb">
+                  {duesMenu ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                </div>
+              )}
+            </span>
+            {duesMenu && (
+              <ul className="submenu">
+                <li className="submenu-item">
+                  <NavLink to="dues/bank" className="nav-link">
+                    {showSidebar && "Bank"}
+                  </NavLink>
+                </li>
+                <li className="submenu-item">
+                  <NavLink to="dues/category" className="nav-link">
+                    {showSidebar && "Category"}
+                  </NavLink>
+                </li>
+                <li className="submenu-item">
+                  <NavLink to="dues" className="nav-link">
+                    {showSidebar && "Dues List"}
                   </NavLink>
                 </li>
               </ul>
