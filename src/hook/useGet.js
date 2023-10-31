@@ -4,6 +4,7 @@ import axios from "axios";
 const useGetHook = (url) => {
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [dataCount, setDataCount] = useState()
 
   const fetchItem = async () => {
     try {
@@ -16,6 +17,9 @@ const useGetHook = (url) => {
       };
       const res = await axios.get(`${process.env.REACT_APP_API_URL}/${url}`, config);
       const data = res.data;
+      const dataCount = res.data.data;
+
+      setDataCount(dataCount)
       setItem(data);
       setLoading(false);
     } catch (error) {
@@ -32,6 +36,6 @@ const useGetHook = (url) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { loading, data: item, refetch };
+  return { loading, data: item, refetch, dataCount };
 };
 export default useGetHook;

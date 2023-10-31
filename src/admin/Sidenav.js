@@ -118,6 +118,14 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
             </NavLink>
           </li>
           <li className="nav-item">
+            <NavLink to="notify" className="nav-link">
+              <span className="nav-icon">
+                <MdAnnouncement />
+                {showSidebar && "Notification"}
+              </span>
+            </NavLink>
+          </li>
+          <li className="nav-item">
             <NavLink to="/settings" className="nav-link">
               <span className="nav-icon">
                 <FiSettings />

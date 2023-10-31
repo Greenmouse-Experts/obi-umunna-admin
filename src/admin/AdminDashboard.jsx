@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Custom } from "../services/config";
+import React, { useState } from "react";
+import useGetHook from "../hook/useGet";
 import Sidenav from "./Sidenav";
 import { Topnav } from "./Topnav";
 import { Route, Routes } from "react-router-dom";
@@ -16,21 +16,12 @@ const AdminDashboard = () => {
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
   };
-  const [data, setData] = useState([]);
 
-  const fetchNotify = async () => {
-    await Custom.get(`admin/count/unread/notifications`)
-      .then((res) => {
-        if (res) {
-          setData(res.data.data);
-        }
-      })
-      .catch();
-  };
+  const {dataCount:data, } = useGetHook('admin/count/unread/notifications')
+  
+  console.log(data);
 
-  useEffect(() => {
-    fetchNotify();
-  }, []);
+
 
   return (
     <div className="layout">

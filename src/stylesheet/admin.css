@@ -235,7 +235,7 @@ margin-top: 1rem;
   background: black;
 }
 
-.notification{
+.all-notification{
   border-radius: 15px;
 background: #f5f3f3;
 margin: 1.5rem 1rem;
@@ -243,6 +243,15 @@ padding: 1rem;
 display: flex;
 justify-content: space-between;
 align-items: center;
+}
+.unread-notification{
+  border-radius: 15px;
+margin: 1.5rem 1rem;
+padding: 1rem;
+display: flex;
+justify-content: space-between;
+align-items: center;
+  background: rgb(163, 163, 241) !important;
 }
 
 .notification h3{
@@ -277,3 +286,11 @@ align-items: center;
 .notification .drop{
   width: fit-content;
 }
+
+
+.notify .load{
+  height: fit-content;
+  padding-bottom: 5rem;
+  background: white;
+}
+

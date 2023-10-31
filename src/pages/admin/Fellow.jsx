@@ -6,8 +6,10 @@ import dayjs from "dayjs";
 import { ThreeCircles } from "react-loader-spinner";
 import AddFellow from "../../admin/AddFellow";
 import useGetHook from "../../hook/useGet";
+import {Link} from 'react-router-dom'
 
 const Fellow = () => {
+  const [activeDropdown, setActiveDropdown] = useState(false)
   const {data:item, isLoading:loading} = useGetHook('admin/member/retrieve/all?keyword=fellow')
   
 
@@ -115,7 +117,12 @@ const Fellow = () => {
                   <td>{dayjs(item.created_at).format("DD-MMM -YYYY")}</td>
                   <td>{item.status}</td>
                   <td>
-                    <BsThreeDotsVertical />
+                  <BsThreeDotsVertical onClick={() => setActiveDropdown(index)} />
+                {activeDropdown === index && (
+                  <div className="drop">
+                    <Link to={`member/${item.membership_id}`}>View Details</Link>
+                  </div>
+                )}
                   </td>
                 </tr>
               ))}
