@@ -4,6 +4,8 @@ import { formatDistanceToNow } from "date-fns";
 import { BsTrash3Fill } from "react-icons/bs";
 import { Circles } from "react-loader-spinner";
 import useGetHook from "../../hook/useGet";
+import usePostHook from "../../hook/usePostRead";
+import {toast} from "react-toastify"
 
 const Notify = ({ datas }) => {
   const formatTimeAgo = (timestamp) => {
@@ -13,6 +15,20 @@ const Notify = ({ datas }) => {
 
   const [activeButton, setActiveButton] = useState("all");
    const { data, isLoading } = useGetHook("admin/get/all/notifications");
+
+
+   const { handlePost } = usePostHook();
+   const onSuccess = () => {
+     toast.success('Announcement added successfully')
+   }
+   const handleSubmit = async (id) => {
+    const endpoint = `admin/read/notification?notification_id=${id}`;
+     handlePost(endpoint, `Application/json`, onSuccess)
+   };
+
+      
+   
+
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
@@ -61,7 +77,7 @@ const Notify = ({ datas }) => {
           <div className="notify_body">
             {notifications.map((item, index) => (
                <div
-              //  onClick={() => read(item.id)}
+               onClick={() => handleSubmit(item.id)}
                key={item.id}
                className={`notification ${
                  (activeButton === "unread" && item.status === "Unread") ||

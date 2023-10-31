@@ -4,11 +4,10 @@ import axios from "axios";
 const useGetHook = (url) => {
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [dataCount, setDataCount] = useState()
 
   const fetchItem = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
       const config = {
         headers: {
           "Content-Type": "Application/json",
@@ -17,11 +16,8 @@ const useGetHook = (url) => {
       };
       const res = await axios.get(`${process.env.REACT_APP_API_URL}/${url}`, config);
       const data = res.data;
-      const dataCount = res.data.data;
-
-      setDataCount(dataCount)
       setItem(data);
-      setLoading(false);
+      setLoading(true);
     } catch (error) {
       setLoading(false);
     }
@@ -36,6 +32,6 @@ const useGetHook = (url) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return { loading, data: item, refetch, dataCount };
+  return { loading, data: item, refetch };
 };
 export default useGetHook;
