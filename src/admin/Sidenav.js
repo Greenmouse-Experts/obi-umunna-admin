@@ -5,6 +5,7 @@ import { FiSettings, FiLogOut } from "react-icons/fi";
 import { MdOutlineManageAccounts, MdAnnouncement } from "react-icons/md";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { GrTransaction } from "react-icons/gr";
+import {GoBell} from "react-icons/go"
 import { LuLayoutDashboard } from "react-icons/lu";
 import "../stylesheet/component.css";
 import { AiOutlineClose } from "react-icons/ai";
@@ -120,7 +121,7 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
           <li className="nav-item">
             <NavLink to="notify" className="nav-link">
               <span className="nav-icon">
-                <MdAnnouncement />
+              <GoBell />
                 {showSidebar && "Notification"}
               </span>
             </NavLink>
