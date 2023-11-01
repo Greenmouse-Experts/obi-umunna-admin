@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import "../../stylesheet/admin.css";
+import "../stylesheet/admin.css";
 import { formatDistanceToNow } from "date-fns";
 import { BsTrash3Fill } from "react-icons/bs";
 import { Circles } from "react-loader-spinner";
-import useGetHook from "../../hook/useGet";
-import usePostHook from "../../hook/usePostRead";
+import useGetHook from "../hook/useGet";
+import usePostHook from "../hook/usePostRead";
 import {toast} from "react-toastify"
 import {GoBell} from "react-icons/go"
 
@@ -15,7 +15,7 @@ const Notify = ({ datas }) => {
   };
 
   const [activeButton, setActiveButton] = useState("all");
-   const { data, isLoading } = useGetHook("admin/get/all/notifications");
+   const { data, isLoading } = useGetHook("member/get/all/notifications");
 
 
    const { handlePost } = usePostHook();

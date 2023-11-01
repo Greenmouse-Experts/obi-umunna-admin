@@ -10,6 +10,9 @@ import { AiOutlineClose} from 'react-icons/ai'
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import {GoBell} from "react-icons/go"
+import { Custom } from "../services/config";
+
 
 
 const Sidebar = ({showSidebar, toggleSidebar}) => {
@@ -28,15 +31,12 @@ const Sidebar = ({showSidebar, toggleSidebar}) => {
 
   const handleLogOut = async () => {
     try {
-      // Perform a log-out request to the server
-      await axios.post('https://bripan.greenmouseacademy.com.ng/api/logout'); // Replace with your actual log-out endpoint
-  
-      toast.success("Logged Out Successfully")
-  
-      // Navigate to the login page or another appropriate page
+     Custom.post('logout'); 
+      localStorage.clear();
+      toast.success("Logged Out Successfully");
       Navigate('/login');
     } catch (err) {
-      toast.error('Log-out failed:' +err);
+      toast.error('Log-out failed: ' + err);
     }
   };
   
@@ -164,6 +164,14 @@ const Sidebar = ({showSidebar, toggleSidebar}) => {
             </NavLink>
           </li>
           <li className="nav-item">
+            <NavLink to="notify" className="nav-link">
+              <span className="nav-icon">
+              <GoBell />
+                {showSidebar && "Notification"}
+              </span>
+            </NavLink>
+          </li>
+          <li className="nav-item">
             <NavLink to="/settings" className="nav-link">
               <span className="nav-icon">
                 <FiSettings />
@@ -172,12 +180,12 @@ const Sidebar = ({showSidebar, toggleSidebar}) => {
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink onClick={handleLogOut} className="nav-link">
+            <button onClick={handleLogOut} className="nav-link">
               <span className="nav-icon">
                 {" "}
                 <FiLogOut /> {showSidebar && "Logout"}
               </span>
-            </NavLink>
+            </button>
           </li>
         </ul>
       </nav>

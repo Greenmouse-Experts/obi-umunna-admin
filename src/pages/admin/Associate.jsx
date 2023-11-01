@@ -101,7 +101,7 @@ const Associate = () => {
             </thead>
 
             <tbody>
-              {item?.data?.data.map((item, index) => (
+              {item?.data?.data.slice(0, 12).map((item, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{item.membership_id}</td>
