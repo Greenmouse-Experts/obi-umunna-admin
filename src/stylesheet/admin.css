@@ -234,19 +234,62 @@ margin-top: 1rem;
 .mem{
   background: black;
 }
+.unread-notification > span{
+  background: var(--red);
+  padding: 1rem;
+  color: white;
+  font-size: 2rem !important;
+}
 
-.notification{
+.unread-notification > div{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  height: 4rem;
+
+
+}
+
+.all-notification span{
+  background: var(--red);
+  padding: 1rem;
+  color: white;
+  font-size: 2rem !important;
+}
+.all-notification> div{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  height: 4rem;
+
+}
+.all-notification{
   border-radius: 15px;
 background: #f5f3f3;
 margin: 1.5rem 1rem;
-padding: 1rem;
+
 display: flex;
-justify-content: space-between;
+flex-direction: row;
 align-items: center;
+}
+.unread-notification{
+  border-radius: 15px;
+margin: 1.5rem 1rem;
+display: flex;
+align-items: center;
+box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 8px;
+
+  
 }
 
 .notification h3{
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: normal;
 }
 
@@ -277,3 +320,11 @@ align-items: center;
 .notification .drop{
   width: fit-content;
 }
+
+
+.notify .load{
+  height: fit-content;
+  padding-bottom: 5rem;
+  background: white;
+}
+

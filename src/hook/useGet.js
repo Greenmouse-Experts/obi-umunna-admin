@@ -17,7 +17,7 @@ const useGetHook = (url) => {
       const res = await axios.get(`${process.env.REACT_APP_API_URL}/${url}`, config);
       const data = res.data;
       setItem(data);
-      setLoading(false);
+      setLoading(true);
     } catch (error) {
       setLoading(false);
     }

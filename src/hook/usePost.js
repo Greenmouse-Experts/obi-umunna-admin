@@ -8,7 +8,7 @@ const usePostHook = () => {
         const config = {
           headers: {
             "Content-Type": type,
-            authorization: `Bearer ${localStorage.getItem("auth_token")}`,
+            authorization: `Bearer ${localStorage.getItem("auth_toxken")}`,
           },
         };
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/${url}`,payload, config);

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from "react";
-import { Custom } from "../services/config";
+import React, { useState } from "react";
+import useGetHook from "../hook/useGet";
 import Sidenav from "./Sidenav";
 import { Topnav } from "./Topnav";
 import { Route, Routes } from "react-router-dom";
@@ -22,21 +22,12 @@ const AdminDashboard = () => {
   const toggleSidebar = () => {
     setShowSidebar(!showSidebar);
   };
-  const [data, setData] = useState([]);
 
-  const fetchNotify = async () => {
-    await Custom.get(`admin/count/unread/notifications`)
-      .then((res) => {
-        if (res) {
-          setData(res.data.data);
-        }
-      })
-      .catch();
-  };
+  const {data, isLoading } = useGetHook('admin/count/unread/notifications')
+  
+  console.log(data);
 
-  useEffect(() => {
-    fetchNotify();
-  }, []);
+
 
   return (
     <div className="layout">
@@ -46,7 +37,8 @@ const AdminDashboard = () => {
       <div className={showSidebar ? "components" : "close-side"}>
         <div className="top_admin_nav">
           <Topnav
-            data={data}
+            data={data?.data}
+            isLoading={isLoading}
             setShowSidebar={setShowSidebar}
             showSidebar={showSidebar}
             toggleSidebar={toggleSidebar}
@@ -58,7 +50,7 @@ const AdminDashboard = () => {
             <Route path="fellow" element={<Fellow />} />
             <Route path="associate" element={<Associate />} />
             <Route path="announcements" element={<AdminAnnouncement />} />
-            <Route path="notify" element={<Notify datas={data} />} />
+            <Route path="notify" element={<Notify datas={data?.data} />} />
             <Route path="dues/list" element={<AdminDues/>} />
             <Route path="dues/bank" element={<AdminBanks/>} />
             <Route path="dues/category" element={<AdminDuesCategory/>} />

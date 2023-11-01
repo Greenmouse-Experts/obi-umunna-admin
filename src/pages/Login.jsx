@@ -51,7 +51,7 @@ const Login = () => {
         })
         .then((res) => {
           if(res.data.code === 200){
-            
+            localStorage.setItem("auth_token", res.data.token);
           toast.success(res.data.message);
           localStorage.setItem('fName', res.data.data.first_name)
           usenavigate('/dashboard/')

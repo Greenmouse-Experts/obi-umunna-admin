@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState} from "react";
 import { BiSearch, BiPlus } from "react-icons/bi";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import "../../stylesheet/admin.css";
@@ -6,8 +6,13 @@ import dayjs from "dayjs";
 import { ThreeCircles } from "react-loader-spinner";
 import AddFellow from "../../admin/AddFellow";
 import useGetHook from "../../hook/useGet";
+import {Link} from 'react-router-dom'
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+
 
 const Fellow = () => {
+  const [activeDropdown, setActiveDropdown] = useState(false)
   const {data:item, isLoading:loading} = useGetHook('admin/member/retrieve/all?keyword=fellow')
   
 
@@ -21,13 +26,36 @@ const Fellow = () => {
     setShowAddMemberPopup(false);
   };
 
+  const downloadAsPDF = () => {
+    const doc = new jsPDF();
+    doc.autoTable({
+      head: [["S/N", "Member Id", "Member Name", "Email", "State", "Date created", "Status"]],
+      body: item?.data?.data.slice(0, 20).map((item, index) => [
+        index + 1,
+        item.membership_id,
+        `${item.first_name} ${item.last_name}`,
+        item.email,
+        item.state,
+        dayjs(item.created_at).format("DD-MMM -YYYY"),
+        item.status,
+      ]),
+    });
+  
+    doc.save("members.pdf");
+  };
+  
+
+
+
+
+  
   return (
     <div className="fellow">
       <div className="fellow_table">
         <div className="admin_head">
           <div className="leftt">
             <h3>Member</h3>
-            <svg
+            <svg onClick={downloadAsPDF}
               xmlns="http://www.w3.org/2000/svg"
               width="30"
               height="30"
@@ -103,7 +131,7 @@ const Fellow = () => {
             </thead>
 
             <tbody>
-              {item?.data?.data.map((item, index) => (
+              {item?.data?.data.slice(0, 12).map((item, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
                   <td>{item.membership_id}</td>
@@ -114,8 +142,13 @@ const Fellow = () => {
                   <td>{item.state}</td>
                   <td>{dayjs(item.created_at).format("DD-MMM -YYYY")}</td>
                   <td>{item.status}</td>
-                  <td>
-                    <BsThreeDotsVertical />
+                  <td className="view_dot">
+                  <BsThreeDotsVertical onClick={() => setActiveDropdown(index)} />
+                {activeDropdown === index && (
+                  <div className="drop">
+                    <Link to={`member/${item.membership_id}`}>View Details</Link>
+                  </div>
+                )}
                   </td>
                 </tr>
               ))}
