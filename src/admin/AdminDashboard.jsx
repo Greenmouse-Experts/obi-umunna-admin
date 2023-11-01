@@ -9,6 +9,12 @@ import Fellow from "../pages/admin/Fellow";
 import Associate from "../pages/admin/Associate";
 import Notify from "../pages/admin/Notify";
 import AdminAnnouncement from "../pages/admin/Announcement";
+import AdminBanks from "../pages/admin/Dues/Banks";
+import AdminDuesCategory from "../pages/admin/Dues/Category";
+import AdminDues from "../pages/admin/Dues/Dues";
+import DuesPayments from "../pages/admin/Payments/Dues";
+import SubscriptionPayments from "../pages/admin/Payments/Subscription";
+import SettingsPage from "../pages/admin/Settings";
 
 const AdminDashboard = () => {
   const [showSidebar, setShowSidebar] = useState(window.innerWidth >= 650);
@@ -53,6 +59,12 @@ const AdminDashboard = () => {
             <Route path="associate" element={<Associate />} />
             <Route path="announcements" element={<AdminAnnouncement />} />
             <Route path="notify" element={<Notify datas={data} />} />
+            <Route path="dues/list" element={<AdminDues/>} />
+            <Route path="dues/bank" element={<AdminBanks/>} />
+            <Route path="dues/category" element={<AdminDuesCategory/>} />
+            <Route path="payments/subscrition" element={<SubscriptionPayments/>} />
+            <Route path="payments/dues" element={<DuesPayments/>} />
+            <Route path="settings" element={<SettingsPage/>} />
           </Routes>
         </div>
       </div>

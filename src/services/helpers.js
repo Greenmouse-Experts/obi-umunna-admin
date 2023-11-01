@@ -11,3 +11,10 @@ export const formatString = (string, number) => {
     return string.substring(0, number).concat("...");
   } else return string;
 };
+
+export const formatAsNgnMoney = (value) => {
+  if (!value) return "";
+  return `₦${value
+    .toLocaleString("en-US")
+    .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
+};

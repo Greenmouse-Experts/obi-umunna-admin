@@ -12,6 +12,7 @@ import { AiOutlineClose } from "react-icons/ai";
 const Sidebar = ({ showSidebar, toggleSidebar }) => {
   const [showUsersMenu, setShowUsersMenu] = useState(false);
   const [duesMenu, setDuesMenu] = useState(false)
+  const [payments, setPayments] = useState(false)
   const navigate = useNavigate()
 
   const toggleUsersMenu = () => {
@@ -23,6 +24,12 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
   const toggleDuesMenu = () => {
     if (showSidebar) {
       setDuesMenu(!duesMenu);
+    }
+  };
+
+  const togglePaymentMenu = () => {
+    if (showSidebar) {
+      setPayments(!payments);
     }
   };
 
@@ -126,7 +133,7 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
                   </NavLink>
                 </li>
                 <li className="submenu-item">
-                  <NavLink to="dues" className="nav-link">
+                  <NavLink to="dues/list" className="nav-link">
                     {showSidebar && "Dues List"}
                   </NavLink>
                 </li>
@@ -134,12 +141,30 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
             )}
           </li>
           <li className="nav-item">
-            <NavLink to="/suppliers" className="nav-link">
+            <span className="nav-link" onClick={togglePaymentMenu}>
               <span className="nav-icon">
-                <GrTransaction />
-                {showSidebar && "Transactions"}
+              <GrTransaction /> {showSidebar && "Payments"}
               </span>
-            </NavLink>
+              {showSidebar && (
+                <div className="bb">
+                  {payments ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                </div>
+              )}
+            </span>
+            {payments && (
+              <ul className="submenu">
+                <li className="submenu-item">
+                  <NavLink to="payments/dues" className="nav-link">
+                    {showSidebar && "Dues"}
+                  </NavLink>
+                </li>
+                <li className="submenu-item">
+                  <NavLink to="payments/subscrition" className="nav-link">
+                    {showSidebar && "Subscription"}
+                  </NavLink>
+                </li>
+              </ul>
+            )}
           </li>
           <li className="nav-item">
             <NavLink to="/admin/announcements" className="nav-link">
@@ -150,7 +175,7 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/settings" className="nav-link">
+            <NavLink to="settings" className="nav-link">
               <span className="nav-icon">
                 <FiSettings />
                 {showSidebar && "Settings"}
