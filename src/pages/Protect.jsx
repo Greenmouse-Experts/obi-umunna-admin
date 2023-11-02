@@ -3,7 +3,7 @@ import { Outlet } from "react-router-dom";
 import Error4 from "../components/Error4";
 
 const Protect = () => {
-  const userLogin = localStorage.getItem("auth_token");
+  const userLogin = localStorage.getItem("bripan_token");
   return userLogin ? (
     <Outlet />
   ) : (

@@ -48,14 +48,20 @@ const Login = () => {
             localStorage.setItem("bripan_token", res.data.token);
             toast.success(res.data.message);
             localStorage.setItem("fName", res.data.data.first_name);
+            localStorage.setItem("bripan_sub", res.data.data.isSubscribed);
+            localStorage.setItem("bripan_email", res.data.data.email);
             usenavigate("/dashboard/");
           } else {
             toast.error("Email or Passward is Incorrect");
           }
         })
         .catch((err) => {
-          toast.error("" + err);
-          console.log(err);
+          if(err?.response?.data?.message){
+            toast.error(err?.response?.data?.message)
+          }
+          if(err?.response?.data?.errors){Object.entries(err?.response?.data?.errors).forEach(([key, value]) => {
+            toast.error(value[0]);
+          });}
         })
         .finally(() => {
           setIsLoading(false);

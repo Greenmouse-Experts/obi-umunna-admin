@@ -4,11 +4,19 @@ import "../../stylesheet/admin.css";
 import dayjs from "dayjs";
 import { ThreeCircles } from "react-loader-spinner";
 import AddAssociate from "../../admin/AddAssociate";
-import { BsThreeDotsVertical } from "react-icons/bs";
+import { BsEye, BsEyeFill, BsThreeDotsVertical } from "react-icons/bs";
 import useGetHook from "../../hook/useGet";
+import useModal from "../../hook/useModal";
+import ReusableModal from "../../components/ReusableModal";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const Associate = () => {
-  const {data:item, isLoading:loading} = useGetHook('admin/member/retrieve/all?keyword=associate')
+  const { data: item, isLoading: loading,refetch } = useGetHook(
+    "admin/member/retrieve/all?keyword=associate"
+  );
+  const [isBusy, setIsBusy] = useState();
+  const [selected, setSelected] = useState();
 
   const [showAddMemberPopup, setShowAddMemberPopup] = useState(false);
 
@@ -19,13 +27,46 @@ const Associate = () => {
   const handleCloseAddMemberPopup = () => {
     setShowAddMemberPopup(false);
   };
+  const { Modal: Activate, setShowModal: ShowActivate } = useModal();
+  const { Modal: Deactivate, setShowModal: ShowDeactivate } = useModal();
+  const openActivate = (item) => {
+    setSelected(item);
+    ShowActivate(true);
+  };
+  const openDeactivate = (item) => {
+    setSelected(item);
+    ShowDeactivate(true);
+  };
+  // change account status
+  const ChangeAccountStatus = async (status) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "Application/json",
+          authorization: `Bearer ${localStorage.getItem("bripan_token")}`,
+        },
+      };
+      const res = await axios.get(
+        `${process.env.REACT_APP_API_URL}/admin/member/${status}?user_id=${selected.id}`,
+        config
+      );
+      const data = res.data;
+      setIsBusy(false);
+      toast.success(data.message)
+      refetch()
+      ShowActivate(false)
+      ShowDeactivate(false)
+    } catch (error) {
+      setIsBusy(false);
+    }
+  };
 
   return (
-    <div className="fellow">
-      <div className="fellow_table">
+    <div className="px-4">
+      <div className="fellow_table p-5 bg-white">
         <div className="admin_head">
           <div className="leftt">
-            <h3>Member</h3>
+            <h3 className="text-2xl font-semibold">Associate Members</h3>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="30"
@@ -71,8 +112,8 @@ const Associate = () => {
             </div>
           </div>
         </div>
-        {loading ? (
-          <div className="load">
+        {loading && (
+          <div className="">
             <ThreeCircles
               height="100"
               width="100"
@@ -86,38 +127,121 @@ const Associate = () => {
               middleCircleColor=""
             />
           </div>
-        ) : (
-          <table className="admin_member">
-            <thead>
-              <tr>
-                <th>S/N</th>
-                <th>Member Id</th>
-                <th>Member Name</th>
-                <th>Email</th>
-                <th>State</th>
-                <th>Date Created</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {item?.data?.data.slice(0, 12).map((item, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{item.membership_id}</td>
-                  <td>
-                    {item.first_name} {item.last_name}
-                  </td>
-                  <td>{item.email}</td>
-                  <td>{item.state}</td>
-                  <td>{dayjs(item.created_at).format("DD-MMM -YYYY")}</td>
-                  <td>
-                    <BsThreeDotsVertical />
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        )}
+        {!loading && (
+          <div className="flex flex-col">
+            <div className=" overflow-x-auto">
+              <div className="py-2 align-middle inline-block min-w-full ">
+                <table className="items-center w-full bg-transparent border-collapse">
+                  <thead className="thead-light border-y-2 border-[#CECECE]">
+                    <tr>
+                      <th
+                        scope="col"
+                        className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
+                      >
+                        S/N
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
+                      >
+                        Member ID
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
+                      >
+                        Member Name
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
+                      >
+                        Email
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
+                      >
+                        Status
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
+                      >
+                        Date Joined
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
+                      >
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {item?.data.data.map((item, i) => (
+                      <tr key={i}>
+                        <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
+                          {i + 1}
+                        </td>
+                        <td className="align-middle fs-500  px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
+                          <div className="font-semibold  text-blue-900">
+                            {item.membership_id}
+                          </div>
+                        </td>
+                        <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
+                          {item.first_name} {item.last_name}
+                        </td>
+                        <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
+                          {item.email}
+                        </td>
+                        <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
+                          <div className="flex items-center gap-x-3">
+                            <div
+                              className={`px-2 py-1 rounded font-semibold border ${
+                                item.status === "Pending" || item.status === "Inactive"
+                                  ? `bg-orange-100`
+                                  : `bg-blue-200`
+                              }`}
+                            >
+                              {item.status}
+                            </div>
+                            {item.status === "Pending" || item.status === "Inactive"  ? (
+                              <span
+                                className="underline cursor-pointer font-medium text-blue-900"
+                                onClick={() => openActivate(item)}
+                              >
+                                Activate
+                              </span>
+                            ) : (
+                              <span
+                                className="underline cursor-pointer font-medium text-red-800"
+                                onClick={() => openDeactivate(item)}
+                              >
+                                Deactivate
+                              </span>
+                            )}
+                          </div>
+                        </td>
+                        <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
+                          {dayjs(item.created_at).format("DD-MMM -YYYY")}
+                        </td>
+                        <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
+                          <div className="flex gap-x-3">
+                            <BsEyeFill
+                              // onClick={() => openEdit(item)}
+                              className="text-xl text-blue-900"
+                            />
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         )}
       </div>
       {showAddMemberPopup && (
@@ -125,6 +249,26 @@ const Associate = () => {
           <AddAssociate onClose={handleCloseAddMemberPopup} />
         </div>
       )}
+      <Activate title={""} noHead>
+        <ReusableModal
+          title={"Are you sure you want to activate this account?"}
+          cancelTitle="No, cancel"
+          actionTitle="Yes, Activate"
+          closeModal={() => ShowActivate(false)}
+          action={() => ChangeAccountStatus("activate")}
+          isBusy={isBusy}
+        />
+      </Activate>
+      <Deactivate title={""} noHead>
+        <ReusableModal
+          title={"Are you sure you want to deactivate this account?"}
+          cancelTitle="No, cancel"
+          actionTitle="Yes, Deactivate"
+          closeModal={() => ShowActivate(false)}
+          action={() => ChangeAccountStatus("deactivate")}
+          isBusy={isBusy}
+        />
+      </Deactivate>
     </div>
   );
 };

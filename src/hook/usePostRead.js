@@ -10,7 +10,7 @@ const usePostRead = () => {
             url: `${process.env.REACT_APP_API_URL}/${url}`,
             headers: {
               "Content-Type": type,
-              authorization: `Bearer ${localStorage.getItem("auth_toxken")}`,
+              authorization: `Bearer ${localStorage.getItem("bripan_token")}`,
             },
           };
           const res = await axios(config);
@@ -19,7 +19,6 @@ const usePostRead = () => {
             Object.entries(error.response.data.errors).forEach(([key, value]) => {
               toast.error(value[0]);
             });
-            console.log();
         }
       }, [])
       return {handlePost}
