@@ -16,7 +16,7 @@ import { toast } from "react-toastify";
 const AdminAnnouncement = () => {
   const [selected, setSelected] = useState();
   const [isBusy, setIsBusy] = useState(false)
-  const { data, loading, refetch } = useGetHook("/admin/announcements");
+  const { data, loading, refetch } = useGetHook("admin/announcements");
   const {handlePost} = usePostHook()
   const { Modal, setShowModal } = useModal();
   const { Modal: Delete, setShowModal: showDelete } = useModal();

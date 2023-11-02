@@ -24,10 +24,6 @@ const AdminDashboard = () => {
   };
 
   const {data, isLoading } = useGetHook('admin/count/unread/notifications')
-  
-  console.log(data);
-
-
 
   return (
     <div className="layout">

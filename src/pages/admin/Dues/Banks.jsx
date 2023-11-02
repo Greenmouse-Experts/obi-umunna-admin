@@ -13,7 +13,7 @@ import usePostHook from "../../../hook/usePost";
 import EditBanksModal from "../../../admin/Dues/Banks/EditBanks";
 
 const AdminBanks = () => {
-  const { data, isLoading, refetch } = useGetHook(`/admin/banks`);
+  const { data, isLoading, refetch } = useGetHook(`admin/banks`);
   const { handlePost } = usePostHook();
   const [isBusy, setIsBusy] = useState(false);
   const { Modal: Delete, setShowModal: showDelete } = useModal();

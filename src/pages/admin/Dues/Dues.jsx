@@ -13,7 +13,7 @@ import EditDues from "../../../admin/Dues/Dues/EditDues";
 import ReusableModal from "../../../components/ReusableModal";
 
 const AdminDues = () => {
-  const { data, isLoading, refetch } = useGetHook(`/admin/dues`);
+  const { data, isLoading, refetch } = useGetHook(`admin/dues`);
   const { handlePost } = usePostHook();
   const [isBusy, setIsBusy] = useState(false);
   const { Modal: Delete, setShowModal: showDelete } = useModal();

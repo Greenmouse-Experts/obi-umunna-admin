@@ -13,7 +13,7 @@ import AddDuesCategory from "../../../admin/Dues/Category/AddCategory";
 import EditDuesCategory from "../../../admin/Dues/Category/EditCategory";
 
 const AdminDuesCategory = () => {
-  const { data, isLoading, refetch } = useGetHook(`/admin/category`);
+  const { data, isLoading, refetch } = useGetHook(`admin/category`);
   const { handlePost } = usePostHook();
   const [isBusy, setIsBusy] = useState(false);
   const { Modal: Delete, setShowModal: showDelete } = useModal();
