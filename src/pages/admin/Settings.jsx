@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaUserShield } from "react-icons/fa";
 import { MdMarkEmailRead } from "react-icons/md";
 import useGetHook from "../../hook/useGet";
@@ -9,18 +9,24 @@ import useModal from "../../hook/useModal";
 import ChangePassword from "../../admin/Settings/ChangePassword";
 
 const SettingsPage = () => {
-  const { data: user } = useGetHook("admin/profile");
+  const { data: user, refetch } = useGetHook("admin/profile");
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState();
   const [isBusy, setIsBusy] = useState(false);
-  const [fname, setFname] = useState()
-  const [lname, setLname] = useState()
-  const [email, setEmail] = useState()
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
+  const [email, setEmail] = useState("");
   const { handlePost } = usePostHook();
-  const {Modal, setShowModal} = useModal()
+  const { Modal, setShowModal } = useModal();
+  useEffect(() => {
+    setFname(user?.data?.first_name);
+    setLname(user?.data?.last_name);
+    setEmail(user?.data?.email);
+  }, [user]);
   const onSuccess = () => {
     toast.success("Profile updated successfully");
     setLoading(false);
+    refetch()
   };
   const changeProfileImage = async (e) => {
     setIsBusy(true);
@@ -47,7 +53,7 @@ const SettingsPage = () => {
       "multipart/form-data",
       onSuccess
     );
-  }
+  };
   return (
     <>
       <div className="bg-white p-5 ml-4">
@@ -58,14 +64,13 @@ const SettingsPage = () => {
           <div className="mt-6 grid lg:grid-cols-4 gap-x-6">
             <div>
               <div className="relative z-0 w-[160px] h-[160px]">
-                
-                  <img
-                    src={preview ? preview : user?.avatar}
-                    alt="profile"
-                    width={160}
-                    height={160}
-                    className="rounded-[80px] border w-full h-full mx-auto"
-                  />
+                <img
+                  src={preview ? preview : user?.data?.avatar}
+                  alt="profile"
+                  width={160}
+                  height={160}
+                  className="rounded-[80px] border w-full h-full mx-auto"
+                />
                 <p className="w-8 h-8 rounded-[80px] grid place-content-center bg-white absolute overflow-hidden z-10 bottom-[1px] right-[15px] border cursor-pointer">
                   {isBusy ? (
                     ""
@@ -80,8 +85,9 @@ const SettingsPage = () => {
                 </p>
               </div>
               <div className="">
-                <p className="fw-600 mt-4 text-center text-primary">Pikaboo</p>
-                <p className="fw-600 mt-1 text-center">{`${user?.firstname} ${user?.lastname}`}</p>
+                <p className="fw-600 mt-1 text-center">{`${
+                  user?.data?.first_name ? user?.data?.first_name : ""
+                } ${user?.data?.last_name ? user?.data?.last_name : ""}`}</p>
               </div>
             </div>
             <div className="col-span-3 mt-9 lg:pl-6">
@@ -92,7 +98,12 @@ const SettingsPage = () => {
                   </div>
                   <div className="w-full">
                     <p className="fs-400 text-primary">First Name:</p>
-                    <input type="text" onClick={(e) => setFname(e.target.value)} className="border-b w-full bg-transparent p-2"/>
+                    <input
+                      type="text"
+                      value={fname}
+                      onChange={(e) => setFname(e.target.value)}
+                      className="border-b w-full bg-transparent p-2"
+                    />
                   </div>
                 </div>
                 <div className="flex items-center gap-x-2">
@@ -101,7 +112,12 @@ const SettingsPage = () => {
                   </div>
                   <div className="w-full">
                     <p className="fs-400 text-primary">Last Name:</p>
-                    <input type="text" onClick={(e) => setLname(e.target.value)} className="border-b w-full bg-transparent p-2"/>
+                    <input
+                      type="text"
+                      value={lname}
+                      onChange={(e) => setLname(e.target.value)}
+                      className="border-b w-full bg-transparent p-2"
+                    />
                   </div>
                 </div>
                 <div className="flex items-center gap-x-2">
@@ -110,7 +126,12 @@ const SettingsPage = () => {
                   </div>
                   <div className="w-full">
                     <p className="fs-400 text-primary">Email:</p>
-                    <input type="text" onClick={(e) => setEmail(e.target.value)} className="border-b w-full bg-transparent p-2"/>
+                    <input
+                      type="text"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="border-b w-full bg-transparent p-2"
+                    />
                   </div>
                 </div>
                 <div className="flex items-center gap-x-2">
@@ -126,17 +147,23 @@ const SettingsPage = () => {
             </div>
           </div>
           <div className="flex justify-end gap-x-6 mt-12">
-            <button className="px-6 py-2 border border-blue-800 text-blue-800 font-semibold rounded-lg" onClick={() => setShowModal(true)}>
+            <button
+              className="px-6 py-2 border border-blue-800 text-blue-800 font-semibold rounded-lg"
+              onClick={() => setShowModal(true)}
+            >
               Change Password
             </button>
-            <button className="px-6 py-2 border border-green-600 bg-blue-800 text-white font-semibold rounded-lg">
+            <button
+              className="px-6 py-2 border border-green-600 bg-blue-800 text-white font-semibold rounded-lg"
+              onClick={handleUpateProfile}
+            >
               Save Changes
             </button>
           </div>
         </div>
       </div>
-      <Modal title={'Change Password'}>
-        <ChangePassword/>
+      <Modal title={"Change Password"}>
+        <ChangePassword />
       </Modal>
     </>
   );

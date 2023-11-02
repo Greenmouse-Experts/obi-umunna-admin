@@ -44,7 +44,7 @@ const AdminLogin = () => {
           console.log(res);
           if (res.data.code === 200) {
             toast.success(res.data.message);
-            localStorage.setItem("auth_token", res.data.token);
+            localStorage.setItem("bripan_token", res.data.token);
             usenavigate("/admin/");
           } else {
             toast.error(res.data.message);

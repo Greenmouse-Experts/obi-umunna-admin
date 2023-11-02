@@ -11,7 +11,6 @@ const ChangePassword = ({ close, refetch }) => {
   const { handlePost } = usePostHook();
   const onSuccess = () => {
     setLoading(false);
-    refetch();
     toast.success("Password changed successfully");
     close();
   };

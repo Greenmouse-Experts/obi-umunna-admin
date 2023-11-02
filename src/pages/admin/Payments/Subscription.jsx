@@ -1,13 +1,16 @@
 import React from "react";
 import useGetHook from "../../../hook/useGet";
+import SetSubscribe from "../../../admin/Payments/SetSubscribe";
 
 const SubscriptionPayments = () => {
   const { data } = useGetHook("admin/get/subscription/transactions");
+  
   return (
     <>
       <div className="mx-2 p-6 bg-white min-h-[70vh]">
-        <div>
+        <div className="flex justify-between items-center">
           <p className="font-semibold text-xl">Subscription Payments</p>
+          <SetSubscribe/>
         </div>
         <div className="mt-12">
           <div className="flex flex-col">

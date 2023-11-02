@@ -8,15 +8,15 @@ const usePostHook = () => {
         const config = {
           headers: {
             "Content-Type": type,
-            authorization: `Bearer ${localStorage.getItem("auth_toxken")}`,
+            authorization: `Bearer ${localStorage.getItem("auth_token")}`,
           },
         };
         const res = await axios.post(`${process.env.REACT_APP_API_URL}/${url}`,payload, config);
         success()
       } catch (error) {
-          Object.entries(error.response.data.errors).forEach(([key, value]) => {
+          if(error?.response?.data?.errors){Object.entries(error?.response?.data?.errors).forEach(([key, value]) => {
             toast.error(value[0]);
-          });
+          });}
           console.log();
       }
     }, [])
