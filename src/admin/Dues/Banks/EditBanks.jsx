@@ -22,7 +22,7 @@ const EditBanksModal = ({ item, close, refetch }) => {
     fd.append("account_number", accNo);
     fd.append("bank_name", bankName);
     fd.append('bank_id', item.id)
-    handlePost(`/admin/bank/update`, fd, `multipart/form-data`, onSuccess);
+    handlePost(`admin/bank/update`, fd, `multipart/form-data`, onSuccess);
   };
   return (
     <>

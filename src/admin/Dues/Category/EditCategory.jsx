@@ -22,7 +22,7 @@ const EditDuesCategory = ({ item, close, refetch }) => {
     fd.append("name", name);
     fd.append("bank_id", accNo);
     fd.append("category_id", item.id )
-    handlePost(`/admin/category/update`, fd, `multipart/form-data`, onSuccess);
+    handlePost(`admin/category/update`, fd, `multipart/form-data`, onSuccess);
   };
   return (
     <>

@@ -21,7 +21,7 @@ const AddBanksModal = ({ close, refetch }) => {
     fd.append("account_name", accName);
     fd.append("account_number", accNo);
     fd.append("bank_name", bankName);
-    handlePost(`/admin/bank/post`, fd, `multipart/form-data`, onSuccess);
+    handlePost(`admin/bank/post`, fd, `multipart/form-data`, onSuccess);
   };
   return (
     <>

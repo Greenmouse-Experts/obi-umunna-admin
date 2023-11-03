@@ -39,49 +39,52 @@ const home = () => {
     responsive: true,
     maintainAspectRatio: false,
   };
- 
-  
 
   const items = [
     {
       Id: 10001,
       Name: "Minimal Due",
       category: "Alumini",
-      cost: 300000,
+      cost: 30000,
       due: "05-07-2023",
     },
     {
-      Id: 10002,
-      Name: "Victor Omar",
-      category: "Business Man",
-      cost: 150000,
-      date: "03-07-2023",
+      Id: 10001,
+      Name: "Minimal Due",
+      category: "Alumini",
+      cost: 4000,
+      due: "05-07-2023",
     },
 
     {
-      Id: 10003,
-      Name: "Daniel Akpan",
-      category: "Banker",
-      cost: 200000,
-      date: "02-07-2023",
+      Id: 10441,
+      Name: "Dier Due",
+      category: "Lawyers",
+      cost: 3100,
+      due: "05-07-2023",
     },
 
     {
-      Id: 10004,
-      Name: "Mubarak Adeyomi",
-      category: "Teachern",
-      cost: 300000,
-      date: "05-07-2023",
+      Id: 13201,
+      Name: "Basic Due",
+      category: "Alumini",
+      cost: 6500,
+      due: "05-07-2023",
     },
   ];
-
+  const announce = [
+    {
+      name: "November Hangout",
+      desc: ""
+    }
+  ]
   return (
     <div className="">
-      {/* <div className="home_top">
+      <div className="home_top">
         {" "}
         <div className="table">
           <div className="head_table">
-            <h3>Recent Members</h3>
+            <h3 className="text-xl font-semibold">Recent Members</h3>
             <div className="searchh">
               <input type="text" placeholder="Search by name" />
               <span>
@@ -91,9 +94,9 @@ const home = () => {
           </div>
           <table>
             <thead>
-            <tr>
+              <tr>
                 <th>S/N</th>
-                <th>Member Id</th>
+                <th>Dues Id</th>
                 <th>Member Name</th>
                 <th>Profession</th>
                 <th>Payment</th>
@@ -104,20 +107,21 @@ const home = () => {
               {items.map((item, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td> <b>{item.Id}</b> </td>
+                  <td>
+                    {" "}
+                    <b>{item.Id}</b>{" "}
+                  </td>
                   <td>{item.Name}</td>
                   <td>{item.category}</td>
                   <td>₦{item.cost.toLocaleString()}</td>
-                  <td>{item.date}</td>
+                  <td>{item.due}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
         <div className="event">
-          <h2>
-            Upcoming Events
-          </h2>          
+          <h2 className="text-xl font-semibold">Announcements</h2>
         </div>
       </div>
       <div className="home_bottom">
@@ -140,10 +144,8 @@ const home = () => {
             <h2>Announcement</h2>{" "}
           </div>
         </div>
-      </div> */}
-      <div className="">
-
       </div>
+      <div className=""></div>
     </div>
   );
 };

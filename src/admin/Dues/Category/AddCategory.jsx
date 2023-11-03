@@ -21,7 +21,7 @@ const AddDuesCategory = ({ close, refetch }) => {
     const fd = new FormData();
     fd.append("name", name);
     fd.append("bank_id", accNo);
-    handlePost(`/admin/category/post`, fd, `multipart/form-data`, onSuccess);
+    handlePost(`admin/category/post`, fd, `multipart/form-data`, onSuccess);
   };
   return (
     <>
