@@ -45,11 +45,11 @@ const Admin = () => {
     maintainAspectRatio: false,
   };
   const data = {
-    labels: ["Transportation", "Electronics", "Plumbing", "Mechanical"],
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
     datasets: [
       {
         label: "Number",
-        data: [40, 88, 60, 50],
+        data: [40, 88, 60, 50, 10, 15],
         backgroundColor: ["#0263FF", "#FF7723", "#8E30FF", "#4A84DF"],
       },
     ],
@@ -72,18 +72,18 @@ const Admin = () => {
       Image: img1,
     },
     {
-      head: "Total Suscriber",
+      head: "Total Subscribers",
       num: 690,
       Image: img2,
     },
     {
-      head: "Total Membership Cost",
+      head: "Total Dues Paid",
       num: "₦13,510,000",
       Image: img3,
     },
     {
-      head: "Total Departments",
-      num: 60,
+      head: "Total Subscription Paid",
+      num: "₦13,510,000",
       Image: img4,
     },
   ];
@@ -126,7 +126,7 @@ const Admin = () => {
         {" "}
         <div className="table">
           <div className="head_table">
-            <h3>Recent Members</h3>
+            <p className="text-xl font-semibold">Recent Members</p>
             <div className="searchh">
               <input type="text" placeholder="Search by name" />
               <span>
@@ -173,9 +173,9 @@ const Admin = () => {
       <div className="home_bottom">
         <div className="l">
           <div className="line">
-            <div className="line_head">
-              <h2>Monthly Members</h2>
-              <button>
+            <div className="flex justify-between mb-4">
+              <h2 className="font-semibold text-xl">Monthly Payment Dues</h2>
+              <button className="flex items-center gap-x-2 bg-blue-900 text-white px-2 py-1 rounded-lg">
                 Monthly (2023){" "}
                 <span>
                   <IoIosArrowDown />
@@ -187,7 +187,7 @@ const Admin = () => {
         </div>
         <div className="b">
           <div className="bar">
-            <h2>Annoncement</h2>{" "}
+            <h2 className="font-semibold mb-2">Monthly Members joined</h2>{" "}
             <Bar className="v" data={data} options={options} />
           </div>
         </div>
