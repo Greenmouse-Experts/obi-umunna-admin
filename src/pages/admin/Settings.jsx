@@ -43,6 +43,7 @@ const SettingsPage = () => {
     );
   };
   const handleUpateProfile = () => {
+    setLoading(true)
     const formData = new FormData();
     formData.append("first_name", fname);
     formData.append("last_name", lname);
@@ -157,7 +158,7 @@ const SettingsPage = () => {
               className="px-6 py-2 border border-green-600 bg-blue-800 text-white font-semibold rounded-lg"
               onClick={handleUpateProfile}
             >
-              Save Changes
+             {loading? "Saving..." : "Save Changes"}
             </button>
           </div>
         </div>

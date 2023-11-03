@@ -14,7 +14,7 @@ const ViewAnnounce = ({ item, openEdit }) => {
         </p>
       </div>
       <div className="max-h-[500px] overflow-y-auto mb-2 no-scrollbar">
-        <img src={item.image} alt="image" className="w-full" />
+        <img src={item.image} alt="item" className="w-full" />
         <p className="mt-5">{item.content}</p>
       </div>
     </>

@@ -23,7 +23,7 @@ const AddAnnounce = ({close, refetch}) => {
     fd.append("title", title);
     fd.append("content", body);
     fd.append("image", image);
-    handlePost(`/admin/announcements/post`, fd, `multipart/form-data`, onSuccess)
+    handlePost(`admin/announcements/post`, fd, `multipart/form-data`, onSuccess)
   };
   return (
     <>

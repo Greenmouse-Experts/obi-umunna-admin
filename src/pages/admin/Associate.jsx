@@ -169,6 +169,12 @@ const Associate = () => {
                         scope="col"
                         className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
                       >
+                        Subscription
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
+                      >
                         Date Joined
                       </th>
                       <th
@@ -223,6 +229,17 @@ const Associate = () => {
                               </span>
                             )}
                           </div>
+                        </td>
+                        <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
+                          {item?.isSubscribed === "0" ? (
+                            <span className="px-2 py-1 text-sm bg-orange-100 font-medium rounded-lg">
+                              Unsubscribed
+                            </span>
+                          ) : (
+                            <span className="px-2 py-1 text-sm bg-green-100 font-medium rounded-lg">
+                              Subscribed
+                            </span>
+                          )}
                         </td>
                         <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
                           {dayjs(item.created_at).format("DD-MMM -YYYY")}

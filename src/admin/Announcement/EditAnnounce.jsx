@@ -26,7 +26,7 @@ const EditAnnounce = ({item, refetch, close}) => {
     if(image){
       fd.append("image", image);
     }
-    handlePost(`/admin/announcements/update`, fd, `multipart/form-data`, onSuccess)
+    handlePost(`admin/announcements/update`, fd, `multipart/form-data`, onSuccess)
   };
   return (
     <>

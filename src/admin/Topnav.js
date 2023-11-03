@@ -1,4 +1,4 @@
-import React,{useState,useEffect, useRef} from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { LuMenu } from "react-icons/lu";
 import "../stylesheet/component.css";
 import { BiSearch } from "react-icons/bi";
@@ -9,14 +9,15 @@ import { Circles } from "react-loader-spinner";
 import useGetHook from "../hook/useGet";
 import { formatDistanceToNow } from "date-fns";
 
-
 export const Topnav = ({ toggleSidebar, data }) => {
   const formatTimeAgo = (timestamp) => {
     const apiDate = new Date(timestamp);
     return formatDistanceToNow(apiDate);
   };
   const [activeDropdown, setActiveDropdown] = useState(false);
-  const { data: datas, isLoading } = useGetHook("admin/get/all/unread/notifications");
+  const { data: datas, isLoading } = useGetHook(
+    "admin/get/all/unread/notifications"
+  );
   const currentDate = new Date();
 
   const monthNames = [
@@ -42,9 +43,9 @@ export const Topnav = ({ toggleSidebar, data }) => {
   const year = currentDate.getFullYear();
 
   const formattedDate = `${day} ${month} ${year}`;
-  const popup =()=>{
-    setActiveDropdown(!activeDropdown)
-  }
+  const popup = () => {
+    setActiveDropdown(!activeDropdown);
+  };
 
   const bellIconRef = useRef(null);
   const handleClickOutside = (event) => {
@@ -81,36 +82,39 @@ export const Topnav = ({ toggleSidebar, data }) => {
           <BiSearch />
           <input type="text" placeholder="Search" />
         </div>
-        <div  ref={bellIconRef} onClick={popup} className="bell">
+        <div ref={bellIconRef} onClick={popup} className="bell">
           <GoBell />
           <span>{data}</span>
           {activeDropdown && (
             <div className="bell_drop">
-            {datas?.data.length > 0 ? (
-              datas.data.map((item) => (
-                <div key={item.id}>
+              <div className="add_head">
+                <p>Recent Notification</p>{" "}
+              </div>
+              {datas?.data.length > 0 ? (
+                datas.data.map((item) => (
+                  <div key={item.id}>
+                    <div className="bell_body">
+                      <GoBell />
+                      <div>
+                        <h3>
+                          {item.body} <span>{item.title}</span>
+                        </h3>
+                        <p>{formatTimeAgo(item.created_at)} ago</p>{" "}
+                      </div>
+                    </div>
+                  </div>
+                ))
+              ) : (
+                <div>
+                  {" "}
                   <div className="add_head">
-        <p>Recent Notification</p>{" "}
-        
-      </div>
-                <div className="bell_body"><GoBell />
-                  <div><h3>
-                    {item.body} <span>{item.title}</span>
-                  </h3>
-                  <p>{formatTimeAgo(item.created_at)} ago</p> </div>
-                  
+                    <p>Recent Notification</p>{" "}
+                  </div>{" "}
+                  <p className="no_body">No Notifications</p>
                 </div>
-                  
-                </div>
-              ))
-            ) : (
-              <div > <div className="add_head">
-              <p>Recent Notification</p>{" "}
-              
-            </div> <p className="no_body">No Notifications</p></div>
-            )}
-            <Link to="notify">View Details</Link>
-          </div>
+              )}
+              <Link to="notify">View Details</Link>
+            </div>
           )}
         </div>
         <img src={user} alt="" />

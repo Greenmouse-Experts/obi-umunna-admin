@@ -40,14 +40,15 @@ const home = () => {
     maintainAspectRatio: false,
   };
  
+  
 
   const items = [
     {
       Id: 10001,
-      Name: "John Doe",
-      category: "Analyst",
+      Name: "Minimal Due",
+      category: "Alumini",
       cost: 300000,
-      date: "05-07-2023",
+      due: "05-07-2023",
     },
     {
       Id: 10002,
@@ -75,8 +76,8 @@ const home = () => {
   ];
 
   return (
-    <div className="home">
-      <div className="home_top">
+    <div className="">
+      {/* <div className="home_top">
         {" "}
         <div className="table">
           <div className="head_table">
@@ -139,6 +140,9 @@ const home = () => {
             <h2>Announcement</h2>{" "}
           </div>
         </div>
+      </div> */}
+      <div className="">
+
       </div>
     </div>
   );

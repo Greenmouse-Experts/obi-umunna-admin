@@ -45,7 +45,7 @@ const AdminAnnouncement = () => {
     const payload = {
       announcement_id: selected.id
     }
-    handlePost(`/admin/announcements/delete`, payload, `application/json`, onSuccess)
+    handlePost(`admin/announcements/delete`, payload, `application/json`, onSuccess)
   }
   return (
     <>

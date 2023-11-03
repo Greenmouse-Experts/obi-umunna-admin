@@ -16,9 +16,11 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const Fellow = () => {
-  const { data: item, isLoading: loading, refetch } = useGetHook(
-    "admin/member/retrieve/all?keyword=fellow"
-  );
+  const {
+    data: item,
+    isLoading: loading,
+    refetch,
+  } = useGetHook("admin/member/retrieve/all?keyword=fellow");
 
   const [showAddMemberPopup, setShowAddMemberPopup] = useState(false);
 
@@ -88,10 +90,10 @@ const Fellow = () => {
       );
       const data = res.data;
       setIsBusy(false);
-      toast.success(data.message)
-      refetch()
-      ShowActivate(false)
-      ShowDeactivate(false)
+      toast.success(data.message);
+      refetch();
+      ShowActivate(false);
+      ShowDeactivate(false);
     } catch (error) {
       setIsBusy(false);
     }
@@ -206,6 +208,12 @@ const Fellow = () => {
                         scope="col"
                         className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
                       >
+                        Subscription
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
+                      >
                         Date Joined
                       </th>
                       <th
@@ -264,6 +272,17 @@ const Fellow = () => {
                           </div>
                         </td>
                         <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
+                          {item?.isSubscribed === "0" ? (
+                            <span className="px-2 py-1 text-sm bg-orange-100 font-medium rounded-lg">
+                              Unsubscribed
+                            </span>
+                          ) : (
+                            <span className="px-2 py-1 text-sm bg-green-100 font-medium rounded-lg">
+                              Subscribed
+                            </span>
+                          )}
+                        </td>
+                        <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
                           {dayjs(item.created_at).format("DD-MMM -YYYY")}
                         </td>
                         <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
@@ -288,7 +307,7 @@ const Fellow = () => {
           <AddFellow onClose={handleCloseAddMemberPopup} />
         </div>
       )}
-       <Activate title={""} noHead>
+      <Activate title={""} noHead>
         <ReusableModal
           title={"Are you sure you want to activate this account?"}
           cancelTitle="No, cancel"

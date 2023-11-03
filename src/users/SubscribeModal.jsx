@@ -22,9 +22,10 @@ const SubscribeModal = () => {
   };
   // you can call this function anything
   const onSuccess = (reference) => {
+    console.log(reference);
     const fd = new FormData();
     fd.append("subscription_id", data?.data.id);
-    fd.append("ref_id", reference);
+    fd.append("ref_id", reference.reference);
     handlePost(`member/subscription/payment`, fd, `multipart/form-data`, isSuccess);
   };
 

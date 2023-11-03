@@ -1,6 +1,8 @@
 import React from "react";
 import useGetHook from "../../../hook/useGet";
 import SetSubscribe from "../../../admin/Payments/SetSubscribe";
+import { formatAsNgnMoney } from "../../../services/helpers";
+import dayjs from "dayjs";
 
 const SubscriptionPayments = () => {
   const { data } = useGetHook("admin/get/subscription/transactions");
@@ -41,6 +43,12 @@ const SubscriptionPayments = () => {
                         scope="col"
                         className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
                       >
+                        Account Type
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
+                      >
                         Amount
                       </th>
                       <th
@@ -53,11 +61,11 @@ const SubscriptionPayments = () => {
                         scope="col"
                         className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
                       >
-                        Actions
+                        Date
                       </th>
                     </tr>
                   </thead>
-                  {/* <tbody>
+                  <tbody>
                     {data?.data.map((item, i) => (
                       <tr key={i}>
                         <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
@@ -65,12 +73,17 @@ const SubscriptionPayments = () => {
                         </td>
                         <td className="align-middle fs-500  px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
                           <div className="w-48">
-                          {item.description}
+                          {item.ref_id}
                           </div>
                         </td>
                         <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
                           <div>
-                            <p>{item.category.name}</p>
+                            <p>{item.user.first_name} {item.user.last_name}</p>
+                          </div>
+                        </td>
+                        <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
+                          <div>
+                            <p>{item.user.account_type}</p>
                           </div>
                         </td>
                         <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
@@ -79,12 +92,12 @@ const SubscriptionPayments = () => {
                           </div>
                         </td>
                         <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
-                          {item.start_date}
+                          {item.status === "success"? <span className="text-green-600 font-semibold">Success</span> : <span className="text-red-600 font-semibold">Failed</span>}
                         </td>
                         <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
-                          {item.end_date}
+                          {dayjs(item.paid_at).format('DD-MM-YYYY')}
                         </td>
-                        <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
+                        {/* <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
                           <div className="flex gap-x-3">
                             <LiaEdit
                               onClick={() => openEdit(item)}
@@ -95,10 +108,10 @@ const SubscriptionPayments = () => {
                               className="text-lg text-red-600"
                             />
                           </div>
-                        </td>
+                        </td> */}
                       </tr>
                     ))}
-                  </tbody> */}
+                  </tbody>
                 </table>
               </div>
             </div>
