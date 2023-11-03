@@ -40,7 +40,7 @@ const AdminBanks = () => {
         bank_id: selected.id,
     };
     handlePost(
-      `/admin/bank/delete`,
+      `admin/bank/delete`,
       payload,
       `application/json`,
       onSuccess

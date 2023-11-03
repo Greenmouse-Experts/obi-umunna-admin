@@ -75,7 +75,19 @@ const home = () => {
   const announce = [
     {
       name: "November Hangout",
-      desc: ""
+      desc: "ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+    },
+    {
+      name: "Lawyers Submit",
+      desc: "Aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+    },
+    {
+      name: "Doctor's Wrap",
+      desc: "Nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+    },
+    {
+      name: "October Hangout",
+      desc: "ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
     }
   ]
   return (
@@ -120,8 +132,20 @@ const home = () => {
             </tbody>
           </table>
         </div>
-        <div className="event">
+        <div className="">
+          <div className="flex justify-center items-center">
           <h2 className="text-xl font-semibold">Announcements</h2>
+          <p className="text-[14px] font medium text-blue-900">View All</p>
+          </div>
+          <div>
+            {
+              announce.map((item, i) => (
+                <div className="shadow-lg rounded-lg p-2" key={i}>
+                    <p className="font-[15px] font-semibold">{item.name}</p>
+                </div>
+              ))
+            }
+          </div>
         </div>
       </div>
       <div className="home_bottom">

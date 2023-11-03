@@ -40,7 +40,7 @@ const AdminDuesCategory = () => {
         category_id: selected.id,
     };
     handlePost(
-      `/admin/category/delete`,
+      `admin/category/delete`,
       payload,
       `application/json`,
       onSuccess
