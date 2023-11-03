@@ -40,7 +40,7 @@ const AdminDues = () => {
        due_id: selected.id,
     };
     handlePost(
-      `/admin/dues/delete`,
+      `admin/dues/delete`,
       payload,
       `application/json`,
       onSuccess

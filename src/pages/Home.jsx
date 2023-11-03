@@ -5,6 +5,7 @@ import { Line } from "react-chartjs-2";
 import { IoIosArrowDown } from "react-icons/io";
 // eslint-disable-next-line
 import { Chart as chartjs } from "chart.js/auto";
+import { formatString } from "../services/helpers";
 
 const home = () => {
   const datas = {
@@ -75,21 +76,21 @@ const home = () => {
   const announce = [
     {
       name: "November Hangout",
-      desc: "ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+      desc: "ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
     },
     {
       name: "Lawyers Submit",
-      desc: "Aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+      desc: "Aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
     },
     {
       name: "Doctor's Wrap",
-      desc: "Nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+      desc: "Nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
     },
     {
       name: "October Hangout",
-      desc: "ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
-    }
-  ]
+      desc: "ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
+    },
+  ];
   return (
     <div className="">
       <div className="home_top">
@@ -111,7 +112,7 @@ const home = () => {
                 <th>Dues Id</th>
                 <th>Member Name</th>
                 <th>Profession</th>
-                <th>Payment</th>
+                <th>Due Amount</th>
                 <th>Date Recorded</th>
               </tr>
             </thead>
@@ -132,19 +133,18 @@ const home = () => {
             </tbody>
           </table>
         </div>
-        <div className="">
-          <div className="flex justify-center items-center">
-          <h2 className="text-xl font-semibold">Announcements</h2>
-          <p className="text-[14px] font medium text-blue-900">View All</p>
+        <div className="event  overflow-y-auto">
+          <div className="flex py-4 px-2 justify-between items-center">
+            <h2 className="text-xl font-semibold">Announcements</h2>
+            <p className="text-[14px] font-medium text-blue-900">View All</p>
           </div>
-          <div>
-            {
-              announce.map((item, i) => (
-                <div className="shadow-lg rounded-lg p-2" key={i}>
-                    <p className="font-[15px] font-semibold">{item.name}</p>
-                </div>
-              ))
-            }
+          <div className="grid gap-5 pr-3">
+            {announce.map((item, i) => (
+              <div className="shadow-lg rounded-lg p-2" key={i}>
+                <p className="font-[15px] font-semibold">{item.name}</p>
+                <p className="text-[13px]">{formatString(item.desc, 60)}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -164,8 +164,11 @@ const home = () => {
           </div>
         </div>
         <div className="b">
-          <div className="bar">
-            <h2>Announcement</h2>{" "}
+          <div className="">
+            <h2 className="font-semibold text-lg">Payments Alert</h2>{" "}
+          </div>
+          <div>
+            <p className="py-24 font-semibold text-center">No Payments Yet</p>
           </div>
         </div>
       </div>
