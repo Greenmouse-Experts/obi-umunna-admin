@@ -14,6 +14,7 @@ import useModal from "../../hook/useModal";
 import ReusableModal from "../../components/ReusableModal";
 import axios from "axios";
 import { toast } from "react-toastify";
+import MemberModal from "../../admin/members/memberModal";
 
 const Fellow = () => {
   const {
@@ -21,7 +22,7 @@ const Fellow = () => {
     isLoading: loading,
     refetch,
   } = useGetHook("admin/member/retrieve/all?keyword=fellow");
-
+  const [showDetails, setShowDetails] = useState(false)
   const [showAddMemberPopup, setShowAddMemberPopup] = useState(false);
 
   const handleAddMemberClick = () => {
@@ -75,6 +76,10 @@ const Fellow = () => {
     setSelected(item);
     ShowDeactivate(true);
   };
+  const openDetails = (item) => {
+    setSelected(item);
+    setShowDetails(true);
+  }
   // change account status
   const ChangeAccountStatus = async (status) => {
     try {
@@ -288,7 +293,7 @@ const Fellow = () => {
                         <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
                           <div className="flex gap-x-3">
                             <BsEyeFill
-                              // onClick={() => openEdit(item)}
+                              onClick={() => openDetails(item)}
                               className="text-xl text-blue-900"
                             />
                           </div>
@@ -307,6 +312,9 @@ const Fellow = () => {
           <AddFellow onClose={handleCloseAddMemberPopup} />
         </div>
       )}
+      {
+        showDetails && <MemberModal item={selected} close={() => setShowDetails(false)}/>
+      }
       <Activate title={""} noHead>
         <ReusableModal
           title={"Are you sure you want to activate this account?"}

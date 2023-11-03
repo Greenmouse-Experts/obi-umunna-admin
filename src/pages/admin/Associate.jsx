@@ -10,6 +10,7 @@ import useModal from "../../hook/useModal";
 import ReusableModal from "../../components/ReusableModal";
 import axios from "axios";
 import { toast } from "react-toastify";
+import MemberModal from "../../admin/members/memberModal";
 
 const Associate = () => {
   const { data: item, isLoading: loading,refetch } = useGetHook(
@@ -17,6 +18,7 @@ const Associate = () => {
   );
   const [isBusy, setIsBusy] = useState();
   const [selected, setSelected] = useState();
+  const [showDetails, setShowDetails] = useState(false)
 
   const [showAddMemberPopup, setShowAddMemberPopup] = useState(false);
 
@@ -37,6 +39,10 @@ const Associate = () => {
     setSelected(item);
     ShowDeactivate(true);
   };
+  const openDetails = (item) => {
+    setSelected(item);
+    setShowDetails(true);
+  }
   // change account status
   const ChangeAccountStatus = async (status) => {
     try {
@@ -247,7 +253,7 @@ const Associate = () => {
                         <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
                           <div className="flex gap-x-3">
                             <BsEyeFill
-                              // onClick={() => openEdit(item)}
+                              onClick={() => openDetails(item)}
                               className="text-xl text-blue-900"
                             />
                           </div>
@@ -266,6 +272,9 @@ const Associate = () => {
           <AddAssociate onClose={handleCloseAddMemberPopup} />
         </div>
       )}
+      {
+        showDetails && <MemberModal item={selected} close={() => setShowDetails(false)}/>
+      }
       <Activate title={""} noHead>
         <ReusableModal
           title={"Are you sure you want to activate this account?"}
