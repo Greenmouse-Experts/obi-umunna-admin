@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../image/logo.png";
 import { FiSettings, FiLogOut } from "react-icons/fi";
-import { MdOutlineManageAccounts, MdAnnouncement } from "react-icons/md";
+import { MdOutlineManageAccounts, MdAnnouncement, MdOutlinePayment } from "react-icons/md";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { GrTransaction } from "react-icons/gr";
 import {GoBell} from "react-icons/go"
@@ -113,7 +113,7 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
           <li className="nav-item">
             <span className="nav-link" onClick={toggleDuesMenu}>
               <span className="nav-icon">
-                <MdOutlineManageAccounts /> {showSidebar && "Dues"}
+                <MdOutlinePayment /> {showSidebar && "Dues"}
               </span>
               {showSidebar && (
                 <div className="bb">

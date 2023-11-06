@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
 import logo from "../image/logo.png";
 import { FiUsers, FiSettings, FiLogOut } from "react-icons/fi";
-import { MdOutlineManageAccounts, MdAccessTime } from "react-icons/md";
+import { MdOutlineManageAccounts, MdAccessTime, MdOutlinePayment } from "react-icons/md";
 // import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { LuLayoutDashboard } from "react-icons/lu";
 import "../stylesheet/component.css";
@@ -39,13 +39,6 @@ const Sidebar = ({showSidebar, toggleSidebar}) => {
       toast.error('Log-out failed: ' + err);
     }
   };
-  
-  // const toggleInventoriesMenu = () => {
-  //   if (showSidebar) {
-  //     setShowInventoriesMenu(!showInventoriesMenu);
-  //   }
-  // };
-
 
   const sidebarRef = useRef(null);
 
@@ -95,71 +88,26 @@ const Sidebar = ({showSidebar, toggleSidebar}) => {
             </NavLink>
           </li>
           <li className="nav-item">
-            <span className="nav-link" onClick={toggleUsersMenu}>
-              <span className="nav-icon">
-                <MdOutlineManageAccounts /> {showSidebar && "Subcriptions"}
-              </span>
-              {/* {showSidebar && (
-                <div className="bb">
-                  {showUsersMenu ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                </div>
-              )} */}
-            </span>
-            {/* {showUsersMenu && (
-              <ul className="submenu">
-                <li className="submenu-item">
-                  <NavLink to="/employees" className="nav-link">
-                    {showSidebar && "Members"}
-                  </NavLink>
-                </li>
-                <li className="submenu-item">
-                  <NavLink to="/sub-admin" className="nav-link">
-                    {showSidebar && "Sub-admin"}
-                  </NavLink>
-                </li>
-              </ul>
-            )} */}
-          </li>
-          <li className="nav-item">
-            <NavLink to="/suppliers" className="nav-link">
-              <span className="nav-icon">
-                <FiUsers />
-                {showSidebar && "Transaction"}
-              </span>
-            </NavLink>
-          </li>
-          {/* <li className="nav-item">
-            <span className="nav-link" onClick={toggleInventoriesMenu}>
-              <span className="nav-icon">
-                {" "}
-                <FiShoppingBag /> {showSidebar && "Inventories"}{" "}
-              </span>{" "}
-              {showSidebar && (
-                <div className="bb">
-                  {showInventoriesMenu ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                </div>
-              )}
-            </span>
-            {showInventoriesMenu && (
-              <ul className="submenu">
-                <li className="submenu-item">
-                  <NavLink to="/assets" className="nav-link">
-                    {showSidebar && "Assets"}
-                  </NavLink>
-                </li>
-                <li className="submenu-item">
-                  <NavLink to="/categories" className="nav-link">
-                    {showSidebar && "Categories"}
-                  </NavLink>
-                </li>
-              </ul>
-            )}
-          </li> */}
-          <li className="nav-item">
-            <NavLink to="/history" className="nav-link">
+            <NavLink to="announce" className="nav-link">
               <span className="nav-icon">
                 <MdAccessTime />
                 {showSidebar && "Announcement"}
+              </span>
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink to="dues" className="nav-link">
+              <span className="nav-icon">
+                <MdOutlinePayment />
+                {showSidebar && "Dues"}
+              </span>
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink to="transact" className="nav-link">
+              <span className="nav-icon">
+                <FiUsers />
+                {showSidebar && "Transaction"}
               </span>
             </NavLink>
           </li>
@@ -172,7 +120,7 @@ const Sidebar = ({showSidebar, toggleSidebar}) => {
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="/settings" className="nav-link">
+            <NavLink to="settings" className="nav-link">
               <span className="nav-icon">
                 <FiSettings />
                 {showSidebar && "Settings"}

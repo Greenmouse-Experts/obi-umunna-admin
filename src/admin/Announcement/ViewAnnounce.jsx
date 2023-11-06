@@ -5,13 +5,13 @@ const ViewAnnounce = ({ item, openEdit }) => {
   return (
     <>
       <div className="flex justify-end">
-        <p
+        {openEdit && <p
           className="flex items-center gap-x-2 text-blue-800 mb-1 cursor-pointer font-semibold"
           onClick={openEdit}
         >
           <MdEdit className="text-lg" />
           Edit
-        </p>
+        </p>}
       </div>
       <div className="max-h-[500px] overflow-y-auto mb-2 no-scrollbar">
         <img src={item.image} alt="item" className="w-full" />

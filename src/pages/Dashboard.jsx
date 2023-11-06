@@ -7,6 +7,10 @@ import Home from "./Home";
 import Notify from "./Notify";
 import useGetHook from "../hook/useGet";
 import SubscribeModal from "../users/SubscribeModal";
+import MembersAnnoucement from "./users/Annoucement";
+import MembersTransactions from "./users/Transactions";
+import MembersSetting from "./users/Setting";
+import MembersDues from "./users/Dues";
 
 const Dashboard = () => {
   const sub = localStorage.getItem("bripan_sub");
@@ -45,6 +49,10 @@ const Dashboard = () => {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="notify" element={<Notify datas={data?.data} />} />
+            <Route path="announce" element={<MembersAnnoucement />} />
+            <Route path="transact" element={<MembersTransactions />} />
+            <Route path="settings" element={<MembersSetting />} />
+            <Route path="dues" element={<MembersDues />} />
           </Routes>
         </div>
       </div>
