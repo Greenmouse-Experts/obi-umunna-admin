@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import useGetHook from "../../../hook/useGet";
 
 const AddDuesCategory = ({ close, refetch }) => {
-  const { data } = useGetHook(`/admin/banks`);
+  const { data } = useGetHook(`admin/banks`);
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [accNo, setAccNo] = useState("");

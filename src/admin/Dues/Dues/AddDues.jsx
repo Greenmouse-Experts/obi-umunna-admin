@@ -6,7 +6,7 @@ import useGetHook from "../../../hook/useGet";
 import dayjs from "dayjs";
 
 const AddDues = ({ close, refetch }) => {
-  const { data } = useGetHook(`/admin/category`);
+  const { data } = useGetHook(`admin/category`);
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [accNo, setAccNo] = useState("");
