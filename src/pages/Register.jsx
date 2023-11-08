@@ -521,7 +521,7 @@ const Register = () => {
         </form>
       </div>
       <Modal title={""} noHead>
-        <RegisterSuccess />
+        <RegisterSuccess close={() => setShowModal(false)} />
       </Modal>
     </>
   );

@@ -51,8 +51,12 @@ const AdminLogin = () => {
           }
         })
         .catch((err) => {
-          toast.error("" + err);
-          console.log(err);
+          if(err?.response?.data?.message){
+            toast.error(err?.response?.data?.message)
+          }
+          if(err?.response?.data?.errors){Object.entries(err?.response?.data?.errors).forEach(([key, value]) => {
+            toast.error(value[0]);
+          });}
         })
         .finally(() => {
           setIsLoading(false);

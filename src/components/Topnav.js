@@ -90,12 +90,12 @@ export const Topnav = ({ toggleSidebar, data }) => {
           <span>{data}</span>
           {activeDropdown && (
             <div className="bell_drop">
+              <div className="add_head">
+                <p>Recent Notification</p>{" "}
+              </div>
               {datas?.data.length > 0 ? (
                 datas.data.map((item) => (
                   <div key={item.id}>
-                    <div className="add_head">
-                      <p>Recent Notification</p>{" "}
-                    </div>
                     <div className="bell_body">
                       <GoBell />
                       <div>

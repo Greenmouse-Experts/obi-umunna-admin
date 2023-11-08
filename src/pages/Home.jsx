@@ -92,7 +92,7 @@ const home = () => {
     },
   ];
   return (
-    <div className="">
+    <div className="pl-4">
       <div className="home_top">
         {" "}
         <div className="table">
