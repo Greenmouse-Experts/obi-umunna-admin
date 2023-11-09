@@ -81,10 +81,10 @@ export const Topnav = ({ toggleSidebar, data }) => {
         </div>
       </div>
       <div className="icon_menu">
-        <div className="search">
+        {/* <div className="search">
           <BiSearch />
           <input type="text" placeholder="Search" />
-        </div>
+        </div> */}
         <div onClick={popup} ref={bellIconRef} className="bell">
           <GoBell />
           <span>{data}</span>

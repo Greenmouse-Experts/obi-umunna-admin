@@ -1,124 +1,40 @@
 import React from "react";
 import "../stylesheet/layout.css";
-import { BiSearch } from "react-icons/bi";
 import img1 from "../image/profit 5.png";
 import img2 from "../image/profit 6.png";
 import img3 from "../image/profit 7.png";
-import { Bar } from "react-chartjs-2";
-import { Line } from "react-chartjs-2";
-import { IoIosArrowDown } from "react-icons/io";
 import useGetHook from "../hook/useGet";
 import dayjs from "dayjs";
+import { formatAsNgnMoney } from "../services/helpers";
+import MembersJoined from "./charts/membersJoined";
+import DuesPayment from "./charts/duesPayment";
 // eslint-disable-next-line
 
 const Admin = () => {
-  const { data: user, refetch } = useGetHook("admin/profile");
-  const datas = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug"],
-    datasets: [
-      {
-        label: "Total Cost",
-        data: [60, 70, 75, 90, 60, 20, 40, 55],
-        borderColor: "rgba(75, 192, 192, 1)",
-        backgroundColor: "rgba(75, 192, 192, 0.2)",
-        fill: true,
-        lineTension: 0.4,
-      },
-      {
-        label: "Number of Members",
-        data: [80, 85, 55, 75, 50, 67, 73, 40],
-        borderColor: "rgba(255, 99, 132, 1)",
-        backgroundColor: "rgba(255, 99, 132, 0.2)",
-        fill: true,
-        lineTension: 0.4,
-      },
-    ],
-  };
-
-  const option = {
-    scales: {
-      y: {
-        beginAtZero: true,
-        max: 100,
-      },
-    },
-    responsive: true,
-    maintainAspectRatio: false,
-  };
-  const data = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
-    datasets: [
-      {
-        label: "Number",
-        data: [40, 88, 60, 50, 10, 15],
-        backgroundColor: ["#0263FF", "#FF7723", "#8E30FF", "#4A84DF"],
-      },
-    ],
-  };
-  const options = {
-    scales: {
-      y: {
-        beginAtZero: true,
-        max: 100,
-      },
-    },
-    responsive: true,
-    maintainAspectRatio: false,
-  };
+  const currentYear = new Date().getFullYear();
+  const { data: user, refetch } = useGetHook(`admin/dashboard?year=${currentYear}`)
 
   const list = [
     {
       head: "Total Members",
-      num: 116,
+      num: user?.data.totalMembers,
       Image: img1,
     },
     {
       head: "Total Subscribers",
-      num: 690,
+      num: user?.data.totalSubscribers,
       Image: img2,
     },
     {
       head: "Total Dues Paid",
-      num: "₦13,510,000",
+      num: user && formatAsNgnMoney(user?.data.totalDuesPaid),
       Image: img3,
     },
     {
       head: "Total Subscription Paid",
-      num: "₦13,510,000",
+      num: user && formatAsNgnMoney(user?.data.totalSubscriptionPaid),
       Image:
         "https://img.freepik.com/premium-vector/sack-money-big-pile-cash-money-icon-illustration-money-bag-flat-icon_385450-362.jpg",
-    },
-  ];
-  const items = [
-    {
-      Id: 10001,
-      Name: "John Doe",
-      category: "Associate",
-      cost: 300000,
-      date: "05-07-2023",
-    },
-    {
-      Id: 10002,
-      Name: "Victor Omar",
-      category: "Fellow",
-      cost: 150000,
-      date: "03-07-2023",
-    },
-
-    {
-      Id: 10003,
-      Name: "Daniel Akpan",
-      category: "Fellow",
-      cost: 200000,
-      date: "02-07-2023",
-    },
-
-    {
-      Id: 10004,
-      Name: "Mubarak Adeyomi",
-      category: "Associate",
-      cost: 300000,
-      date: "05-07-2023",
     },
   ];
 
@@ -129,12 +45,12 @@ const Admin = () => {
         <div className="bg-white p-6 w-[70%]">
           <div className="head_table">
             <p className="text-xl font-semibold">Recent Members</p>
-            <div className="searchh">
+            {/* <div className="searchh">
               <input type="text" placeholder="Search by name" />
               <span>
                 <BiSearch />
               </span>
-            </div>
+            </div> */}
           </div>
           <div className="w-full overflow-x-auto">
           <table className="overflow-x-auto">
@@ -150,7 +66,7 @@ const Admin = () => {
             </thead>
             <tbody>
               {user &&
-                user?.data?.latestSixMember.slice(0,5).map((item, index) => (
+                user?.data?.latestFiveMember.map((item, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
                     <td>{item.membership_id}</td>
@@ -192,20 +108,20 @@ const Admin = () => {
           <div className="line">
             <div className="flex justify-between mb-4">
               <h2 className="font-semibold text-xl">Monthly Payment Dues</h2>
-              <button className="flex items-center gap-x-2 bg-blue-900 text-white px-2 py-1 rounded-lg">
+              {/* <button className="flex items-center gap-x-2 bg-blue-900 text-white px-2 py-1 rounded-lg">
                 Monthly (2023){" "}
                 <span>
                   <IoIosArrowDown />
                 </span>
-              </button>
+              </button> */}
             </div>
-            <Line data={datas} options={option} />
+            <DuesPayment data={user?.data?.usersPayments}/>
           </div>
         </div>
         <div className="b">
           <div className="bar">
             <h2 className="font-semibold mb-2">Monthly Members joined</h2>{" "}
-            <Bar className="v" data={data} options={options} />
+            <MembersJoined className="v" data={user?.data?.monthly_members_joined} />
           </div>
         </div>
       </div>

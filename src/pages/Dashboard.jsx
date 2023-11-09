@@ -36,7 +36,7 @@ const Dashboard = () => {
         <Sidenav showSidebar={showSidebar} toggleSidebar={toggleSidebar} />
       </div>
       <div className={showSidebar ? "component" : "close-side"}>
-        <div>
+        <div className="pl-4">
           <Topnav
             data={data?.data}
             isLoading={isLoading}
