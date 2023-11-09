@@ -81,7 +81,7 @@ const AdminLogin = () => {
   return (
     <div className="main_login">
       <form onSubmit={handleSubmit} action="submit" className="login">
-        <img src={logo} alt="" />
+      <a href="https://bripan.org.ng/"><img src={logo} alt="" /></a>
         <div className="log_head">
           <h3>Admin Login</h3>
           <p>Fill in your credentials to login to the dashboard</p>

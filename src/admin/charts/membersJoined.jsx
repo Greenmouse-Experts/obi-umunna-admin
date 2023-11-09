@@ -1,9 +1,11 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Bar } from "react-chartjs-2";
+import { Chart, registerables } from 'chart.js';
+import { Chart as ReactChartJs } from 'react-chartjs-2';
 
 const MembersJoined = ({ data }) => {
+  Chart.register(...registerables);
   const [months, setMonths] = useState([]);
   const [values, setValues] = useState([]);
   useEffect(() => {
@@ -31,7 +33,7 @@ const MembersJoined = ({ data }) => {
     responsive: true,
     maintainAspectRatio: false,
   };
-  return <>{data && <Bar options={options} data={datas} />}</>;
+  return <>{!!months.length && <ReactChartJs type="bar" options={options} data={datas} />}</>;
 };
 
 export default MembersJoined;

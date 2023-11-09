@@ -70,7 +70,7 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
       className={showSidebar ? "sidebar" : "sidebar closed"}
     >
       <div className={showSidebar ? "side_img" : "img-side"}>
-        <img className="img-logo" src={logo} alt="Logo" />{" "}
+      <a href="https://bripan.org.ng/"><img className="img-logo" src={logo} alt="Logo" /></a>{" "}
         <div className="men" onClick={toggleSidebar}>
           <AiOutlineClose />
         </div>

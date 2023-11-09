@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2";
+import { Chart, registerables } from 'chart.js';
+import { Chart as ReactChartJs } from 'react-chartjs-2';
 
 const DuesPayment = ({ data }) => {
+  Chart.register(...registerables);
   const [months, setMonths] = useState([]);
   const [values, setValues] = useState([]);
   useEffect(() => {
@@ -41,7 +44,7 @@ const DuesPayment = ({ data }) => {
   };
   return (
     <>
-      <Line data={datas} options={option} />
+      {data && <ReactChartJs type="line" data={datas} options={option} />}
     </>
   );
 };

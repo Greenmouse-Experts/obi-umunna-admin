@@ -85,7 +85,7 @@ const Login = () => {
   return (
     <div className="main_login">
       <form onSubmit={handleSubmit} action="submit" className="login">
-        <img src={logo} alt="" />
+        <a href="https://bripan.org.ng/"><img src={logo} alt="logo" /></a>
         <div className="log_head">
           <h3>Member Login</h3>
           <p>Fill in your credentials to login to your dashboard</p>

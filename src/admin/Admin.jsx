@@ -115,13 +115,13 @@ const Admin = () => {
                 </span>
               </button> */}
             </div>
-            <DuesPayment data={user?.data?.usersPayments}/>
+            {user && <DuesPayment data={user?.data?.usersPayments}/>}
           </div>
         </div>
         <div className="b">
           <div className="bar">
             <h2 className="font-semibold mb-2">Monthly Members joined</h2>{" "}
-            <MembersJoined className="v" data={user?.data?.monthly_members_joined} />
+            {user && <MembersJoined className="v" data={user?.data?.monthly_members_joined} />}
           </div>
         </div>
       </div>
