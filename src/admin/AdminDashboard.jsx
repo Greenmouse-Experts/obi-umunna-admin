@@ -23,7 +23,7 @@ const AdminDashboard = () => {
     setShowSidebar(!showSidebar);
   };
 
-  const {data, isLoading } = useGetHook('admin/count/unread/notifications')
+  const {data, isLoading } = useGetHook('admin/profile')
 
   return (
     <div className="layout">

@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import MemberModal from "../../admin/members/memberModal";
 
 const Associate = () => {
-  const { data: item, isLoading: loading,refetch } = useGetHook(
+  const { data: item, isLoading: loading, refetch } = useGetHook(
     "admin/member/retrieve/all?keyword=associate"
   );
   const [isBusy, setIsBusy] = useState();

@@ -4,7 +4,6 @@ import axios from "axios";
 const useGetHook = (url) => {
   const [item, setItem] = useState(null);
   const [loading, setLoading] = useState(true);
-
   const fetchItem = async () => {
     setLoading(true);
     try {

@@ -32,7 +32,7 @@ const AdminLogin = () => {
       setIsLoading(true);
       axios
         .post(
-          "https://bripan.greenmouseacademy.com.ng/api/auth/admin/login",
+          `${process.env.REACT_APP_API_URL}/auth/admin/login`,
           fd,
           {
             headers: {

@@ -89,7 +89,7 @@ const PendingPayments = () => {
                           {item.channel}
                         </td>
                         <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
-                          <a href={item.receipt} target="_blank"><img src={item.receipt} alt="receipt" className="w-24"/></a>
+                          <a href={item.receipt} target="_blank" rel="noopener"><img src={item.receipt} alt="receipt" className="w-24"/></a>
                         </td>
                         <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
                           {item.status === "success" ? (

@@ -38,7 +38,7 @@ const Login = () => {
       });
       setIsLoading(true);
       axios
-        .post("https://bripan.greenmouseacademy.com.ng/api/auth/login", fd, {
+        .post(`${process.env.REACT_APP_API_URL}/auth/login`, fd, {
           headers: {
             "Content-Type": "multipart/form-data",
           },

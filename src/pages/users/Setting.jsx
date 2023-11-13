@@ -30,6 +30,7 @@ const MembersSetting = () => {
     setFname(user?.data?.first_name);
     setLname(user?.data?.last_name);
     setEmail(user?.data?.email);
+    setPhone(user?.data?.phone_number);
     setPbe(user?.data?.place_business_employment)
     setNbe(user?.data?.nature_business_employment)
     setMpb(user?.data?.membership_professional_bodies)

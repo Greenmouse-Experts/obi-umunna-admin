@@ -5,7 +5,6 @@ import { BiSearch } from "react-icons/bi";
 import { GoBell } from "react-icons/go";
 import user from "../image/Ellipse 922.png";
 import { Link } from "react-router-dom";
-import { Circles } from "react-loader-spinner";
 import useGetHook from "../hook/useGet";
 import { formatDistanceToNow } from "date-fns";
 
@@ -34,9 +33,6 @@ export const Topnav = ({ toggleSidebar, data }) => {
     "November",
     "December",
   ];
-  // const dayNames = [
-  //   "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
-  // ];
 
   const day = currentDate.getDate();
   const month = monthNames[currentDate.getMonth()];
@@ -78,13 +74,13 @@ export const Topnav = ({ toggleSidebar, data }) => {
         </div>
       </div>
       <div className="icon_menu">
-        <div className="search">
+        {/* <div className="search">
           <BiSearch />
           <input type="text" placeholder="Search" />
-        </div>
+        </div> */}
         <div ref={bellIconRef} onClick={popup} className="bell">
           <GoBell />
-          <span>{data}</span>
+          <span>{datas?.data?.length}</span>
           {activeDropdown && (
             <div className="bell_drop">
               <div className="add_head">
@@ -117,7 +113,7 @@ export const Topnav = ({ toggleSidebar, data }) => {
             </div>
           )}
         </div>
-        <img src={user} alt="" />
+        <img src={data?.avatar || user} alt="profile" />
       </div>
     </div>
   );

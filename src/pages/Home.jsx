@@ -5,17 +5,19 @@ import { BiSearch } from "react-icons/bi";
 import { formatAsNgnMoney, formatString } from "../services/helpers";
 import useGetHook from "../hook/useGet";
 import dayjs from "dayjs";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const currentYear = new Date().getFullYear();
   const { data } = useGetHook(`member/dashboard?year=${currentYear}`);
+  const navigate = useNavigate()
   return (
     <div className="pl-4">
       <div className="lg:grid grid-cols-2 gap-x-5">
         <div className="bg-white p-6 overflow-y-auto">
           <div className="flex px-2 justify-between items-center">
             <h2 className="text-xl font-semibold">Announcements</h2>
-            <p className="text-[14px] font-medium text-blue-900">View All</p>
+            <p className="text-[14px] font-medium text-blue-900" onClick={() => navigate('/dashboard/announce')}>View All</p>
           </div>
           <div className="grid gap-5 pr-3">
             {data &&

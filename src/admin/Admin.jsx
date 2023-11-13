@@ -42,7 +42,7 @@ const Admin = () => {
     <div className="home">
       <div className="home_top">
         {" "}
-        <div className="bg-white p-6 w-[70%]">
+        <div className="bg-white p-6 w-[99%] lg:w-[70%]">
           <div className="head_table">
             <p className="text-xl font-semibold">Recent Members</p>
             {/* <div className="searchh">

@@ -16,12 +16,14 @@ const SettingsPage = () => {
   const [fname, setFname] = useState("");
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const { handlePost } = usePostHook();
   const { Modal, setShowModal } = useModal();
   useEffect(() => {
     setFname(user?.data?.first_name);
     setLname(user?.data?.last_name);
     setEmail(user?.data?.email);
+    setPhone(user?.data?.phone_number);
   }, [user]);
   const onSuccess = () => {
     toast.success("Profile updated successfully");
@@ -48,6 +50,7 @@ const SettingsPage = () => {
     formData.append("first_name", fname);
     formData.append("last_name", lname);
     formData.append("email", email);
+    formData.append("phone_number", phone);
     handlePost(
       `admin/profile/update`,
       formData,
@@ -140,8 +143,13 @@ const SettingsPage = () => {
                     <BsTelephonePlusFill className="text-2xl text-gray-400" />
                   </div>
                   <div className="w-full">
-                    <p className="fs-400 text-primary">Phone:</p>
-                    <p className="border-b mt-3 fw-500 p-2">{user?.phone}</p>
+                    <p className=" text-primary">Phone:</p>
+                    <input
+                      type="number"
+                      value={phone}
+                      onChange={(e) => setPhone(e.target.value)}
+                      className="border-b w-full bg-transparent p-2"
+                    />
                   </div>
                 </div>
               </div>

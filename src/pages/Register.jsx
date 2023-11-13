@@ -29,7 +29,6 @@ const Register = () => {
       toggleIcon.style.backgroundImage = 'url("eye-icon.png")'; // Change back to the normal eye icon
     }
   }
-
   const [isLoading, setIsLoading] = useState(false);
 
   const [logindata, setLoginData] = useState({
@@ -155,7 +154,7 @@ const Register = () => {
       setIsLoading(true); // Set loading state to true
 
       axios
-        .post("https://bripan.greenmouseacademy.com.ng/api/auth/register", fd, {
+        .post(`${process.env.REACT_APP_API_URL}/auth/register`, fd, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -172,8 +171,12 @@ const Register = () => {
           }
         })
         .catch((err) => {
-          toast.error("Failed: " + err);
-          console.log(err);
+          if(err?.response?.data?.message){
+            toast.error(err?.response?.data?.message)
+          }
+          if(err?.response?.data?.errors){Object.entries(err?.response?.data?.errors).forEach(([key, value]) => {
+            toast.error(value[0]);
+          });}
         })
         .finally(() => {
           setIsLoading(false);
