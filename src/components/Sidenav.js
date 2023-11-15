@@ -16,11 +16,12 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { GoBell } from "react-icons/go";
 import { Custom } from "../services/config";
+import useModal from "../hook/useModal";
 
 const Sidebar = ({ showSidebar, toggleSidebar }) => {
   const [showUsersMenu, setShowUsersMenu] = useState(false);
   // const [showInventoriesMenu, setShowInventoriesMenu] = useState(false);
-
+  const {Modal, setShowModal} = useModal()
   const toggleUsersMenu = () => {
     if (showSidebar) {
       setShowUsersMenu(!showUsersMenu);
@@ -125,8 +126,8 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
               </span>
             </NavLink>
           </li>
-          <li className="nav-item">
-            <button onClick={handleLogOut} className="nav-link">
+          <li className="nav-item cursor-pointer">
+            <button onClick={() => setShowModal(true)} className="nav-link">
               <span className="nav-icon">
                 {" "}
                 <FiLogOut /> {showSidebar && "Logout"}
@@ -135,6 +136,15 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
           </li>
         </ul>
       </nav>
+      <Modal title={''} noHead>
+        <div className="p-5">
+          <p className="text-center">Are you sure you want to logout?</p>
+          <div className="mt-6 flex items-center justify-between">
+            <button className="px-5 py-2 bg-red-500 rounded text-white" onClick={() => setShowModal(false)}>Cancel</button>
+            <button className="px-5 py-2 bg-blue-900 rounded text-white" onClick={handleLogOut}>Logout</button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

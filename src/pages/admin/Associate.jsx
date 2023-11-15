@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BiSearch, BiPlus } from "react-icons/bi";
 import "../../stylesheet/admin.css";
 import dayjs from "dayjs";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 import { ThreeCircles } from "react-loader-spinner";
 import AddAssociate from "../../admin/AddAssociate";
 import { BsEye, BsEyeFill, BsThreeDotsVertical } from "react-icons/bs";
@@ -13,21 +15,55 @@ import { toast } from "react-toastify";
 import MemberModal from "../../admin/members/memberModal";
 
 const Associate = () => {
-  const { data: item, isLoading: loading, refetch } = useGetHook(
+  const { data, isLoading: loading, refetch } = useGetHook(
     "admin/member/retrieve/all?keyword=associate"
   );
+  const [items, setItems] = useState([]);
   const [isBusy, setIsBusy] = useState();
   const [selected, setSelected] = useState();
   const [showDetails, setShowDetails] = useState(false)
 
   const [showAddMemberPopup, setShowAddMemberPopup] = useState(false);
-
+    
+  useEffect(() => {
+    if(data){
+      setItems(data?.data.data)
+    }
+  }, [data])
   const handleAddMemberClick = () => {
     setShowAddMemberPopup(true);
   };
 
   const handleCloseAddMemberPopup = () => {
     setShowAddMemberPopup(false);
+  };
+  // pdf download
+  const downloadAsPDF = () => {
+    const doc = new jsPDF();
+    doc.autoTable({
+      head: [
+        [
+          "S/N",
+          "Member Id",
+          "Member Name",
+          "Email",
+          "State",
+          "Date created",
+          "Status",
+        ],
+      ],
+      body: data?.data?.data.map((item, index) => [
+          index + 1,
+          item.membership_id,
+          `${item.first_name} ${item.last_name}`,
+          item.email,
+          item.state,
+          dayjs(item.created_at).format("DD-MMM -YYYY"),
+          item.status,
+        ]),
+    });
+
+    doc.save("members.pdf");
   };
   const { Modal: Activate, setShowModal: ShowActivate } = useModal();
   const { Modal: Deactivate, setShowModal: ShowDeactivate } = useModal();
@@ -67,6 +103,16 @@ const Associate = () => {
     }
   };
 
+  // handle search
+  const handleSearch = (e) => {
+    if(e.target.value === ""){
+      setItems(data.data.data)
+    }else{
+      const filtered = data.data.data.filter((item) => item.first_name.toLowerCase().includes(e.target.value.toLowerCase()))
+      setItems(filtered)
+    }
+  }
+
   return (
     <div className="px-4">
       <div className="fellow_table p-5 bg-white">
@@ -74,9 +120,10 @@ const Associate = () => {
           <div className="leftt">
             <h3 className="text-2xl font-semibold">Associate Members</h3>
             <svg
+            onClick={downloadAsPDF}
               xmlns="http://www.w3.org/2000/svg"
-              width="30"
-              height="30"
+              width="25"
+              height="25"
               viewBox="0 0 30 30"
               fill="none"
             >
@@ -92,18 +139,6 @@ const Associate = () => {
                 </clipPath>
               </defs>
             </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="44"
-              height="44"
-              viewBox="0 0 44 44"
-              fill="none"
-            >
-              <path
-                d="M34.0098 17.5812H33.264V13.9831C33.2634 13.9602 33.2612 13.9374 33.2574 13.9149C33.2584 13.7703 33.2068 13.6304 33.1122 13.5211L27.126 6.68239L27.1216 6.67799C27.0857 6.63926 27.0451 6.60526 27.0006 6.57679L26.961 6.55259C26.923 6.53144 26.8828 6.51448 26.8411 6.50199L26.8081 6.49099C26.7624 6.47959 26.7155 6.47369 26.6684 6.47339H11.9537C11.2816 6.47339 10.736 7.02009 10.736 7.69109V17.5801H9.9902C9.0288 17.5801 8.25 18.3589 8.25 19.3203V28.3711C8.25 29.3314 9.0299 30.1113 9.9902 30.1113H10.736V36.3065C10.736 36.9775 11.2816 37.5242 11.9537 37.5242H32.0463C32.7173 37.5242 33.264 36.9775 33.264 36.3065V30.1113H34.0098C34.9701 30.1113 35.75 29.3325 35.75 28.3711V19.3203C35.75 18.36 34.9712 17.5812 34.0098 17.5812ZM11.9537 7.69109H26.059V13.9215C26.059 14.2581 26.3318 14.5298 26.6684 14.5298H32.0474V17.5801H11.9537V7.69109ZM21.0639 24.3759C19.5855 23.8479 18.6098 23.0295 18.6098 21.737C18.6098 20.2201 19.8902 19.0728 21.9747 19.0728C22.9911 19.0728 23.716 19.2708 24.244 19.5205L23.7952 21.1298C23.22 20.8496 22.5881 20.7055 21.9483 20.7085C21.0771 20.7085 20.6547 21.1166 20.6547 21.5654C20.6547 22.133 21.142 22.3827 22.3036 22.8183C23.8744 23.3991 24.5993 24.2164 24.5993 25.4704C24.5993 26.962 23.4652 28.2281 21.0243 28.2281C20.0079 28.2281 19.0058 27.9509 18.5042 27.6737L18.9134 26.0248C19.6041 26.3775 20.3665 26.5671 21.142 26.5792C22.066 26.5792 22.5544 26.1953 22.5544 25.6156C22.5544 25.0612 22.1331 24.7455 21.0639 24.3759ZM10.5853 23.7687C10.5853 20.747 12.749 19.0717 15.4396 19.0717C16.4824 19.0717 17.2733 19.2818 17.6297 19.4545L17.2073 21.0506C16.673 20.8262 16.0983 20.7139 15.5188 20.7206C13.9359 20.7206 12.6962 21.6831 12.6962 23.662C12.6962 25.4297 13.7511 26.5517 15.532 26.5517C16.1524 26.5517 16.8124 26.434 17.2205 26.2613L17.512 27.8442C17.1556 28.0147 16.3108 28.227 15.2427 28.227C12.1682 28.2281 10.5853 26.302 10.5853 23.7687ZM32.0463 35.9787H11.9537V30.1124H32.0463V35.9787ZM30.4205 28.0961H28.072L25.223 19.2037H27.4263L28.5076 22.9646C28.8101 24.0327 29.0873 25.0359 29.2985 26.1436H29.3381C29.563 25.0866 29.8313 24.0392 30.1422 23.0042L31.2774 19.2048H33.4136L30.4205 28.0961Z"
-                fill="#9BCE95"
-              />
-            </svg>
           </div>
 
           <div className="rightt">
@@ -111,7 +146,7 @@ const Associate = () => {
               <BiPlus /> Add New
             </button>
             <div className="searchh">
-              <input type="text" placeholder="Search by name" />
+              <input type="text" placeholder="Search by name" onChange={handleSearch}/>
               <span>
                 <BiSearch />
               </span>
@@ -192,7 +227,7 @@ const Associate = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {item?.data.data.map((item, i) => (
+                    {!!items.length && items?.map((item, i) => (
                       <tr key={i}>
                         <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
                           {i + 1}
