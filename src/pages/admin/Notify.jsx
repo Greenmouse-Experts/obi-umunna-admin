@@ -51,7 +51,7 @@ const Notify = ({ datas }) => {
               onClick={() => handleButtonClick("all")}
               className={activeButton === "all" ? "active" : ""}
             >
-              All <span>{datas}</span>
+              All <span>{notifications.length}</span>
             </button>
             <button
               onClick={() => handleButtonClick("unread")}
@@ -76,7 +76,7 @@ const Notify = ({ datas }) => {
           </div>
         ) : (
           <div className="notify_body">
-            {notifications.map((item, index) => (
+            {!!notifications.length && notifications.map((item, index) => (
                <div
                onClick={() => handleSubmit(item.id)}
                key={item.id}

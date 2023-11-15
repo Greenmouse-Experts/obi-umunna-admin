@@ -51,7 +51,7 @@ const Notify = ({ datas }) => {
               onClick={() => handleButtonClick("all")}
               className={activeButton === "all" ? "active" : ""}
             >
-              All <span>{datas}</span>
+              All <span>{notifications?.length}</span>
             </button>
             <button
               onClick={() => handleButtonClick("unread")}
