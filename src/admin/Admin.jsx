@@ -16,23 +16,23 @@ const Admin = () => {
 
   const list = [
     {
-      head: "Total Members",
-      num: user?.data.totalMembers,
+      head: "Total Applicants",
+      num:  8,
       Image: img1,
     },
     {
-      head: "Total Subscribers",
-      num: user?.data.totalSubscribers,
+      head: "Total Sponsors",
+      num: 5,
       Image: img2,
     },
     {
-      head: "Total Dues Paid",
-      num: user && formatAsNgnMoney(user?.data.totalDuesPaid),
+      head: "Total Programs",
+      num: 3,
       Image: img3,
     },
     {
-      head: "Total Subscription Paid",
-      num: user && formatAsNgnMoney(user?.data.totalSubscriptionPaid),
+      head: "Total amount ",
+      num:  formatAsNgnMoney(400000),
       Image:
         "https://img.freepik.com/premium-vector/sack-money-big-pile-cash-money-icon-illustration-money-bag-flat-icon_385450-362.jpg",
     },
@@ -65,16 +65,17 @@ const Admin = () => {
               </tr>
             </thead>
             <tbody>
-              {/* {user &&
-                user?.data?.latestFiveMember.map((item, index) => (
+              
+              {
+                ["", "", "", ""].map((item, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
-                    <td>{item.membership_id}</td>
+                    <td>OB123</td>
                     <td>
-                      {item.first_name} {item.last_name}
+                     Green Mouse
                     </td>
-                    <td>{item.account_type}</td>
-                    <td>
+                    <td>greenmouse@gmail.com</td>
+                    {/* <td>
                       {item?.isSubscribed === "0" ? (
                         <span className="px-2 py-1 text-sm bg-orange-100 font-medium rounded-lg">
                           Unsubscribed
@@ -84,15 +85,17 @@ const Admin = () => {
                           Subscribed
                         </span>
                       )}
-                    </td>
-                    <td>{dayjs(item.created_at).format('DD-MM-YYYY')}</td>
+                    </td> */}
+                    {/* <td>{dayjs().format('DD-MM-YYYY')}</td> */}
+                    <td>12 July 2024</td>
                   </tr>
-                ))} */}
+                ))}
+               
             </tbody>
           </table>
           </div>
         </div>
-        {/* <div className="top_right">
+        <div className="top_right">
           {list.map((item) => (
             <div className="">
               <div className="_text">
@@ -101,19 +104,19 @@ const Admin = () => {
               <img src={item.Image} alt="" className="w-[60px]" />
             </div>
           ))}
-        </div> */}
+        </div>
       </div>
-      <div className="home_bottom">
+      {/* <div className="home_bottom">
         <div className="l">
           <div className="line">
             <div className="flex justify-between mb-4">
               <h2 className="font-semibold text-xl">Applicants</h2>
-              {/* <button className="flex items-center gap-x-2 bg-blue-900 text-white px-2 py-1 rounded-lg">
+              <button className="flex items-center gap-x-2 bg-blue-900 text-white px-2 py-1 rounded-lg">
                 Monthly (2023){" "}
                 <span>
                   <IoIosArrowDown />
                 </span>
-              </button> */}
+              </button>
             </div>
             {user && <DuesPayment data={user?.data?.usersPayments}/>}
           </div>
@@ -124,7 +127,7 @@ const Admin = () => {
             {user && <MembersJoined className="v" data={user?.data?.monthly_members_joined} />}
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

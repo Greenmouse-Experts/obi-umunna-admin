@@ -44,7 +44,7 @@ const DuesPayment = ({ data }) => {
   };
   return (
     <>
-      {data && <ReactChartJs type="line" data={datas} options={option} />}
+      {data && <ReactChartJs type="line" data={[""]} options={option} />}
     </>
   );
 };
