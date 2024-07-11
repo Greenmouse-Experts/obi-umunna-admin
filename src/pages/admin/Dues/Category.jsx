@@ -8,13 +8,14 @@ import { LiaEdit } from "react-icons/lia";
 import ReusableModal from "../../../components/ReusableModal";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import usePostHook from "../../../hook/usePost";
+
 import AddDuesCategory from "../../../admin/Dues/Category/AddCategory";
 import EditDuesCategory from "../../../admin/Dues/Category/EditCategory";
+import useDelete from "../../../hook/useDelete";
 
 const AdminDuesCategory = () => {
-  const { data, isLoading, refetch } = useGetHook(`admin/category`);
-  const { handlePost } = usePostHook();
+  const { data, isLoading, refetch } = useGetHook(`admin/category/fetch`);
+  const { handleDelete:deleteCat } = useDelete();
   const [isBusy, setIsBusy] = useState(false);
   const { Modal: Delete, setShowModal: showDelete } = useModal();
   const { Modal: Edit, setShowModal: showEdit } = useModal();
@@ -31,15 +32,15 @@ const AdminDuesCategory = () => {
   const onSuccess = () => {
     setIsBusy(false);
     refetch();
-    toast.success("Bank Account deleted successfully");
+    toast.success("Category deleted successfully");
     showDelete(false);
   };
   const handleDelete = () => {
     setIsBusy(true);
     const payload = {
-        category_id: selected.id,
+      category_id: selected.id,
     };
-    handlePost(
+    deleteCat(
       `admin/category/delete`,
       payload,
       `application/json`,
@@ -51,9 +52,9 @@ const AdminDuesCategory = () => {
       <div className="mx-3 bg-white p-5 min-h-[80vh]">
         <div className="flex justify-between">
           <div className="lg:w-8/12">
-            <p className="text-xl font-semibold">Dues Category</p>
+            <p className="text-xl font-semibold"> Category</p>
             <p>
-              Add, edit and delete dues informations for members.
+              Add, edit and delete categories
             </p>
           </div>
           <div>
@@ -89,7 +90,7 @@ const AdminDuesCategory = () => {
                         scope="col"
                         className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
                       >
-                        Bank Account
+                       status
                       </th>
                       <th
                         scope="col"
@@ -116,8 +117,8 @@ const AdminDuesCategory = () => {
                         </td>
                         <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
                           <div>
-                            <p>{item.bank.account_name}</p>
-                            <p>{item.bank.account_number}</p>
+                            <p>{item.status}</p>
+                          
                           </div>
                         </td>
                         <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
@@ -144,7 +145,7 @@ const AdminDuesCategory = () => {
           </div>
         </div>
       </div>
-      <Modal title={"Add Bank Account"}>
+      <Modal title={"Add Category"}>
         <AddDuesCategory close={() => setShowModal(false)} refetch={refetch} />
       </Modal>
       <Edit title={selected?.name}>

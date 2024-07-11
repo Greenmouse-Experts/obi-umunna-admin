@@ -1,15 +1,16 @@
 import React from "react";
 import { useState } from "react";
-import usePostHook from "../../../hook/usePost";
+
 import { toast } from "react-toastify";
 import useGetHook from "../../../hook/useGet";
+import usePutHook from "../../../hook/usePut";
 
 const EditDuesCategory = ({ item, close, refetch }) => {
   const { data } = useGetHook(`admin/banks`);
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState(item.name || "");
-  const [accNo, setAccNo] = useState(item.bank.id || "");
-  const { handlePost } = usePostHook();
+
+  const { handlePut } = usePutHook();
   const onSuccess = () => {
     setLoading(false);
     refetch();
@@ -18,11 +19,16 @@ const EditDuesCategory = ({ item, close, refetch }) => {
   };
   const handleSubmit = async () => {
     setLoading(true);
-    const fd = new FormData();
-    fd.append("name", name);
-    fd.append("bank_id", accNo);
-    fd.append("category_id", item.id )
-    handlePost(`admin/category/update`, fd, `multipart/form-data`, onSuccess);
+    const updatedCat = {
+      category_id: item.id,
+      name: name,
+    };
+    handlePut(
+      `admin/category/update`,
+      updatedCat,
+      `application/json`,
+      onSuccess
+    );
   };
   return (
     <>
@@ -35,23 +41,7 @@ const EditDuesCategory = ({ item, close, refetch }) => {
           onChange={(e) => setName(e.target.value)}
         />
       </div>
-      <div className="mt-4">
-        <label className="text-lg font-medium">Selected Bank</label>
-        <div className="border border-gray-400 rounded mt-2">
-          <select
-            className="w-full py-3 p-2 rounded"
-            value={accNo}
-            onChange={(e) => setAccNo(e.target.value)}
-          >
-            <option value={""}></option>
-            {data?.data.map((item, i) => (
-              <option value={item.id} key={i}>
-                {item.account_name}
-              </option>
-            ))}
-          </select>
-        </div>
-      </div>
+
       <div className="mt-8">
         <button
           type="submit"

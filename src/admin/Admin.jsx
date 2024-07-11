@@ -44,7 +44,7 @@ const Admin = () => {
         {" "}
         <div className="bg-white p-6 w-[99%] lg:w-[70%]">
           <div className="head_table">
-            <p className="text-xl font-semibold">Recent Members</p>
+            <p className="text-xl font-semibold">Recent Applicants</p>
             {/* <div className="searchh">
               <input type="text" placeholder="Search by name" />
               <span>
@@ -57,15 +57,15 @@ const Admin = () => {
             <thead>
               <tr>
                 <th className="whitespace-nowrap">S/N</th>
-                <th className="whitespace-nowrap">Member Id</th>
-                <th className="whitespace-nowrap">Member Name</th>
-                <th className="whitespace-nowrap">Profession</th>
-                <th className="whitespace-nowrap">Subscription</th>
+                <th className="whitespace-nowrap">Applicant Id</th>
+                <th className="whitespace-nowrap">Applicant Name</th>
+                <th className="whitespace-nowrap">Email</th>
+                {/* <th className="whitespace-nowrap">Subscription</th> */}
                 <th className="whitespace-nowrap">Date Registered</th>
               </tr>
             </thead>
             <tbody>
-              {user &&
+              {/* {user &&
                 user?.data?.latestFiveMember.map((item, index) => (
                   <tr key={index}>
                     <td>{index + 1}</td>
@@ -87,12 +87,12 @@ const Admin = () => {
                     </td>
                     <td>{dayjs(item.created_at).format('DD-MM-YYYY')}</td>
                   </tr>
-                ))}
+                ))} */}
             </tbody>
           </table>
           </div>
         </div>
-        <div className="top_right">
+        {/* <div className="top_right">
           {list.map((item) => (
             <div className="">
               <div className="_text">
@@ -101,13 +101,13 @@ const Admin = () => {
               <img src={item.Image} alt="" className="w-[60px]" />
             </div>
           ))}
-        </div>
+        </div> */}
       </div>
       <div className="home_bottom">
         <div className="l">
           <div className="line">
             <div className="flex justify-between mb-4">
-              <h2 className="font-semibold text-xl">Monthly Payment Dues</h2>
+              <h2 className="font-semibold text-xl">Applicants</h2>
               {/* <button className="flex items-center gap-x-2 bg-blue-900 text-white px-2 py-1 rounded-lg">
                 Monthly (2023){" "}
                 <span>
@@ -120,7 +120,7 @@ const Admin = () => {
         </div>
         <div className="b">
           <div className="bar">
-            <h2 className="font-semibold mb-2">Monthly Members joined</h2>{" "}
+            <h2 className="font-semibold mb-2">Sponsors</h2>{" "}
             {user && <MembersJoined className="v" data={user?.data?.monthly_members_joined} />}
           </div>
         </div>

@@ -2,21 +2,27 @@ import React, { useState, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../image/logo.png";
 import { FiSettings, FiLogOut } from "react-icons/fi";
-import { MdOutlineManageAccounts, MdAnnouncement, MdOutlinePayment } from "react-icons/md";
+import {
+  MdOutlineManageAccounts,
+  MdAnnouncement,
+  MdOutlinePayment,
+} from "react-icons/md";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import { GrTransaction } from "react-icons/gr";
-import {GoBell} from "react-icons/go"
+import { GoBell } from "react-icons/go";
 import { LuLayoutDashboard } from "react-icons/lu";
 import "../stylesheet/component.css";
 import { AiOutlineClose } from "react-icons/ai";
 import useModal from "../hook/useModal";
+import { LiaToolsSolid } from "react-icons/lia";
+import { IoDuplicateOutline } from "react-icons/io5";
 
 const Sidebar = ({ showSidebar, toggleSidebar }) => {
   const [showUsersMenu, setShowUsersMenu] = useState(false);
-  const [duesMenu, setDuesMenu] = useState(false)
-  const [payments, setPayments] = useState(false)
-  const navigate = useNavigate()
-  const {Modal, setShowModal} = useModal()
+  const [duesMenu, setDuesMenu] = useState(false);
+  const [payments, setPayments] = useState(false);
+  const navigate = useNavigate();
+  const { Modal, setShowModal } = useModal();
   const toggleUsersMenu = () => {
     if (showSidebar) {
       setShowUsersMenu(!showUsersMenu);
@@ -62,7 +68,7 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate('/admin/login')
+    navigate("/admin/login");
   };
 
   return (
@@ -71,7 +77,9 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
       className={showSidebar ? "sidebar" : "sidebar closed"}
     >
       <div className={showSidebar ? "side_img" : "img-side"}>
-      <a href="https://bripan.org.ng/"><img className="img-logo" src={logo} alt="Logo" /></a>{" "}
+        <a href="https://obi-inky.vercel.app">
+          <img className="img-logo" src={logo} alt="Logo" />
+        </a>{" "}
         <div className="men" onClick={toggleSidebar}>
           <AiOutlineClose />
         </div>
@@ -86,6 +94,30 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
             </NavLink>
           </li>
           <li className="nav-item">
+            <NavLink to="categories" className="nav-link">
+              <span className="nav-icon">
+                <IoDuplicateOutline /> {showSidebar && "Categories"}
+              </span>
+            </NavLink>
+          </li>
+
+
+          <li className="nav-item">
+            <NavLink to="programs" className="nav-link">
+              <span className="nav-icon">
+                <LiaToolsSolid /> {showSidebar && "Programs"}
+              </span>
+            </NavLink>
+          </li>
+
+          <li className="nav-item">
+            <NavLink to="applicants" className="nav-link">
+              <span className="nav-icon">
+                <MdOutlineManageAccounts /> {showSidebar && "Applicants"}
+              </span>
+            </NavLink>
+          </li>
+          {/* <li className="nav-item">
             <span className="nav-link" onClick={toggleUsersMenu}>
               <span className="nav-icon">
                 <MdOutlineManageAccounts /> {showSidebar && "Members"}
@@ -110,8 +142,8 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
                 </li>
               </ul>
             )}
-          </li>
-          <li className="nav-item">
+          </li> */}
+          {/* <li className="nav-item">
             <span className="nav-link" onClick={toggleDuesMenu}>
               <span className="nav-icon">
                 <MdOutlinePayment /> {showSidebar && "Dues"}
@@ -141,11 +173,11 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
                 </li>
               </ul>
             )}
-          </li>
+          </li> */}
           <li className="nav-item">
             <span className="nav-link" onClick={togglePaymentMenu}>
               <span className="nav-icon">
-              <GrTransaction /> {showSidebar && "Payments"}
+                <GrTransaction /> {showSidebar && "Payments"}
               </span>
               {showSidebar && (
                 <div className="bb">
@@ -153,7 +185,7 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
                 </div>
               )}
             </span>
-            {payments && (
+            {/* {payments && (
               <ul className="submenu">
                 <li className="submenu-item">
                   <NavLink to="payments/dues" className="nav-link">
@@ -166,20 +198,20 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
                   </NavLink>
                 </li>
               </ul>
-            )}
+            )} */}
           </li>
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <NavLink to="/admin/announcements" className="nav-link">
               <span className="nav-icon">
                 <MdAnnouncement />
                 {showSidebar && "Announcement"}
               </span>
             </NavLink>
-          </li>
+          </li> */}
           <li className="nav-item">
             <NavLink to="notify" className="nav-link">
               <span className="nav-icon">
-              <GoBell />
+                <GoBell />
                 {showSidebar && "Notification"}
               </span>
             </NavLink>
@@ -193,7 +225,7 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
             </NavLink>
           </li>
           <li className="nav-item" onClick={() => setShowModal(true)}>
-            <div  className="nav-link">
+            <div className="nav-link">
               <span className="nav-icon">
                 {" "}
                 <FiLogOut /> {showSidebar && "Logout"}
@@ -202,12 +234,22 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
           </li>
         </ul>
       </nav>
-      <Modal title={''} noHead>
+      <Modal title={""} noHead>
         <div className="p-5">
           <p className="text-center">Are you sure you want to logout?</p>
           <div className="mt-6 flex items-center justify-between">
-            <button className="px-5 py-2 bg-red-500 rounded text-white" onClick={() => setShowModal(false)}>Cancel</button>
-            <button className="px-5 py-2 bg-blue-900 rounded text-white" onClick={handleLogout}>Logout</button>
+            <button
+              className="px-5 py-2 bg-red-500 rounded text-white"
+              onClick={() => setShowModal(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className="px-5 py-2 bg-blue-900 rounded text-white"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
           </div>
         </div>
       </Modal>

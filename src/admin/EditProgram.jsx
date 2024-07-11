@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { IoClose } from "react-icons/io5";
 import { ThreeDots } from "react-loader-spinner";
 import useGetHook from "../hook/useGet";
-import usePostHook from "../hook/usePost";
+import usePutHook from "../hook/usePut";
 
-const AddProgram = ({ onClose, refetch }) => {
+const UpdateProgram = ({ onClose, refetch, item }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { data: category } = useGetHook(`admin/category/fetch`);
-  const { handlePost } = usePostHook();
+  const { handlePut } = usePutHook();
 
   const [programData, setProgramData] = useState({
-    categoryId: "",
+    categoryId: 0,
     name: "",
     startDate: "",
     endDate: "",
@@ -21,6 +21,23 @@ const AddProgram = ({ onClose, refetch }) => {
     supportBanner: null,
     budgetAmount: 0,
   });
+
+  useEffect(() => {
+    if (item) {
+      setProgramData((prevState) => ({
+        ...prevState,
+        programId:item.id,
+        categoryId: item.category.id || 0,
+        name: item.name || "",
+        startDate: item.startDate || "",
+        endDate: item.endDate || "",
+        description: item.description || "",
+        requirements: item.requirements || "",
+        supportBanner: "",
+        budgetAmount: item.budgetAmount || 0,
+      }));
+    }
+  }, [item]);
 
   const handleInput = (e) => {
     const { name, value } = e.target;
@@ -57,8 +74,7 @@ const AddProgram = ({ onClose, refetch }) => {
       programData.endDate === "" ||
       programData.description === "" ||
       programData.requirements === "" ||
-      programData.budgetAmount === "" ||
-      programData.supportBanner === null
+      programData.budgetAmount === ""
     ) {
       isProceed = false;
       errorMessages += "Please fill all inputs. ";
@@ -84,7 +100,7 @@ const AddProgram = ({ onClose, refetch }) => {
   const onSuccess = () => {
     setIsLoading(false);
     refetch();
-    toast.success("Program added successfully");
+    toast.success("Program updated successfully");
     onClose();
   };
 
@@ -99,14 +115,14 @@ const AddProgram = ({ onClose, refetch }) => {
         fd.append(key, value);
       });
 
-      handlePost(`admin/program/add`, fd, "application/json", onSuccess);
+      handlePut(`admin/program/update`, fd, "application/json", onSuccess);
     }
   };
 
   return (
     <div className="add_member bg-white max-h-[90vh] overflow-y-auto">
       <div className="add_head">
-        <p>Add Program</p>
+        <p>Update Program</p>
         <span onClick={onClose}>
           <IoClose />
         </span>
@@ -135,7 +151,7 @@ const AddProgram = ({ onClose, refetch }) => {
                 value={programData.categoryId}
                 onChange={handleSelectInput}
               >
-                <option value="">
+                <option value="" disabled>
                   Select a Category
                 </option>
                 {category?.data?.map((cat) => (
@@ -240,7 +256,7 @@ const AddProgram = ({ onClose, refetch }) => {
           </div>
         ) : (
           <button className="add_btn" type="submit" disabled={isLoading}>
-            Add Program
+            Update Program
           </button>
         )}
       </form>
@@ -248,4 +264,4 @@ const AddProgram = ({ onClose, refetch }) => {
   );
 };
 
-export default AddProgram;
+export default UpdateProgram;

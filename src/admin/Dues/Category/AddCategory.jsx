@@ -18,10 +18,12 @@ const AddDuesCategory = ({ close, refetch }) => {
   };
   const handleSubmit = async () => {
     setLoading(true);
-    const fd = new FormData();
-    fd.append("name", name);
-    fd.append("bank_id", accNo);
-    handlePost(`admin/category/post`, fd, `multipart/form-data`, onSuccess);
+    const fd = {
+      name:name
+    }
+   
+    // fd.append("bank_id", accNo);
+    handlePost(`admin/category/add`, fd, "application/json", onSuccess)
   };
   return (
     <>
@@ -33,7 +35,7 @@ const AddDuesCategory = ({ close, refetch }) => {
           onChange={(e) => setName(e.target.value)}
         />
       </div>
-      <div className="mt-4">
+      {/* <div className="mt-4">
         <label className="text-lg font-medium">Selected Bank</label>
         <div className="border border-gray-400 rounded mt-2">
         <select className="w-full py-3 p-2 rounded" onChange={(e) => setAccNo(e.target.value)}>
@@ -45,7 +47,7 @@ const AddDuesCategory = ({ close, refetch }) => {
           }
         </select>
         </div>
-      </div>
+      </div> */}
       <div className="mt-8">
         <button
           type="submit"

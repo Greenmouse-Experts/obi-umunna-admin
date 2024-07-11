@@ -12,15 +12,30 @@ import ReusableModal from "../../components/ReusableModal";
 import axios from "axios";
 import { toast } from "react-toastify";
 import MemberModal from "../../admin/members/memberModal";
+import EditProgram from "../../admin/EditProgram";
+import useDelete from "../../hook/useDelete";
 
 const Fellow = () => {
   const {
     data,
     isLoading: loading,
     refetch,
-  } = useGetHook("admin/member/retrieve/all?keyword=fellow");
-  const [showDetails, setShowDetails] = useState(false)
+  } = useGetHook("admin/program/fetch");
+  const { handleDelete:deleteCat } = useDelete();
+
+  const [showDetails, setShowDetails] = useState(false);
   const [showAddMemberPopup, setShowAddMemberPopup] = useState(false);
+  const { Modal: Deactivate, setShowModal: ShowDeactivate } = useModal();
+
+  const [showEditMemberPopup, setShowEditMemberPopup] = useState(false);
+
+  const handleEditMemberClick = () => {
+    setShowEditMemberPopup(true);
+  };
+
+  const handleCloseEditMemberPopup = () => {
+    setShowEditMemberPopup(false);
+  };
 
   const handleAddMemberClick = () => {
     setShowAddMemberPopup(true);
@@ -28,6 +43,11 @@ const Fellow = () => {
 
   const handleCloseAddMemberPopup = () => {
     setShowAddMemberPopup(false);
+  };
+
+  const openDelete = (item) => {
+    setSelected(item);
+    ShowDeactivate(true);
   };
 
   const downloadAsPDF = () => {
@@ -44,15 +64,15 @@ const Fellow = () => {
           "Status",
         ],
       ],
-      body: data?.data?.data.map((item, index) => [
-          index + 1,
-          item.membership_id,
-          `${item.first_name} ${item.last_name}`,
-          item.email,
-          item.state,
-          dayjs(item.created_at).format("DD-MMM -YYYY"),
-          item.status,
-        ]),
+      body: data?.data.map((item, index) => [
+        index + 1,
+        item.membership_id,
+        `${item.first_name} ${item.last_name}`,
+        item.email,
+        item.state,
+        dayjs(item.created_at).format("DD-MMM -YYYY"),
+        item.status,
+      ]),
     });
 
     doc.save("members.pdf");
@@ -62,12 +82,12 @@ const Fellow = () => {
   const [selected, setSelected] = useState();
 
   const { Modal: Activate, setShowModal: ShowActivate } = useModal();
-  const { Modal: Deactivate, setShowModal: ShowDeactivate } = useModal();
+  const { Modal: deleteProgram, setShowModal: ShowDeleteProgram } = useModal();
   useEffect(() => {
-    if(data){
-      setItems(data?.data.data)
+    if (data) {
+      setItems(data?.data);
     }
-  }, [data])
+  }, [data]);
   const openActivate = (item) => {
     setSelected(item);
     ShowActivate(true);
@@ -76,48 +96,55 @@ const Fellow = () => {
     setSelected(item);
     ShowDeactivate(true);
   };
+
+  const openEdit = (item) => {
+    setSelected(item);
+  };
   const openDetails = (item) => {
     setSelected(item);
     setShowDetails(true);
-  }
-  // change account status
-  const ChangeAccountStatus = async (status) => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "Application/json",
-          authorization: `Bearer ${localStorage.getItem("bripan_token")}`,
-        },
-      };
-      const res = await axios.get(
-        `${process.env.REACT_APP_API_URL}/admin/member/${status}?user_id=${selected.id}`,
-        config
-      );
-      const data = res.data;
-      setIsBusy(false);
-      toast.success(data.message);
-      refetch();
-      ShowActivate(false);
-      ShowDeactivate(false);
-    } catch (error) {
-      setIsBusy(false);
-    }
   };
+  // change account status
+
   // handle search
   const handleSearch = (e) => {
-    if(e.target.value === ""){
-      setItems(data.data.data)
-    }else{
-      const filtered = data.data.data.filter((item) => item.first_name.toLowerCase().includes(e.target.value.toLowerCase()))
-      setItems(filtered)
+    if (e.target.value === "") {
+      setItems(data?.data);
+    } else {
+      const filtered = data?.data?.filter((item) =>
+        item.name.toLowerCase().includes(e.target.value.toLowerCase())
+      );
+      setItems(filtered);
     }
-  }
+  };
+
+  const onSuccess = () => {
+    setIsBusy(false);
+    refetch();
+    toast.success("Program deleted successfully");
+    ShowDeactivate(false);
+  };
+  const handleDelete = () => {
+    setIsBusy(true);
+    const payload = {
+      programId: selected.id,
+    };
+    deleteCat(
+      `admin/program/delete`,
+      payload,
+      `application/json`,
+      onSuccess
+    );
+  };
+  // h
+
+  console.log(items);
   return (
     <div className="px-5">
       <div className="p-6 bg-white">
         <div className="admin_head">
           <div className="leftt">
-            <h3 className="text-2xl font-semibold">Fellow Members</h3>
+            <h3 className="text-2xl font-semibold">Programs</h3>
             <svg
               onClick={downloadAsPDF}
               xmlns="http://www.w3.org/2000/svg"
@@ -145,7 +172,11 @@ const Fellow = () => {
               <BiPlus /> Add New
             </button>
             <div className="searchh">
-              <input type="text" placeholder="Search by name" onChange={handleSearch}/>
+              <input
+                type="text"
+                placeholder="Search by name"
+                onChange={handleSearch}
+              />
               <span>
                 <BiSearch />
               </span>
@@ -185,37 +216,37 @@ const Fellow = () => {
                         scope="col"
                         className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
                       >
-                        Member ID
+                        Image
                       </th>
                       <th
                         scope="col"
                         className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
                       >
-                        Member Name
+                        Program Name
                       </th>
                       <th
                         scope="col"
                         className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
                       >
-                        Email
+                        Amount
                       </th>
                       <th
                         scope="col"
                         className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
                       >
-                        Status
+                        Start Date
                       </th>
                       <th
                         scope="col"
                         className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
                       >
-                        Subscription
+                        End Date
                       </th>
                       <th
                         scope="col"
                         className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
                       >
-                        Date Joined
+                        Date Created
                       </th>
                       <th
                         scope="col"
@@ -226,76 +257,58 @@ const Fellow = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {!!items.length && items?.map((item, i) => (
-                      <tr key={i}>
-                        <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
-                          {i + 1}
-                        </td>
-                        <td className="align-middle fs-500  px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
-                          <div className="font-semibold text-blue-900">
-                            {item.membership_id}
-                          </div>
-                        </td>
-                        <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
-                          {item.first_name} {item.last_name}
-                        </td>
-                        <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
-                          {item.email}
-                        </td>
-                        <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
-                          <div className="flex items-center gap-x-3">
-                            <div
-                              className={`px-2 py-1 rounded font-semibold border ${
-                                item.status === "Pending" ||
-                                item.status === "Inactive"
-                                  ? `bg-orange-100`
-                                  : `bg-blue-200`
-                              }`}
-                            >
-                              {item.status}
+                    {!!items.length &&
+                      items?.map((item, i) => (
+                        <tr key={i}>
+                          <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
+                            {i + 1}
+                          </td>
+                          <td className="align-middle fs-500  px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
+                            <div className="font-semibold text-blue-900">
+                              <img src={item.supportBanner} alt={item.name} />
                             </div>
-                            {item.status === "Pending" ||
-                            item.status === "Inactive" ? (
+                          </td>
+                          <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
+                            {item.name}
+                          </td>
+                          <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
+                            {item.budgetAmount}
+                          </td>
+                          <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
+                            {dayjs(item.startDate).format("DD-MMM -YYYY")}
+                          </td>
+                          <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
+                            {dayjs(item.endDate).format("DD-MMM -YYYY")}
+                          </td>
+                          <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
+                            {dayjs(item.createdAt).format("DD-MMM -YYYY")}
+                          </td>
+                          <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
+                            <div className="flex gap-x-3">
+                              <BsEyeFill
+                                onClick={() => openDetails(item)}
+                                className="text-xl text-blue-900"
+                              />
                               <span
                                 className="underline cursor-pointer font-medium text-blue-900"
-                                onClick={() => openActivate(item)}
+                                onClick={() => {
+                                  openEdit(item);
+                                  handleEditMemberClick();
+                                }}
                               >
-                                Activate
+                                Edit
                               </span>
-                            ) : (
+
                               <span
                                 className="underline cursor-pointer font-medium text-red-800"
-                                onClick={() => openDeactivate(item)}
+                                onClick={() => openDelete(item)}
                               >
-                                Deactivate
+                                Delete
                               </span>
-                            )}
-                          </div>
-                        </td>
-                        <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
-                          {item?.isSubscribed === "0" ? (
-                            <span className="px-2 py-1 text-sm bg-orange-100 font-medium rounded-lg">
-                              Unsubscribed
-                            </span>
-                          ) : (
-                            <span className="px-2 py-1 text-sm bg-green-100 font-medium rounded-lg">
-                              Subscribed
-                            </span>
-                          )}
-                        </td>
-                        <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
-                          {dayjs(item.created_at).format("DD-MMM -YYYY")}
-                        </td>
-                        <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
-                          <div className="flex gap-x-3">
-                            <BsEyeFill
-                              onClick={() => openDetails(item)}
-                              className="text-xl text-blue-900"
-                            />
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>
@@ -305,29 +318,30 @@ const Fellow = () => {
       </div>
       {showAddMemberPopup && (
         <div className="popup">
-          <AddFellow onClose={handleCloseAddMemberPopup} />
+          <AddFellow onClose={handleCloseAddMemberPopup} refetch={refetch} />
         </div>
       )}
-      {
-        showDetails && <MemberModal item={selected} close={() => setShowDetails(false)}/>
-      }
-      <Activate title={""} noHead>
-        <ReusableModal
-          title={"Are you sure you want to activate this account?"}
-          cancelTitle="No, cancel"
-          actionTitle="Yes, Activate"
-          closeModal={() => ShowActivate(false)}
-          action={() => ChangeAccountStatus("activate")}
-          isBusy={isBusy}
-        />
-      </Activate>
+      {showDetails && (
+        <MemberModal item={selected} close={() => setShowDetails(false)} />
+      )}
+
+      {showEditMemberPopup && (
+        <div className="popup">
+          <EditProgram
+            item={selected}
+            onClose={handleCloseEditMemberPopup}
+            refetch={refetch}
+          />
+        </div>
+      )}
+    
       <Deactivate title={""} noHead>
         <ReusableModal
-          title={"Are you sure you want to deactivate this account?"}
+          title={"Are you sure you want to delete this program?"}
           cancelTitle="No, cancel"
-          actionTitle="Yes, Deactivate"
-          closeModal={() => ShowActivate(false)}
-          action={() => ChangeAccountStatus("deactivate")}
+          actionTitle="Yes, Delete"
+          closeModal={() => ShowDeactivate(false)}
+          action={() => handleDelete()}
           isBusy={isBusy}
         />
       </Deactivate>

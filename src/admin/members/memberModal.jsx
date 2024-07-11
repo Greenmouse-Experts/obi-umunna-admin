@@ -1,9 +1,12 @@
+import dayjs from "dayjs";
 import React from "react";
-import useGetHook from "../../hook/useGet";
 import { FaTimes } from "react-icons/fa";
 
 const MemberModal = ({ item, close }) => {
-  const { data, loading } = useGetHook(`admin/member/view?user_id=${item.id}`);
+  // const { data, loading } = useGetHook(`admin/member/view?user_id=${item.id}`);
+
+  console.log(item);
+
   return (
     <div
       className="fixed flex justify-center items-center h-screen w-full top-0 left-0 bg-[#00000066]"
@@ -15,93 +18,56 @@ const MemberModal = ({ item, close }) => {
       >
         <div className="p-5">
           <div className="flex justify-between border-b items-center mb-3">
-            <p className="text-lg font-semibold ">
-              {item.first_name} {item.last_name}
-            </p>
+            <p className="text-lg font-semibold ">{item.name}</p>
             <FaTimes onClick={close} className="" />
           </div>
-          {!data && <p className="py-12 text-center">Loading....</p>}
+
           <div className="oveflow-y-auto px-3">
-            {data && (
-              <div className="grid lg:grid-cols-2 gap-y-2 py-3 overflow-y-auto pr-3">
-                <div>
-                  <p className="text-gray-500">First Name:</p>
-                  <p className="font-semibold">{item.first_name}</p>
-                </div>
-                <div>
-                  <p className="text-gray-500">Last Name:</p>
-                  <p className="font-semibold">{item.last_name}</p>
-                </div>
-                <div>
-                  <p className="text-gray-500">User Name:</p>
-                  <p className="font-semibold">{item.username}</p>
-                </div>
-                <div>
-                  <p className="text-gray-500">Email:</p>
-                  <p className="font-semibold">{item.email}</p>
-                </div>
-                <div>
-                  <p className="text-gray-500">Address:</p>
-                  <p className="font-semibold">
-                    {item.address} {item.state}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-gray-500">Phone:</p>
-                  <p className="font-semibold">{item.phone_number}</p>
-                </div>
-                <div>
-                  <p className="text-gray-500">Marital Status:</p>
-                  <p className="font-semibold">{item.marital_status}</p>
-                </div>
-                <div>
-                  <p className="text-gray-500">Membership ID:</p>
-                  <p className="font-semibold">{item.membership_id}</p>
-                </div>
-                <div>
-                  <p className="text-gray-500">Membership Professional Body:</p>
-                  <p className="font-semibold">
-                    {item.membership_professional_bodies}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-gray-500">Business Category:</p>
-                  <p className="font-semibold">
-                    {item.nature_business_employment}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-gray-500">Place of Business:</p>
-                  <p className="font-semibold">
-                    {item.place_business_employment}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-gray-500">Account Status:</p>
-                  <p className="font-semibold">{item.status}</p>
-                </div>
-                <div>
-                  <p className="text-gray-500">Passport:</p>
-                  {item.passport && <a href={item.passport} target="_blank">
-                    <img
-                      src={item.passport}
-                      alt="cert"
-                      className="w-24 border cursor-pointer"
-                    />
-                  </a>}
-                </div>
-                <div>
-                  <p className="text-gray-500">Certificates:</p>
-                  {item.certificates && <a href={item.certificates} target="_blank">
-                    <img
-                      src={item.certificates}
-                      alt="cert"
-                      className="w-24 border cursor-pointer"
-                    />
-                  </a>}
-                </div>
+            <div className="grid lg:grid-cols-2 gap-y-4 py-3 overflow-y-auto pr-3">
+              <div>
+                <p className="text-gray-500">Program Name:</p>
+                <p className="font-semibold">{item.name}</p>
               </div>
-            )}
+              <div>
+                <p className="text-gray-500">Program Category:</p>
+                <p className="font-semibold">{item.category.name}</p>
+              </div>
+              <div>
+                <p className="text-gray-500">Budget Amount:</p>
+                <p className="font-semibold">{item.budgetAmount}</p>
+              </div>
+              <div>
+                <p className="text-gray-500">Start Date</p>
+                <p className="font-semibold">
+                  {" "}
+                  {dayjs(item.startDate).format("DD-MMM -YYYY")}
+                </p>
+              </div>
+              <div>
+                <p className="text-gray-500">End Date</p>
+                <p className="font-semibold">
+                  {dayjs(item.endDate).format("DD-MMM -YYYY")}
+                </p>
+              </div>
+              <div>
+                <p className="text-gray-500">Requirement</p>
+                <p className="font-semibold">{item.requirements}</p>
+              </div>
+              <div>
+                <p className="text-gray-500">Description:</p>
+                <p className="font-semibold">{item.description}</p>
+              </div>
+              <div>
+                <p className="text-gray-500">Support Banner:</p>
+                <img
+                  src={item.supportBanner}
+                  alt=""
+                  className="h-44 object-cover"
+                />
+              </div>
+
+              
+            </div>
           </div>
           <div className="py-3"></div>
         </div>

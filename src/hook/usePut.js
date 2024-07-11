@@ -2,8 +2,8 @@ import { useCallback } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const usePostHook = () => {
-  const handlePost = useCallback(async (url, payload, type, success) => {
+const usePutHook = () => {
+  const handlePut = useCallback(async (url, payload, type, success) => {
     try {
       const config = {
         headers: {
@@ -11,7 +11,7 @@ const usePostHook = () => {
           authorization: `Bearer ${localStorage.getItem("obi_token")}`,
         },
       };
-      const res = await axios.post(
+      const res = await axios.put(
         `${process.env.REACT_APP_API_URL}/${url}`,
         payload,
         config
@@ -27,6 +27,6 @@ const usePostHook = () => {
       }
     }
   }, []);
-  return { handlePost };
+  return { handlePut };
 };
-export default usePostHook;
+export default usePutHook;

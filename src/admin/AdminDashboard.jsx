@@ -43,8 +43,8 @@ const AdminDashboard = () => {
         <div className="pages">
           <Routes>
             <Route path="/" element={<Admin />} />
-            <Route path="fellow" element={<Fellow />} />
-            <Route path="associate" element={<Associate />} />
+            <Route path="programs" element={<Fellow />} />
+            <Route path="categories" element={<AdminDuesCategory />} />
             <Route path="announcements" element={<AdminAnnouncement />} />
             <Route path="notify" element={<Notify datas={data?.data} />} />
             <Route path="dues/list" element={<AdminDues/>} />
