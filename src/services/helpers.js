@@ -6,6 +6,8 @@ export const getLocalToken = (key) => {
       }
       return null;
 }
+
+
 export const formatString = (string, number) => {
   if (string.length > number - 2) {
     return string.substring(0, number).concat("...");

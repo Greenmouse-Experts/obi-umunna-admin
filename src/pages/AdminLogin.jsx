@@ -46,6 +46,9 @@ const AdminLogin = () => {
           if (res.data.code === 200) {
             toast.success(res.data.message);
             localStorage.setItem("obi_token", res.data.token);
+            localStorage.setItem("obi_role", res.data.data.role);
+            localStorage.setItem("obi_name", res.data.data.name);
+            localStorage.setItem("obi_email", res.data.data.email);
             usenavigate("/admin/");
           } else {
             toast.error(res.data.message);
@@ -86,8 +89,8 @@ const AdminLogin = () => {
   return (
     <div className="main_login">
       <form onSubmit={handleSubmit} action="submit" className="login">
-        <a href="https://obi-inky.vercel.app">
-          <img src={logo} alt="" />
+        <a href="https://obi-inky.vercel.app" className="mx-auto">
+          <img src={logo} alt=""  />
         </a>
         <div className="log_head">
           <h3>Admin Login</h3>

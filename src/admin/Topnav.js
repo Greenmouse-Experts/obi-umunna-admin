@@ -7,17 +7,24 @@ import user from "../image/Ellipse 922.png";
 import { Link } from "react-router-dom";
 import useGetHook from "../hook/useGet";
 import { formatDistanceToNow } from "date-fns";
+import { getLocalToken } from "../services/helpers";
 
 export const Topnav = ({ toggleSidebar, data }) => {
   const formatTimeAgo = (timestamp) => {
     const apiDate = new Date(timestamp);
     return formatDistanceToNow(apiDate);
   };
+  const [role, setRole] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(false);
   const { data: datas, isLoading } = useGetHook(
     "admin/get/all/unread/notifications"
   );
   const currentDate = new Date();
+
+  useEffect(() => {
+    setRole(getLocalToken("obi_role"));
+  }, [role]);
+
 
   const monthNames = [
     "January",
@@ -69,15 +76,15 @@ export const Topnav = ({ toggleSidebar, data }) => {
           <LuMenu />
         </div>
         <div className="icon_text">
-          <h3>Hello Super Admin</h3>
+         {role === "superadmin" ? <h3>Hello Super Admin</h3> : <h3>Hello Sub Admin</h3>}
           <p>{formattedDate}</p>
         </div>
       </div>
-      <div className="icon_menu">
-        {/* <div className="search">
+      {/* <div className="icon_menu">
+        <div className="search">
           <BiSearch />
           <input type="text" placeholder="Search" />
-        </div> */}
+        </div>
         <div ref={bellIconRef} onClick={popup} className="bell">
           <GoBell />
           <span>{datas?.data?.length}</span>
@@ -114,7 +121,7 @@ export const Topnav = ({ toggleSidebar, data }) => {
           )}
         </div>
         <img src={data?.avatar || user} alt="profile" />
-      </div>
+      </div> */}
     </div>
   );
 };

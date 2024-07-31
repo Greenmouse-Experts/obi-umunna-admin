@@ -6,9 +6,10 @@ import {
   MdOutlineManageAccounts,
   MdAnnouncement,
   MdOutlinePayment,
+  MdOutlineAdminPanelSettings,
 } from "react-icons/md";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
-import { GrTransaction } from "react-icons/gr";
+import { GrBlog, GrTransaction } from "react-icons/gr";
 import { GoBell } from "react-icons/go";
 import { LuLayoutDashboard } from "react-icons/lu";
 import "../stylesheet/component.css";
@@ -16,11 +17,13 @@ import { AiOutlineClose } from "react-icons/ai";
 import useModal from "../hook/useModal";
 import { LiaToolsSolid } from "react-icons/lia";
 import { IoDuplicateOutline } from "react-icons/io5";
+import { FaBlog, FaUserFriends } from "react-icons/fa";
+import { getLocalToken } from "../services/helpers";
 
 const Sidebar = ({ showSidebar, toggleSidebar }) => {
   const [showUsersMenu, setShowUsersMenu] = useState(false);
   const [duesMenu, setDuesMenu] = useState(false);
-  const [payments, setPayments] = useState(false);
+  const [role, setRole] = useState(false);
   const navigate = useNavigate();
   const { Modal, setShowModal } = useModal();
   const toggleUsersMenu = () => {
@@ -29,17 +32,7 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
     }
   };
 
-  const toggleDuesMenu = () => {
-    if (showSidebar) {
-      setDuesMenu(!duesMenu);
-    }
-  };
-
-  const togglePaymentMenu = () => {
-    if (showSidebar) {
-      setPayments(!payments);
-    }
-  };
+  
 
   const sidebarRef = useRef(null);
 
@@ -71,6 +64,11 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
     navigate("/admin/login");
   };
 
+  useEffect(() => {
+    setRole(getLocalToken("obi_role"));
+  }, [role]);
+
+
   return (
     <div
       ref={sidebarRef}
@@ -101,7 +99,6 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
             </NavLink>
           </li>
 
-
           <li className="nav-item">
             <NavLink to="programs" className="nav-link">
               <span className="nav-icon">
@@ -117,113 +114,51 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
               </span>
             </NavLink>
           </li>
-          {/* <li className="nav-item">
-            <span className="nav-link" onClick={toggleUsersMenu}>
-              <span className="nav-icon">
-                <MdOutlineManageAccounts /> {showSidebar && "Members"}
-              </span>
-              {showSidebar && (
-                <div className="bb">
-                  {showUsersMenu ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                </div>
-              )}
-            </span>
-            {showUsersMenu && (
-              <ul className="submenu">
-                <li className="submenu-item">
-                  <NavLink to="fellow" className="nav-link">
-                    {showSidebar && "Fellow"}
-                  </NavLink>
-                </li>
-                <li className="submenu-item">
-                  <NavLink to="associate" className="nav-link">
-                    {showSidebar && "Associate"}
-                  </NavLink>
-                </li>
-              </ul>
-            )}
-          </li> */}
-          {/* <li className="nav-item">
-            <span className="nav-link" onClick={toggleDuesMenu}>
-              <span className="nav-icon">
-                <MdOutlinePayment /> {showSidebar && "Dues"}
-              </span>
-              {showSidebar && (
-                <div className="bb">
-                  {duesMenu ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                </div>
-              )}
-            </span>
-            {duesMenu && (
-              <ul className="submenu">
-                <li className="submenu-item">
-                  <NavLink to="dues/bank" className="nav-link">
-                    {showSidebar && "Bank"}
-                  </NavLink>
-                </li>
-                <li className="submenu-item">
-                  <NavLink to="dues/category" className="nav-link">
-                    {showSidebar && "Category"}
-                  </NavLink>
-                </li>
-                <li className="submenu-item">
-                  <NavLink to="dues/list" className="nav-link">
-                    {showSidebar && "Dues List"}
-                  </NavLink>
-                </li>
-              </ul>
-            )}
-          </li> */}
+
           <li className="nav-item">
-            <span className="nav-link" onClick={togglePaymentMenu}>
+            <NavLink to="sponsors" className="nav-link">
               <span className="nav-icon">
-                <GrTransaction /> {showSidebar && "Payments"}
-              </span>
-              {showSidebar && (
-                <div className="bb">
-                  {payments ? <IoIosArrowUp /> : <IoIosArrowDown />}
-                </div>
-              )}
-            </span>
-            {/* {payments && (
-              <ul className="submenu">
-                <li className="submenu-item">
-                  <NavLink to="payments/dues" className="nav-link">
-                    {showSidebar && "Dues"}
-                  </NavLink>
-                </li>
-                <li className="submenu-item">
-                  <NavLink to="payments/subscrition" className="nav-link">
-                    {showSidebar && "Subscription"}
-                  </NavLink>
-                </li>
-              </ul>
-            )} */}
-          </li>
-          {/* <li className="nav-item">
-            <NavLink to="/admin/announcements" className="nav-link">
-              <span className="nav-icon">
-                <MdAnnouncement />
-                {showSidebar && "Announcement"}
-              </span>
-            </NavLink>
-          </li> */}
-          <li className="nav-item">
-            <NavLink to="notify" className="nav-link">
-              <span className="nav-icon">
-                <GoBell />
-                {showSidebar && "Notification"}
+                <FaUserFriends />
+                {showSidebar && "Sponsors"}
               </span>
             </NavLink>
           </li>
           <li className="nav-item">
-            <NavLink to="settings" className="nav-link">
+            <NavLink to="blog" className="nav-link">
               <span className="nav-icon">
-                <FiSettings />
-                {showSidebar && "Settings"}
+                <GrBlog />
+                {showSidebar && "Blogs"}
               </span>
             </NavLink>
           </li>
+          <li className="nav-item">
+            <NavLink to="testimonials" className="nav-link">
+              <span className="nav-icon">
+                <FaUserFriends />
+                {showSidebar && "Testimonials"}
+              </span>
+            </NavLink>
+          </li>
+          {role === "superadmin" && (
+            <li className="nav-item">
+              <NavLink to="sub-admin" className="nav-link">
+                <span className="nav-icon">
+                  <MdOutlineAdminPanelSettings />
+                  {showSidebar && "SubAdmin"}
+                </span>
+              </NavLink>
+            </li>
+          )}
+          {role === "sub-admin" && (
+            <li className="nav-item">
+              <NavLink to="settings" className="nav-link">
+                <span className="nav-icon">
+                  <FiSettings />
+                  {showSidebar && "Settings"}
+                </span>
+              </NavLink>
+            </li>
+          )}
           <li className="nav-item" onClick={() => setShowModal(true)}>
             <div className="nav-link">
               <span className="nav-icon">

@@ -2,13 +2,14 @@ import React from "react";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import usePostHook from "../../hook/usePost";
+import usePutHook from "../../hook/usePut";
 
 const ChangePassword = ({ close, refetch }) => {
   const [loading, setLoading] = useState(false);
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [newPassword2, setNewPassword2] = useState("");
-  const { handlePost } = usePostHook();
+  const { handlePut } = usePutHook();
   const onSuccess = () => {
     setLoading(false);
     toast.success("Password changed successfully");
@@ -16,11 +17,17 @@ const ChangePassword = ({ close, refetch }) => {
   };
   const handleSubmit = async () => {
     setLoading(true);
-    const fd = new FormData();
-    fd.append("old_password", oldPassword);
-    fd.append("new_password", newPassword);
-    fd.append("new_password_confirmation", newPassword2);
-    handlePost(`admin/profile/update/password`, fd, `multipart/form-data`, onSuccess);
+    if (newPassword!== newPassword2) {
+      toast.error("Passwords do not match");
+      return;
+    }
+    const payload = {
+     
+      oldPassword,
+      newPassword
+    };
+    // fd.append("new_password_confirmation", newPassword2);
+    handlePut(`admin/update/password`, payload, "application/json", onSuccess);
   };
   return (
     <>

@@ -1,8 +1,9 @@
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
 const usePutHook = () => {
+  const [data, setdata] = useState([])
   const handlePut = useCallback(async (url, payload, type, success) => {
     try {
       const config = {
@@ -17,6 +18,7 @@ const usePutHook = () => {
         config
       );
       success();
+      setdata(res.data)
     } catch (error) {
       if (error?.response?.data?.errors) {
         Object.entries(error?.response?.data?.errors).forEach(
@@ -27,6 +29,6 @@ const usePutHook = () => {
       }
     }
   }, []);
-  return { handlePut };
+  return { handlePut, data };
 };
 export default usePutHook;

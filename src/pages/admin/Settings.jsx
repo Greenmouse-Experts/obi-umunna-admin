@@ -7,57 +7,52 @@ import usePostHook from "../../hook/usePost";
 import { toast } from "react-toastify";
 import useModal from "../../hook/useModal";
 import ChangePassword from "../../admin/Settings/ChangePassword";
+import { getLocalToken } from "../../services/helpers";
+import usePutHook from "../../hook/usePut";
 
 const SettingsPage = () => {
-  const { data: user, refetch } = useGetHook("admin/profile");
+ 
   const [loading, setLoading] = useState(false);
   const [preview, setPreview] = useState();
   const [isBusy, setIsBusy] = useState(false);
-  const [fname, setFname] = useState("");
+  const [name, setname] = useState("");
   const [lname, setLname] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
-  const { handlePost } = usePostHook();
+  const { handlePut, data } = usePutHook();
   const { Modal, setShowModal } = useModal();
-  useEffect(() => {
-    setFname(user?.data?.first_name);
-    setLname(user?.data?.last_name);
-    setEmail(user?.data?.email);
-    setPhone(user?.data?.phone_number);
-  }, [user]);
+
+
+const updateData = () =>{
+  if(data.code === 200){
+    localStorage.setItem("obi_name", data?.data?.name);
+    localStorage.setItem("obi_email", data?.data?.email);
+  }
+}
+
   const onSuccess = () => {
     toast.success("Profile updated successfully");
     setLoading(false);
-    refetch()
+    updateData()
+   
   };
-  const changeProfileImage = async (e) => {
-    setIsBusy(true);
-    e.preventDefault();
-    const objectUrl = URL.createObjectURL(e.target.files[0]);
-    setPreview(objectUrl);
-    const formData = new FormData();
-    formData.append("avatar", e.target.files[0]);
-    handlePost(
-      `admin/profile/upload/profile-picture`,
-      formData,
-      "multipart/form-data",
-      onSuccess
-    );
-  };
+
   const handleUpateProfile = () => {
-    setLoading(true)
-    const formData = new FormData();
-    formData.append("first_name", fname);
-    formData.append("last_name", lname);
-    formData.append("email", email);
-    formData.append("phone_number", phone);
-    handlePost(
-      `admin/profile/update`,
-      formData,
-      "multipart/form-data",
-      onSuccess
-    );
+    setLoading(true);
+    
+    const payload = {
+      name,
+      email,
+    };
+    // fd.append("new_password_confirmation", newPassword2);
+    handlePut(`admin/update/profile`, payload, "application/json", onSuccess);
+   
   };
+
+  useEffect(() => {
+    setname(getLocalToken("obi_name"));
+    setEmail(getLocalToken("obi_email"));
+  }, []);
   return (
     <>
       <div className="bg-white p-5 ml-4">
@@ -67,31 +62,9 @@ const SettingsPage = () => {
           </div>
           <div className="mt-6 grid lg:grid-cols-4 gap-x-6">
             <div>
-              <div className="relative z-0 w-[160px] h-[160px]">
-                <img
-                  src={preview ? preview : user?.data?.avatar}
-                  alt="profile"
-                  width={160}
-                  height={160}
-                  className="rounded-[80px] border w-full h-full mx-auto"
-                />
-                <p className="w-8 h-8 rounded-[80px] grid place-content-center bg-white absolute overflow-hidden z-10 bottom-[1px] right-[15px] border cursor-pointer">
-                  {isBusy ? (
-                    ""
-                  ) : (
-                    <BsFillCameraFill className="text-primary relative" />
-                  )}
-                  <input
-                    type="file"
-                    onChange={(e) => changeProfileImage(e)}
-                    className="w-full h-full absolute z-10 opacity-0 cursor-pointer"
-                  />
-                </p>
-              </div>
+           
               <div className="">
-                <p className="fw-600 mt-1 text-center">{`${
-                  user?.data?.first_name ? user?.data?.first_name : ""
-                } ${user?.data?.last_name ? user?.data?.last_name : ""}`}</p>
+                <p className="fw-600 mt-1 text-center">{name}</p>
               </div>
             </div>
             <div className="col-span-3 mt-9 lg:pl-6">
@@ -101,29 +74,16 @@ const SettingsPage = () => {
                     <FaUserShield className="text-2xl text-gray-400" />
                   </div>
                   <div className="w-full">
-                    <p className="fs-400 text-primary">First Name:</p>
+                    <p className="fs-400 text-primary"> Name:</p>
                     <input
                       type="text"
-                      value={fname}
-                      onChange={(e) => setFname(e.target.value)}
+                      value={name}
+                      onChange={(e) => setname(e.target.value)}
                       className="border-b w-full bg-transparent p-2"
                     />
                   </div>
                 </div>
-                <div className="flex items-center gap-x-2">
-                  <div className="w-16 h-16 grid place-content-center shadow-lg">
-                    <FaUserShield className="text-2xl text-gray-400" />
-                  </div>
-                  <div className="w-full">
-                    <p className="fs-400 text-primary">Last Name:</p>
-                    <input
-                      type="text"
-                      value={lname}
-                      onChange={(e) => setLname(e.target.value)}
-                      className="border-b w-full bg-transparent p-2"
-                    />
-                  </div>
-                </div>
+             
                 <div className="flex items-center gap-x-2">
                   <div className="w-16 h-16 grid place-content-center shadow-lg">
                     <MdMarkEmailRead className="text-2xl text-gray-400" />
@@ -138,20 +98,7 @@ const SettingsPage = () => {
                     />
                   </div>
                 </div>
-                <div className="flex items-center gap-x-2">
-                  <div className="w-16 h-16 grid place-content-center shadow-lg">
-                    <BsTelephonePlusFill className="text-2xl text-gray-400" />
-                  </div>
-                  <div className="w-full">
-                    <p className=" text-primary">Phone:</p>
-                    <input
-                      type="number"
-                      value={phone}
-                      onChange={(e) => setPhone(e.target.value)}
-                      className="border-b w-full bg-transparent p-2"
-                    />
-                  </div>
-                </div>
+               
               </div>
             </div>
           </div>
@@ -166,7 +113,7 @@ const SettingsPage = () => {
               className="px-6 py-2 border border-green-600 bg-blue-800 text-white font-semibold rounded-lg"
               onClick={handleUpateProfile}
             >
-             {loading? "Saving..." : "Save Changes"}
+              {loading ? "Saving..." : "Save Changes"}
             </button>
           </div>
         </div>

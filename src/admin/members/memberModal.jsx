@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import React from "react";
 import { FaTimes } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const MemberModal = ({ item, close }) => {
   // const { data, loading } = useGetHook(`admin/member/view?user_id=${item.id}`);
@@ -13,7 +14,7 @@ const MemberModal = ({ item, close }) => {
       onClick={close}
     >
       <div
-        className="w-11/12 lg:w-7/12 bg-white"
+        className="w-11/12 lg:w-7/12 bg-white h-[95vh] overflow-y-scroll"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="p-5">
@@ -23,6 +24,9 @@ const MemberModal = ({ item, close }) => {
           </div>
 
           <div className="oveflow-y-auto px-3">
+            <div>
+              <Link to={`/admin/applicants?program=${item.id}`} className="text-white bg-[#291670] px-4 py-1 rounded-md">View Applicants</Link>
+            </div>
             <div className="grid lg:grid-cols-2 gap-y-4 py-3 overflow-y-auto pr-3">
               <div>
                 <p className="text-gray-500">Program Name:</p>
@@ -53,10 +57,7 @@ const MemberModal = ({ item, close }) => {
                 <p className="text-gray-500">Requirement</p>
                 <p className="font-semibold">{item.requirements}</p>
               </div>
-              <div>
-                <p className="text-gray-500">Description:</p>
-                <p className="font-semibold">{item.description}</p>
-              </div>
+            
               <div>
                 <p className="text-gray-500">Support Banner:</p>
                 <img
@@ -68,6 +69,10 @@ const MemberModal = ({ item, close }) => {
 
               
             </div>
+            <div>
+                <p className="text-gray-500">Description:</p>
+                <p className="font-semibold">{item.description}</p>
+              </div>
           </div>
           <div className="py-3"></div>
         </div>

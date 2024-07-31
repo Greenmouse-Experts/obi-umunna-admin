@@ -1,45 +1,70 @@
 import React, { useEffect, useState } from "react";
 import { BiSearch, BiPlus } from "react-icons/bi";
-import "../../stylesheet/admin.css";
 import dayjs from "dayjs";
+import { ThreeCircles } from "react-loader-spinner";
+import AddFellow from "../../admin/AddFellow";
+import useGetHook from "../../hook/useGet";
 import jsPDF from "jspdf";
 import "jspdf-autotable";
-import { ThreeCircles } from "react-loader-spinner";
-import AddAssociate from "../../admin/AddAssociate";
-import { BsEye, BsEyeFill, BsThreeDotsVertical } from "react-icons/bs";
-import useGetHook from "../../hook/useGet";
+import { BsEyeFill } from "react-icons/bs";
 import useModal from "../../hook/useModal";
 import ReusableModal from "../../components/ReusableModal";
 import axios from "axios";
 import { toast } from "react-toastify";
 import MemberModal from "../../admin/members/memberModal";
+import EditProgram from "../../admin/EditProgram";
+import useDelete from "../../hook/useDelete";
+import usePostHook from "../../hook/usePost";
+import ApplicantModal from "../../admin/applicants/ApplicantModal";
+import { useLocation } from "react-router-dom";
+import AddSubAdmin from "../../admin/AddSubAdmin";
+import usePutHook from "../../hook/usePut";
 
-const Associate = () => {
+const SubAdmin = () => {
+  const { search, pathname } = useLocation();
+  const queryParams = new URLSearchParams(search);
+  const program = queryParams.get("program");
+
   const {
     data,
     isLoading: loading,
     refetch,
-  } = useGetHook("admin/member/retrieve/all?keyword=associate");
-  const [items, setItems] = useState([]);
-  const [isBusy, setIsBusy] = useState();
-  const [selected, setSelected] = useState();
+  } = useGetHook(`admin/subadmin/fetch`);
+  const { handleDelete: deleteCat } = useDelete();
+  const { handlePut } = usePutHook();
+
   const [showDetails, setShowDetails] = useState(false);
-
   const [showAddMemberPopup, setShowAddMemberPopup] = useState(false);
+  const { Modal: Deactivate, setShowModal: ShowDeactivate } = useModal();
 
-  useEffect(() => {
-    if (data) {
-      setItems(data?.data.data);
-    }
-  }, [data]);
-  const handleAddMemberClick = () => {
-    setShowAddMemberPopup(true);
+  const { Modal: Status, setShowModal: ShowStatus } = useModal();
+
+  const [showEditMemberPopup, setShowEditMemberPopup] = useState(false);
+
+  const [status, setstatus] = useState("");
+
+  const handleCloseEditMemberPopup = () => {
+    setShowEditMemberPopup(false);
   };
 
   const handleCloseAddMemberPopup = () => {
     setShowAddMemberPopup(false);
   };
-  // pdf download
+
+  const handleAddMemberClick = () => {
+    setShowAddMemberPopup(true);
+  };
+
+  const openDelete = (item) => {
+    setSelected(item);
+    ShowDeactivate(true);
+  };
+
+  const openStatus = (item) => {
+    setSelected(item);
+    ShowStatus(true);
+  };
+
   const downloadAsPDF = () => {
     const doc = new jsPDF();
     doc.autoTable({
@@ -54,7 +79,7 @@ const Associate = () => {
           "Status",
         ],
       ],
-      body: data?.data?.data.map((item, index) => [
+      body: data?.data.map((item, index) => [
         index + 1,
         item.membership_id,
         `${item.first_name} ${item.last_name}`,
@@ -67,63 +92,77 @@ const Associate = () => {
 
     doc.save("members.pdf");
   };
+  const [items, setItems] = useState([]);
+  const [isBusy, setIsBusy] = useState();
+  const [selected, setSelected] = useState();
+
   const { Modal: Activate, setShowModal: ShowActivate } = useModal();
-  const { Modal: Deactivate, setShowModal: ShowDeactivate } = useModal();
-  const openActivate = (item) => {
-    setSelected(item);
-    ShowActivate(true);
+  const { Modal: deleteProgram, setShowModal: ShowDeleteProgram } = useModal();
+  useEffect(() => {
+    if (data) {
+      setItems(data?.data);
+    }
+  }, [data]);
+
+  const onStatus = () => {
+    refetch();
+    toast.success("Applicant Updated successfully");
+    ShowStatus(false);
   };
-  const openDeactivate = (item) => {
-    setSelected(item);
-    ShowDeactivate(true);
+
+  const handleStatus = () => {
+    const payload = {
+      user_id: selected.id,
+    };
+
+    handlePut(
+      `admin/subadmin/toggle/status?subadmin_id=${selected.id}`,
+      payload,
+      "application/json",
+      onStatus
+    );
   };
+
   const openDetails = (item) => {
     setSelected(item);
     setShowDetails(true);
   };
   // change account status
-  const ChangeAccountStatus = async (status) => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "Application/json",
-          authorization: `Bearer ${localStorage.getItem("obi_token")}`,
-        },
-      };
-      const res = await axios.get(
-        `${process.env.REACT_APP_API_URL}/admin/member/${status}?user_id=${selected.id}`,
-        config
-      );
-      const data = res.data;
-      setIsBusy(false);
-      toast.success(data.message);
-      refetch();
-      ShowActivate(false);
-      ShowDeactivate(false);
-    } catch (error) {
-      setIsBusy(false);
-    }
-  };
 
   // handle search
   const handleSearch = (e) => {
     if (e.target.value === "") {
-      setItems(data.data.data);
+      setItems(data?.data);
     } else {
-      const filtered = data.data.data.filter((item) =>
-        item.first_name.toLowerCase().includes(e.target.value.toLowerCase())
+      const filtered = data?.data?.filter((item) =>
+        item.name.toLowerCase().includes(e.target.value.toLowerCase())
       );
       setItems(filtered);
     }
   };
 
+  const onSuccess = () => {
+    setIsBusy(false);
+    refetch();
+    toast.success("Applicant deleted successfully");
+    ShowDeactivate(false);
+  };
+  const handleDelete = () => {
+    setIsBusy(true);
+    const payload = {
+      subadmin_id: selected.id,
+    };
+    deleteCat(`admin/subadmin/delete`, payload, `application/json`, onSuccess);
+  };
+
+  console.log(items);
   return (
-    <div className="px-4">
-      <div className="fellow_table p-5 bg-white">
+    <div className="px-5">
+      <div className="p-6 bg-white">
         <div className="admin_head">
           <div className="leftt">
-            <h3 className="text-2xl font-semibold">Associate Members</h3>
-            <svg
+            <h3 className="text-2xl font-semibold">Sub Admin</h3>
+            {/* <svg
               onClick={downloadAsPDF}
               xmlns="http://www.w3.org/2000/svg"
               width="25"
@@ -142,7 +181,7 @@ const Associate = () => {
                   <rect width="30" height="30" fill="white" />
                 </clipPath>
               </defs>
-            </svg>
+            </svg> */}
           </div>
 
           <div className="rightt">
@@ -190,17 +229,12 @@ const Associate = () => {
                       >
                         S/N
                       </th>
+
                       <th
                         scope="col"
                         className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
                       >
-                        Member ID
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
-                      >
-                        Member Name
+                        Name
                       </th>
                       <th
                         scope="col"
@@ -208,23 +242,12 @@ const Associate = () => {
                       >
                         Email
                       </th>
+
                       <th
                         scope="col"
                         className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
                       >
                         Status
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
-                      >
-                        Subscription
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
-                      >
-                        Date Joined
                       </th>
                       <th
                         scope="col"
@@ -241,60 +264,24 @@ const Associate = () => {
                           <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
                             {i + 1}
                           </td>
-                          <td className="align-middle fs-500  px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
-                            <div className="font-semibold  text-blue-900">
-                              {item.membership_id}
-                            </div>
-                          </td>
+
                           <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
-                            {item.first_name} {item.last_name}
+                            {item.name}
                           </td>
                           <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
                             {item.email}
                           </td>
+
                           <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
-                            <div className="flex items-center gap-x-3">
-                              <div
-                                className={`px-2 py-1 rounded font-semibold border ${
-                                  item.status === "Pending" ||
-                                  item.status === "Inactive"
-                                    ? `bg-orange-100`
-                                    : `bg-blue-200`
-                                }`}
-                              >
-                                {item.status}
-                              </div>
-                              {item.status === "Pending" ||
-                              item.status === "Inactive" ? (
-                                <span
-                                  className="underline cursor-pointer font-medium text-blue-900"
-                                  onClick={() => openActivate(item)}
-                                >
-                                  Activate
-                                </span>
-                              ) : (
-                                <span
-                                  className="underline cursor-pointer font-medium text-red-800"
-                                  onClick={() => openDeactivate(item)}
-                                >
-                                  Deactivate
-                                </span>
-                              )}
-                            </div>
-                          </td>
-                          <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
-                            {item?.isSubscribed === "0" ? (
-                              <span className="px-2 py-1 text-sm bg-orange-100 font-medium rounded-lg">
-                                Unsubscribed
-                              </span>
-                            ) : (
-                              <span className="px-2 py-1 text-sm bg-green-100 font-medium rounded-lg">
-                                Subscribed
-                              </span>
-                            )}
-                          </td>
-                          <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
-                            {dayjs(item.created_at).format("DD-MMM -YYYY")}
+                            <span
+                              className={`px-2 py-1 rounded-md text-white  ${
+                                item.status === "active"
+                                  ? "bg-green-600"
+                                  : " bg-red-600"
+                              }`}
+                            >
+                              {item.status}
+                            </span>
                           </td>
                           <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
                             <div className="flex gap-x-3">
@@ -302,6 +289,24 @@ const Associate = () => {
                                 onClick={() => openDetails(item)}
                                 className="text-xl text-blue-900"
                               />
+                              <span
+                                className="underline cursor-pointer font-medium text-blue-900"
+                                onClick={() => {
+                                  openStatus(item);
+                                  setstatus(item.status);
+                                }}
+                              >
+                                {item.status === "active"
+                                  ? "Deactivate"
+                                  : "Activate"}
+                              </span>
+
+                              <span
+                                className="underline cursor-pointer font-medium text-red-800"
+                                onClick={() => openDelete(item)}
+                              >
+                                Delete
+                              </span>
                             </div>
                           </td>
                         </tr>
@@ -315,29 +320,43 @@ const Associate = () => {
       </div>
       {showAddMemberPopup && (
         <div className="popup">
-          <AddAssociate onClose={handleCloseAddMemberPopup} />
+          <AddSubAdmin onClose={handleCloseAddMemberPopup} refetch={refetch} />
         </div>
       )}
       {showDetails && (
-        <MemberModal item={selected} close={() => setShowDetails(false)} />
+        <ApplicantModal item={selected} close={() => setShowDetails(false)} />
       )}
-      <Activate title={""} noHead>
+
+      {showEditMemberPopup && (
+        <div className="popup">
+          <EditProgram
+            item={selected}
+            onClose={handleCloseEditMemberPopup}
+            refetch={refetch}
+          />
+        </div>
+      )}
+      <Status title={""} noHead>
         <ReusableModal
-          title={"Are you sure you want to activate this account?"}
+          title={`Are you sure you want to ${
+            status === "active" ? "Deactivate" : "Activate"
+          } applicant?`}
           cancelTitle="No, cancel"
-          actionTitle="Yes, Activate"
-          closeModal={() => ShowActivate(false)}
-          action={() => ChangeAccountStatus("activate")}
+          actionTitle={`Yes, ${
+            status === "active" ? "Deactivate" : "Activate"
+          }`}
+          closeModal={() => ShowStatus(false)}
+          action={() => handleStatus()}
           isBusy={isBusy}
         />
-      </Activate>
+      </Status>
       <Deactivate title={""} noHead>
         <ReusableModal
-          title={"Are you sure you want to deactivate this account?"}
+          title={"Are you sure you want to delete this program?"}
           cancelTitle="No, cancel"
-          actionTitle="Yes, Deactivate"
-          closeModal={() => ShowActivate(false)}
-          action={() => ChangeAccountStatus("deactivate")}
+          actionTitle="Yes, Delete"
+          closeModal={() => ShowDeactivate(false)}
+          action={() => handleDelete()}
           isBusy={isBusy}
         />
       </Deactivate>
@@ -345,4 +364,4 @@ const Associate = () => {
   );
 };
 
-export default Associate;
+export default SubAdmin;

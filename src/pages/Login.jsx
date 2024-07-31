@@ -38,38 +38,39 @@ const Login = () => {
       });
       setIsLoading(true);
       axios
-        .post(`${process.env.REACT_APP_API_URL}/auth/login`, fd, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        })
-        .then((res) => {
-          if (res.data.code === 200) {
-            localStorage.setItem("obi_token", res.data.token);
-            toast.success(res.data.message);
-            localStorage.setItem("fName", res.data.data.first_name);
-            localStorage.setItem("bripan_sub", res.data.data.isSubscribed);
-            localStorage.setItem("bripan_email", res.data.data.email);
-            usenavigate("/dashboard/");
-          } else {
-            toast.error("Email or Passward is Incorrect");
-          }
-        })
-        .catch((err) => {
-          if (err?.response?.data?.message) {
-            toast.error(err?.response?.data?.message);
-          }
-          if (err?.response?.data?.errors) {
-            Object.entries(err?.response?.data?.errors).forEach(
-              ([key, value]) => {
-                toast.error(value[0]);
-              }
-            );
-          }
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
+      .post(`https://obi.victornwadinobi.com/api/auth/admin/login`, {
+        email: logData.login_details,
+        password: logData.password,
+      }, {
+        // headers: {
+        //   "Content-Type": "multipart/form-data",
+        // },
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.data.code === 200) {
+          toast.success(res.data.message);
+          localStorage.setItem("obi_token", res.data.token);
+          usenavigate("/dashboard/");
+        } else {
+          toast.error(res.data.message);
+        }
+      })
+      .catch((err) => {
+        if (err?.response?.data?.message) {
+          toast.error(err?.response?.data?.message);
+        }
+        if (err?.response?.data?.errors) {
+          Object.entries(err?.response?.data?.errors).forEach(
+            ([key, value]) => {
+              toast.error(value[0]);
+            }
+          );
+        }
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
     }
   };
   const logValidate = () => {
@@ -93,11 +94,11 @@ const Login = () => {
           <img src={logo} alt="logo" />
         </a>
         <div className="log_head">
-          <h3>Member Login</h3>
+          <h3>Sub Admin Login</h3>
           <p>Fill in your credentials to login to your dashboard</p>
         </div>
         <div className="input_log">
-          <label htmlFor="email">Email or Username</label>
+          <label htmlFor="email">Email</label>
           <div>
             {" "}
             <HiOutlineMail />{" "}

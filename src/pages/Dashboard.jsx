@@ -11,6 +11,11 @@ import MembersAnnoucement from "./users/Annoucement";
 import MembersTransactions from "./users/Transactions";
 import MembersSetting from "./users/Setting";
 import MembersDues from "./users/Dues";
+import Programs from "./admin/Programs";
+import Testimonial from "./admin/Dues/Testimonial";
+import Blogs from "./admin/Dues/Blogs";
+import Applicants from "./admin/Applicants";
+import Sponsors from "./admin/Sponsors";
 
 const Dashboard = () => {
   const sub = localStorage.getItem("bripan_sub");
@@ -23,7 +28,7 @@ const Dashboard = () => {
   };
 
   const { data, isLoading } = useGetHook("member/count/unread/notifications");
-  
+
   useEffect(() => {
     if (sub === "0") {
       setSubModal(true);
@@ -48,17 +53,17 @@ const Dashboard = () => {
         <div className="pages">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="notify" element={<Notify datas={data?.data} />} />
-            <Route path="announce" element={<MembersAnnoucement />} />
-            <Route path="transact" element={<MembersTransactions />} />
+            <Route path="programs" element={<Programs />} />
+            <Route path="testimonials" element={<Testimonial />} />
+            <Route path="blogs" element={<Blogs />} />
+            <Route path="applicants" element={<Applicants />} />
+
+            <Route path="sponsors" element={<Sponsors />} />
             <Route path="settings" element={<MembersSetting />} />
-            <Route path="dues" element={<MembersDues />} />
           </Routes>
         </div>
       </div>
-      {subModal && (
-        <SubscribeModal/>
-      )}
+      {subModal && <SubscribeModal />}
     </div>
   );
 };

@@ -5,26 +5,28 @@ import { Chart as ReactChartJs } from 'react-chartjs-2';
 
 const DuesPayment = ({ data }) => {
   Chart.register(...registerables);
-  const [months, setMonths] = useState([]);
-  const [values, setValues] = useState([]);
+  const [programs, setPrograms] = useState([]);
+  const [applicants, setApplicants] = useState([]);
+
   useEffect(() => {
     if (data) {
-      const month = [];
-      const vals = []
+      const prog = [];
+      const apps = [];
       data.forEach((item) => {
-          month.push(item.month);
-          vals.push(item.total_amount)
+        prog.push(item.name);
+        apps.push(item.totalApplicants);
       });
-      setMonths(month);
-      setValues(vals)
+      setPrograms(prog);
+      setApplicants(apps);
     }
   }, [data]);
+
   const datas = {
-    labels: months,
+    labels: programs,
     datasets: [
       {
-        label: "Total Cost",
-        data: values,
+        label: "Number of Applicants",
+        data: applicants,
         borderColor: "rgba(75, 192, 192, 1)",
         backgroundColor: "rgba(75, 192, 192, 0.2)",
         fill: true,
@@ -42,9 +44,10 @@ const DuesPayment = ({ data }) => {
     responsive: true,
     maintainAspectRatio: false,
   };
+
   return (
     <>
-      {data && <ReactChartJs type="line" data={[""]} options={option} />}
+       {data && <ReactChartJs type="line" data={datas} options={option} />}
     </>
   );
 };

@@ -17,7 +17,7 @@ const ReusableModal = ({
           onClick={closeModal}
         >{cancelTitle}</button>
         <button
-          className="py-2 px-3 lg:px-6 bg-blue-900 rounded text-white"
+          className="py-2 px-3 lg:px-6 bg-blue-900 rounded text-white capitalize"
           onClick={action}
         >{actionTitle}</button>
       </div>

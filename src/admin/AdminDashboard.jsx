@@ -5,8 +5,6 @@ import { Topnav } from "./Topnav";
 import { Route, Routes } from "react-router-dom";
 import "../stylesheet/layout.css";
 import Admin from "./Admin";
-import Fellow from "../pages/admin/Fellow";
-import Associate from "../pages/admin/Associate";
 import Notify from "../pages/admin/Notify";
 import AdminAnnouncement from "../pages/admin/Announcement";
 import AdminBanks from "../pages/admin/Dues/Banks";
@@ -15,6 +13,13 @@ import AdminDues from "../pages/admin/Dues/Dues";
 import DuesPayments from "../pages/admin/Payments/Dues";
 import SubscriptionPayments from "../pages/admin/Payments/Subscription";
 import SettingsPage from "../pages/admin/Settings";
+import Programs from "../pages/admin/Programs";
+import Applicants from "../pages/admin/Applicants";
+import Sponsors from "../pages/admin/Sponsors";
+import Category from "../pages/admin/Dues/Category";
+import Testimonial from "../pages/admin/Dues/Testimonial";
+import Blogs from "../pages/admin/Dues/Blogs";
+import SubAdmin from "../pages/admin/SubAdmin";
 
 const AdminDashboard = () => {
   const [showSidebar, setShowSidebar] = useState(window.innerWidth >= 650);
@@ -43,10 +48,13 @@ const AdminDashboard = () => {
         <div className="pages">
           <Routes>
             <Route path="/" element={<Admin />} />
-            <Route path="programs" element={<Fellow />} />
-            <Route path="categories" element={<AdminDuesCategory />} />
-            <Route path="announcements" element={<AdminAnnouncement />} />
-            <Route path="notify" element={<Notify datas={data?.data} />} />
+            <Route path="programs" element={<Programs />} />
+            <Route path="categories" element={<Category />} />
+            <Route path="testimonials" element={<Testimonial />} />
+            <Route path="blogs" element={<Blogs />} />
+            <Route path="applicants" element={<Applicants />} />
+            <Route path="sub-admin" element={<SubAdmin />} />
+            <Route path="sponsors" element={<Sponsors/>} />
             <Route path="dues/list" element={<AdminDues/>} />
             <Route path="dues/bank" element={<AdminBanks/>} />
             <Route path="dues/category" element={<AdminDuesCategory/>} />

@@ -14,31 +14,33 @@ import { toast } from "react-toastify";
 import MemberModal from "../../admin/members/memberModal";
 import EditProgram from "../../admin/EditProgram";
 import useDelete from "../../hook/useDelete";
+import usePostHook from "../../hook/usePost";
+import ApplicantModal from "../../admin/applicants/ApplicantModal";
+import { useLocation } from "react-router-dom";
 
-const Fellow = () => {
-  const {
-    data,
-    isLoading: loading,
-    refetch,
-  } = useGetHook("admin/program/fetch");
-  const { handleDelete:deleteCat } = useDelete();
+const Applicants = () => {
+  const { search, pathname } = useLocation(); 
+  const queryParams = new URLSearchParams(search);
+  const program = queryParams.get("program");
+
+
+  const url = program ? `admin/applicants?programId=${program}` : `admin/applicants`
+  const { data, isLoading: loading, refetch } = useGetHook(`${url}`);
+  const { handleDelete: deleteCat } = useDelete();
+  const { handlePost } = usePostHook();
 
   const [showDetails, setShowDetails] = useState(false);
   const [showAddMemberPopup, setShowAddMemberPopup] = useState(false);
   const { Modal: Deactivate, setShowModal: ShowDeactivate } = useModal();
 
+  const { Modal: Status, setShowModal: ShowStatus } = useModal();
+
   const [showEditMemberPopup, setShowEditMemberPopup] = useState(false);
 
-  const handleEditMemberClick = () => {
-    setShowEditMemberPopup(true);
-  };
+  const [status, setstatus] = useState("");
 
   const handleCloseEditMemberPopup = () => {
     setShowEditMemberPopup(false);
-  };
-
-  const handleAddMemberClick = () => {
-    setShowAddMemberPopup(true);
   };
 
   const handleCloseAddMemberPopup = () => {
@@ -48,6 +50,11 @@ const Fellow = () => {
   const openDelete = (item) => {
     setSelected(item);
     ShowDeactivate(true);
+  };
+
+  const openStatus = (item) => {
+    setSelected(item);
+    ShowStatus(true);
   };
 
   const downloadAsPDF = () => {
@@ -84,22 +91,31 @@ const Fellow = () => {
   const { Modal: Activate, setShowModal: ShowActivate } = useModal();
   const { Modal: deleteProgram, setShowModal: ShowDeleteProgram } = useModal();
   useEffect(() => {
+
     if (data) {
       setItems(data?.data);
     }
   }, [data]);
-  const openActivate = (item) => {
-    setSelected(item);
-    ShowActivate(true);
-  };
-  const openDeactivate = (item) => {
-    setSelected(item);
-    ShowDeactivate(true);
+
+  const onStatus = () => {
+   
+    refetch();
+    toast.success("Applicant Updated successfully");
+    ShowStatus(false)
   };
 
-  const openEdit = (item) => {
-    setSelected(item);
-  };
+  const handleStatus = () => {
+      const payload = {
+        user_id: selected.id
+      }
+
+      handlePost(`admin/action/applicant`, payload, "application/json", onStatus);
+    }
+  
+
+  
+
+
   const openDetails = (item) => {
     setSelected(item);
     setShowDetails(true);
@@ -121,31 +137,25 @@ const Fellow = () => {
   const onSuccess = () => {
     setIsBusy(false);
     refetch();
-    toast.success("Program deleted successfully");
+    toast.success("Applicant deleted successfully");
     ShowDeactivate(false);
   };
   const handleDelete = () => {
     setIsBusy(true);
     const payload = {
-      programId: selected.id,
+      user_id: selected.id,
     };
-    deleteCat(
-      `admin/program/delete`,
-      payload,
-      `application/json`,
-      onSuccess
-    );
+    deleteCat(`admin/delete/applicant`, payload, `application/json`, onSuccess);
   };
-  // h
-
+ 
   console.log(items);
   return (
     <div className="px-5">
       <div className="p-6 bg-white">
         <div className="admin_head">
           <div className="leftt">
-            <h3 className="text-2xl font-semibold">Programs</h3>
-            <svg
+            <h3 className="text-2xl font-semibold">Applicants</h3>
+            {/* <svg
               onClick={downloadAsPDF}
               xmlns="http://www.w3.org/2000/svg"
               width="25"
@@ -164,13 +174,11 @@ const Fellow = () => {
                   <rect width="30" height="30" fill="white" />
                 </clipPath>
               </defs>
-            </svg>
+            </svg> */}
           </div>
 
           <div className="rightt">
-            <button onClick={handleAddMemberClick}>
-              <BiPlus /> Add New
-            </button>
+           
             <div className="searchh">
               <input
                 type="text"
@@ -222,31 +230,31 @@ const Fellow = () => {
                         scope="col"
                         className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
                       >
-                        Program Name
+                        Applicant Name
                       </th>
                       <th
                         scope="col"
                         className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
                       >
-                        Amount
+                        Email
                       </th>
                       <th
                         scope="col"
                         className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
                       >
-                        Start Date
+                        Phone
                       </th>
                       <th
                         scope="col"
                         className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
                       >
-                        End Date
+                        Gender
                       </th>
                       <th
                         scope="col"
                         className="px-6 lg:px-10 align-middle py-3 fs-500 whitespace-nowrap text-left"
                       >
-                        Date Created
+                        Status
                       </th>
                       <th
                         scope="col"
@@ -265,23 +273,25 @@ const Fellow = () => {
                           </td>
                           <td className="align-middle fs-500  px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
                             <div className="font-semibold text-blue-900">
-                              <img src={item.supportBanner} alt={item.name} />
+                              <img src={item.photo} alt={item.name} />
                             </div>
                           </td>
                           <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
                             {item.name}
                           </td>
                           <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
-                            {item.budgetAmount}
+                            {item.email}
                           </td>
                           <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
-                            {dayjs(item.startDate).format("DD-MMM -YYYY")}
+                            {item.phone}
                           </td>
                           <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
-                            {dayjs(item.endDate).format("DD-MMM -YYYY")}
+                            {item.gender}
                           </td>
                           <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
-                            {dayjs(item.createdAt).format("DD-MMM -YYYY")}
+                        <span className={`px-2 py-1 rounded-md text-white  ${item.status === "active" ? "bg-green-600" :" bg-red-600"}`}>
+                        {item.status}
+                        </span>
                           </td>
                           <td className="align-middle fs-500 whitespace-nowrap px-6 lg:px-10 py-4 text-left border-b border-[#CECECE]">
                             <div className="flex gap-x-3">
@@ -292,11 +302,13 @@ const Fellow = () => {
                               <span
                                 className="underline cursor-pointer font-medium text-blue-900"
                                 onClick={() => {
-                                  openEdit(item);
-                                  handleEditMemberClick();
+                                  openStatus(item);
+                                  setstatus(item.status);
                                 }}
                               >
-                                Edit
+                                {item.status === "active"
+                                  ? "Deactivate"
+                                  : "Activate"}
                               </span>
 
                               <span
@@ -322,7 +334,7 @@ const Fellow = () => {
         </div>
       )}
       {showDetails && (
-        <MemberModal item={selected} close={() => setShowDetails(false)} />
+        <ApplicantModal item={selected} close={() => setShowDetails(false)} />
       )}
 
       {showEditMemberPopup && (
@@ -334,7 +346,20 @@ const Fellow = () => {
           />
         </div>
       )}
-    
+      <Status title={""} noHead>
+        <ReusableModal
+          title={`Are you sure you want to ${status === "active"
+            ? "Deactivate"
+            : "Activate"} applicant?`}
+          cancelTitle="No, cancel"
+          actionTitle={`Yes, ${status === "active"
+            ? "Deactivate"
+            : "Activate"}`}
+          closeModal={() => ShowStatus(false)}
+          action={() => handleStatus()}
+          isBusy={isBusy}
+        />
+      </Status>
       <Deactivate title={""} noHead>
         <ReusableModal
           title={"Are you sure you want to delete this program?"}
@@ -347,6 +372,10 @@ const Fellow = () => {
       </Deactivate>
     </div>
   );
+
+
+
+
 };
 
-export default Fellow;
+export default Applicants;

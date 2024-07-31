@@ -13,7 +13,7 @@ const AddDuesCategory = ({ close, refetch }) => {
   const onSuccess = () => {
     setLoading(false);
     refetch();
-    toast.success("Dues Category added successfully");
+    toast.success(" Category added successfully");
     close();
   };
   const handleSubmit = async () => {
