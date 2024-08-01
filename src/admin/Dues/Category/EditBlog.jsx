@@ -4,6 +4,8 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import useGetHook from "../../../hook/useGet";
 import usePutHook from "../../../hook/usePut";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const EditBlog = ({ item, close, refetch }) => {
   const { data } = useGetHook(`admin/banks`);
@@ -54,17 +56,23 @@ const EditBlog = ({ item, close, refetch }) => {
       </div>
       <div>
         <label className="text-lg font-medium">Description</label>
-        <textarea
+        {/* <textarea
           className="border border-gray-400 w-full mt-2 p-2 rounded"
           name=""
           id=""
           cols="30"
           rows="5"
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
-        ></textarea>
+          onChange={setDescription}
+        ></textarea> */}
+         <ReactQuill
+            theme="snow"
+            value={description}
+            onChange={setDescription} 
+            className={"h-32"}
+          />
       </div>
-      <div>
+      <div className="mt-14">
         <label className="text-lg font-medium">Image</label>
         <input
           type="file"

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import usePostHook from "../../../hook/usePost";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 import { toast } from "react-toastify";
 
 const AddBlog = ({ close, refetch }) => {
@@ -63,7 +65,7 @@ const AddBlog = ({ close, refetch }) => {
       </div>
       <div>
         <label className="text-lg font-medium">description</label>
-        <textarea
+        {/* <textarea
           className="border border-gray-400 w-full mt-2 p-2 rounded"
           name=""
           id=""
@@ -71,9 +73,15 @@ const AddBlog = ({ close, refetch }) => {
           rows="5"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-        ></textarea>
+        ></textarea> */}
+         <ReactQuill
+            theme="snow"
+            value={description}
+            onChange={setDescription} 
+            className={"h-32"}
+          />
       </div>
-      <div>
+      <div className="mt-12">
         <label className="text-lg font-medium">image</label>
         <input
           type="file"
