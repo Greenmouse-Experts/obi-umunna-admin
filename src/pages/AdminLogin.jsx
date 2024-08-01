@@ -3,7 +3,7 @@ import { HiOutlineMail } from "react-icons/hi";
 import { GoLock } from "react-icons/go";
 import "../stylesheet/login.css";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "../image/logo.png";
 import axios from "axios";
 
@@ -93,14 +93,13 @@ const AdminLogin = () => {
   return (
     <div className="main_login">
       <form onSubmit={handleSubmit} action="submit" className="login">
-        <a
+        <NavLink
           href="https://obi-umunna.netlify.app/"
-          target="_blank"
-          rel="noreferrer"
+          
           className="mx-auto"
         >
           <img src={logo} alt="" />
-        </a>
+        </NavLink>
         <div className="log_head">
           <h3>Admin Login</h3>
           <p>Fill in your credentials to login to the dashboard</p>
