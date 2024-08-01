@@ -38,39 +38,43 @@ const Login = () => {
       });
       setIsLoading(true);
       axios
-      .post(`https://obi.victornwadinobi.com/api/auth/admin/login`, {
-        email: logData.login_details,
-        password: logData.password,
-      }, {
-        // headers: {
-        //   "Content-Type": "multipart/form-data",
-        // },
-      })
-      .then((res) => {
-        console.log(res);
-        if (res.data.code === 200) {
-          toast.success(res.data.message);
-          localStorage.setItem("obi_token", res.data.token);
-          usenavigate("/dashboard/");
-        } else {
-          toast.error(res.data.message);
-        }
-      })
-      .catch((err) => {
-        if (err?.response?.data?.message) {
-          toast.error(err?.response?.data?.message);
-        }
-        if (err?.response?.data?.errors) {
-          Object.entries(err?.response?.data?.errors).forEach(
-            ([key, value]) => {
-              toast.error(value[0]);
-            }
-          );
-        }
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+        .post(
+          `https://obi.victornwadinobi.com/api/auth/admin/login`,
+          {
+            email: logData.login_details,
+            password: logData.password,
+          },
+          {
+            // headers: {
+            //   "Content-Type": "multipart/form-data",
+            // },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          if (res.data.code === 200) {
+            toast.success(res.data.message);
+            localStorage.setItem("obi_token", res.data.token);
+            usenavigate("/dashboard/");
+          } else {
+            toast.error(res.data.message);
+          }
+        })
+        .catch((err) => {
+          if (err?.response?.data?.message) {
+            toast.error(err?.response?.data?.message);
+          }
+          if (err?.response?.data?.errors) {
+            Object.entries(err?.response?.data?.errors).forEach(
+              ([key, value]) => {
+                toast.error(value[0]);
+              }
+            );
+          }
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
   };
   const logValidate = () => {
@@ -90,7 +94,11 @@ const Login = () => {
   return (
     <div className="main_login">
       <form onSubmit={handleSubmit} action="submit" className="login">
-        <a href="https://obi-inky.vercel.app">
+        <a
+          href="https://obi-umunna.netlify.app/"
+          target="_blank"
+          rel="noreferrer"
+        >
           <img src={logo} alt="logo" />
         </a>
         <div className="log_head">

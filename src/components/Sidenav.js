@@ -72,7 +72,11 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
       className={showSidebar ? "sidebar" : "sidebar closed"}
     >
       <div className={showSidebar ? "side_img" : "img-side"}>
-        <a href="https://obi-inky.vercel.app">
+        <a
+          href="https://obi-umunna.netlify.app/"
+          target="_blank"
+          rel="noreferrer"
+        >
           <img className="img-logo" src={logo} alt="Logo" />
         </a>{" "}
         <div className="men" onClick={toggleSidebar}>

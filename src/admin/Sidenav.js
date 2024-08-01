@@ -32,8 +32,6 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
     }
   };
 
-  
-
   const sidebarRef = useRef(null);
 
   useEffect(() => {
@@ -68,14 +66,17 @@ const Sidebar = ({ showSidebar, toggleSidebar }) => {
     setRole(getLocalToken("obi_role"));
   }, [role]);
 
-
   return (
     <div
       ref={sidebarRef}
       className={showSidebar ? "sidebar" : "sidebar closed"}
     >
       <div className={showSidebar ? "side_img" : "img-side"}>
-        <a href="https://obi-inky.vercel.app">
+        <a
+          href="https://obi-umunna.netlify.app/"
+          target="_blank"
+          rel="noreferrer"
+        >
           <img className="img-logo" src={logo} alt="Logo" />
         </a>{" "}
         <div className="men" onClick={toggleSidebar}>

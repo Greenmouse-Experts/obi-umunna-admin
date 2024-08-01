@@ -33,14 +33,18 @@ const AdminLogin = () => {
       console.log(fd);
       setIsLoading(true);
       axios
-        .post(`https://obi.victornwadinobi.com/api/auth/admin/login`, {
-          email: logData.email,
-          password: logData.password,
-        }, {
-          // headers: {
-          //   "Content-Type": "multipart/form-data",
-          // },
-        })
+        .post(
+          `https://obi.victornwadinobi.com/api/auth/admin/login`,
+          {
+            email: logData.email,
+            password: logData.password,
+          },
+          {
+            // headers: {
+            //   "Content-Type": "multipart/form-data",
+            // },
+          }
+        )
         .then((res) => {
           console.log(res);
           if (res.data.code === 200) {
@@ -89,8 +93,13 @@ const AdminLogin = () => {
   return (
     <div className="main_login">
       <form onSubmit={handleSubmit} action="submit" className="login">
-        <a href="https://obi-inky.vercel.app" className="mx-auto">
-          <img src={logo} alt=""  />
+        <a
+          href="https://obi-umunna.netlify.app/"
+          target="_blank"
+          rel="noreferrer"
+          className="mx-auto"
+        >
+          <img src={logo} alt="" />
         </a>
         <div className="log_head">
           <h3>Admin Login</h3>
